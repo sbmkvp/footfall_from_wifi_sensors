@@ -18,6 +18,7 @@ clean_sensor_data <- function(input,output) {
 }
 
 analyse_data <- function(manual = NULL, sensor = NULL, interval = 5) {
+	library(tidyverse)
 	source("methods.r")
 	if(!is.null(manual)) {
 		manual <- manual %>% read_file()
@@ -26,12 +27,12 @@ analyse_data <- function(manual = NULL, sensor = NULL, interval = 5) {
 	if(!is.null(sensor)) {
 		sensor <- sensor %>% read_file()
 		sensor_range <- sensor %>% filter_by_signal()
-		sensor_unique <- sensor_range %>% identify_unique_devices()
-		sensor_repeat <- sensor_unique %>% remove_repeat_devices("mac")
+		sensor_repeat_all <- sensor %>%  remove_repeat_devices("mac")
+		sensor_repeat_range <- sensor_range %>% remove_repeat_devices("mac")
 		sensor %<>% prepare_with(interval, "mac", "Probe requests")
 		sensor_range %<>% prepare_with(interval, "mac", "Within range")
-		sensor_unique %<>% prepare_with(interval, "mac", "Unique devices")
-		sensor_repeat %<>% prepare_with(interval, "mac", "Non repeating")
+		sensor_repeat_all %<>% prepare_with(interval, "mac", "Not filtered")
+		sensor_repeat_range %<>% prepare_with(interval, "mac", "Filtered")
 	}
-	list(manual, sensor, sensor_range, sensor_unique, sensor_repeat) %>% bind_rows()
+	list(manual, sensor, sensor_range, sensor_repeat_all, sensor_repeat_range) %>% bind_rows()
 }

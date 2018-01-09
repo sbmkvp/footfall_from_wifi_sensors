@@ -1,16 +1,18 @@
 rm(list = ls())
+library(tidyverse)
+library(xts)
 source("analysis4Jan.r")
 ucl_data_1min <- list(
-			  analyse_data(sensor="../data/01#uclcloisters/sensor_cleaned.csv",interval=1),
-			  read.csv("../data/01#uclcloisters/manual.csv") %>%
+			  analyse_data(sensor="../data/ucl_sensor.csv",interval=1),
+			  read.csv("../data/ucl_manual.csv") %>%
 				  rename(footfall=count) %>%
 				  mutate(action="Manual counts",time=as.POSIXct(time)) %>%
 				  as_tibble()) %>%
 	bind_rows()
 
 ucl_data_5min <- list(
-			  analyse_data(sensor="../data/01#uclcloisters/sensor_cleaned.csv",interval=5),
-			  read.csv("../data/01#uclcloisters/manual.csv") %>%
+			  analyse_data(sensor="../data/ucl_sensor.csv",interval=5),
+			  read.csv("../data/ucl_manual.csv") %>%
 				  rename(footfall=count) %>%
 				  mutate(time=as.POSIXct(time)) %>%
 				  set_interval(5) %>%
@@ -22,14 +24,14 @@ ucl_data_5min <- list(
 
 oxst_data_1min <-
 	analyse_data(
-				 manual = "../data/02#oxfordst/20171220_manual.csv",
-				 sensor = "../data/02#oxfordst/20171220_laptop.csv",
+				 manual = "../data/oxst_manual.csv",
+				 sensor = "../data/oxst_sensor.csv",
 				 interval = 1)
 
 oxst_data_5min <-
 	analyse_data(
-				 manual = "../data/02#oxfordst/20171220_manual.csv",
-				 sensor = "../data/02#oxfordst/20171220_laptop.csv",
+				 manual = "../data/oxst_manual.csv",
+				 sensor = "../data/oxst_sensor.csv",
 				 interval = 5)
 
 
