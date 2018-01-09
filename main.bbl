@@ -1,0 +1,245 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.9 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\datalist[entry]{nty/global//global/global}
+  \entry{konto2017}{article}{}
+    \name{author}{2}{}{%
+      {{hash=KCE}{%
+         family={Kontokosta},
+         familyi={K\bibinitperiod},
+         given={Constantine\bibnamedelima E},
+         giveni={C\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+      {{hash=JN}{%
+         family={Johnson},
+         familyi={J\bibinitperiod},
+         given={Nicholas},
+         giveni={N\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Elsevier}%
+    }
+    \strng{namehash}{KCEJN1}
+    \strng{fullhash}{KCEJN1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{pages}{144\bibrangedash 153}
+    \field{title}{Urban phenology: Toward a real-time census of the city using
+  Wi-Fi data}
+    \field{volume}{64}
+    \field{journaltitle}{Computers, Environment and Urban Systems}
+    \field{year}{2017}
+  \endentry
+
+  \entry{martin2017}{article}{}
+    \name{author}{8}{}{%
+      {{hash=MJ}{%
+         family={Martin},
+         familyi={M\bibinitperiod},
+         given={Jeremy},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=MT}{%
+         family={Mayberry},
+         familyi={M\bibinitperiod},
+         given={Travis},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=DC}{%
+         family={Donahue},
+         familyi={D\bibinitperiod},
+         given={Collin},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=FL}{%
+         family={Foppe},
+         familyi={F\bibinitperiod},
+         given={Lucas},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=BL}{%
+         family={Brown},
+         familyi={B\bibinitperiod},
+         given={Lamont},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=RC}{%
+         family={Riggins},
+         familyi={R\bibinitperiod},
+         given={Chadwick},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=REC}{%
+         family={Rye},
+         familyi={R\bibinitperiod},
+         given={Erik\bibnamedelima C},
+         giveni={E\bibinitperiod\bibinitdelim C\bibinitperiod},
+      }}%
+      {{hash=BD}{%
+         family={Brown},
+         familyi={B\bibinitperiod},
+         given={Dane},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{MJ+1}
+    \strng{fullhash}{MJMTDCFLBLRCRECBD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{A Study of MAC Address Randomization in Mobile Devices and
+  When it Fails}
+    \field{journaltitle}{arXiv preprint arXiv:1703.02874}
+    \field{year}{2017}
+  \endentry
+
+  \entry{matte2016}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=MC}{%
+         family={Matte},
+         familyi={M\bibinitperiod},
+         given={C{\'e}lestin},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=CM}{%
+         family={Cunche},
+         familyi={C\bibinitperiod},
+         given={Mathieu},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=RF}{%
+         family={Rousseau},
+         familyi={R\bibinitperiod},
+         given={Franck},
+         giveni={F\bibinitperiod},
+      }}%
+      {{hash=VM}{%
+         family={Vanhoef},
+         familyi={V\bibinitperiod},
+         given={Mathy},
+         giveni={M\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{MC+1}
+    \strng{fullhash}{MCCMRFVM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{booktitle}{Proceedings of the 9th ACM Conference on Security \&
+  Privacy in Wireless and Mobile Networks}
+    \field{pages}{15\bibrangedash 20}
+    \field{title}{Defeating mac address randomization through timing attacks}
+    \field{year}{2016}
+  \endentry
+
+  \entry{vanhoef2016}{inproceedings}{}
+    \name{author}{5}{}{%
+      {{hash=VM}{%
+         family={Vanhoef},
+         familyi={V\bibinitperiod},
+         given={Mathy},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=MC}{%
+         family={Matte},
+         familyi={M\bibinitperiod},
+         given={C{\'e}lestin},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=CM}{%
+         family={Cunche},
+         familyi={C\bibinitperiod},
+         given={Mathieu},
+         giveni={M\bibinitperiod},
+      }}%
+      {{hash=CLS}{%
+         family={Cardoso},
+         familyi={C\bibinitperiod},
+         given={Leonardo\bibnamedelima S},
+         giveni={L\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+      {{hash=PF}{%
+         family={Piessens},
+         familyi={P\bibinitperiod},
+         given={Frank},
+         giveni={F\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{VM+1}
+    \strng{fullhash}{VMMCCMCLSPF1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{booktitle}{Proceedings of the 11th ACM on Asia Conference on
+  Computer and Communications Security}
+    \field{pages}{413\bibrangedash 424}
+    \field{title}{Why MAC address randomization is not enough: An analysis of
+  Wi-Fi network discovery mechanisms}
+    \field{year}{2016}
+  \endentry
+
+  \entry{vo2016}{inproceedings}{}
+    \name{author}{3}{}{%
+      {{hash=VHTD}{%
+         family={Vo-Huu},
+         familyi={V\bibinitperiod-H\bibinitperiod},
+         given={Tien\bibnamedelima Dang},
+         giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod},
+      }}%
+      {{hash=VHTD}{%
+         family={Vo-Huu},
+         familyi={V\bibinitperiod-H\bibinitperiod},
+         given={Triet\bibnamedelima Dang},
+         giveni={T\bibinitperiod\bibinitdelim D\bibinitperiod},
+      }}%
+      {{hash=NG}{%
+         family={Noubir},
+         familyi={N\bibinitperiod},
+         given={Guevara},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \list{organization}{1}{%
+      {ACM}%
+    }
+    \strng{namehash}{VHTDVHTDNG1}
+    \strng{fullhash}{VHTDVHTDNG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{V}
+    \field{sortinithash}{V}
+    \field{booktitle}{Proceedings of the 9th ACM Conference on Security \&
+  Privacy in Wireless and Mobile Networks}
+    \field{pages}{3\bibrangedash 14}
+    \field{title}{Fingerprinting Wi-Fi devices using software defined radios}
+    \field{year}{2016}
+  \endentry
+\enddatalist
+\endinput

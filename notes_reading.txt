@@ -1,0 +1,7 @@
+Martin 2017 - MAC address randomisation in mobile devices and when it fails
+
+Abstract : mar is cycling through hardware addresses to avoid. adoption has been sporadic and varied across manufacturers. wide scale study - break down of techniques by OS, model and manuf. identify flaws in implementation. improper use of mar by sending true mac. extend passive identification by vanhoef to defeat 96%. another method for 100% by low level control frame.
+
+Internet access vs Privacy. Cellphone users have been tracked by state sponsored agencies. Smartphones - two modes of communication - cellular radio - often overlooked one is wifi radio. Every WiFi radio has 48bit link layer MAC address global unique identifier of the device. This is included in every link layer frame. Privacy problem - eavesdropping thirdparty can identify.
+
+
