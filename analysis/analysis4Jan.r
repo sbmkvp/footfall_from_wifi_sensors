@@ -2,7 +2,6 @@ clean_sensor_data <- function(input,output) {
 	library(digest)
 	data <- read.csv(input,header=FALSE,stringsAsFactors=FALSE)
 	names(data) <- c("time","length","signal","duration","vendor","macaddress","sequence","tags","ssid")
-	data$time <- as.POSIXct(data$time,format="%b %d, %Y %H:%M:%OS")
 	data$type <- ifelse(substr(data$macaddress,2,2)%in%c('2','6','e','a'),"local","global")
 	data$mac <- sapply(data$macaddress,digest,algo="sha1")
 	data$oui  <- substr(data$macaddress,1,8)
