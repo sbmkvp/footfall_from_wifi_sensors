@@ -11,7 +11,7 @@ read_file <- function(location) {
 		read.csv(.,stringsAsFactors=FALSE) %>%
 		as_tibble() %>%
 		mutate(id = NULL,
-			   time = as.POSIXct(time)) %>%
+			   time = as.POSIXct(time,format = "%b  %d, %Y %H:%M:%OS")) %>%
 		return
 }
 
