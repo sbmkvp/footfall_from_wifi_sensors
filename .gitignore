@@ -9,3 +9,4 @@ temp/
 *.run,xml
 *-blx.bib
 *.blg
+*.swp
