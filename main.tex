@@ -3,18 +3,48 @@
 
 \title{Enumerating unique mobile devices from a set of Wi-Fi probe requests}
 \author{
-	\authorstyle{Balamurugan Soundararaj\textsuperscript{1}, James Cheshire\textsuperscript{1} and Paul Longley\textsuperscript{1}}
+	\authorstyle{
+		Balamurugan Soundararaj\textsuperscript{1}, 
+		James Cheshire\textsuperscript{1} and 
+		Paul Longley\textsuperscript{1}}
 	\newline\newline
-	\textsuperscript{1}\institution{Department of Geography, University College London, United Kingdom}
+	\textsuperscript{1}\institution{
+		Department of Geography, 
+		University College London, 
+		United Kingdom}
 }
 \date{\today}
 
 \begin{document}
 
 	\maketitle
+
 	\thispagestyle{firstpage}
-	\textbf{Abstract }
-	Wifi has become an ubiquitous technology. The service provision coverage is almost everywhere and almost all devices have wifi capabiliy for internet access and quick location. Probe requests are low level management packets used by devices defined by protocol. At any given location since people have mobile devices on them a host of wifi probe requests are sent. They are either identifiable or obfuscated. But still has patterns in them. We look into a method to convert these bunch of probe requests into a measure of number of people at that location. We start by looking into what is present in a probe request and how it can be used to count people anonymously.
+
+	\textbf{Abstract : }
+	Wifi has become an ubiquitous technology in provision of private and public 
+	internet access to mobile devices such as smartphones,tablets and laptops.
+	In addition to internet these devices use these networks as a way to quick 
+	geo location without waiting for GPS.
+	To produce a list of WiFi networks available, mobile devices constantly 
+	broadcast signals called probe requests.
+	These signals have various information regarding the device and its 
+	capabilities which are identifiable such as MAC addresses, non identifiable 
+	such as signal strength and partly identifiable such as randomised mac 
+	addresses.
+	There is a significant use in uniquely identify the number of mobile devices
+	at a specific location wihout actually affecting the privacy of the mobile
+	devices.
+	Such enumeration can be done by looking at identifiable information after 
+	anonymising them whenever they are available and from the patterns in the 
+	other information when they are not.
+	We collect data on probe requests sent at set of locations in 
+	different times and device a methodology for enumerating number of people
+	at these locations from the data.
+	We compare the enumerated counts with the counts collected manually at
+	these locations to find that we are able to estimate real life with a 
+	confidence of XX\%.
+	
 	\section{Introduction}\label{intro}
 		
 	\section{Previous Work}\label{prev}
