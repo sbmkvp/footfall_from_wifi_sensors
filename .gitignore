@@ -3,3 +3,9 @@ temp/
 .DS_Store
 *.RData
 *.Rhistory
+*.log
+*.aux
+*.bbl
+*.run,xml
+*-blx.bib
+*.blg
