@@ -6,12 +6,12 @@ library(digest)
 library(xts)
 library(magrittr)
 
-read_file <- function(location) {
+read_file <- function(location,s=FALSE) {
 	location %>%
 		read.csv(.,stringsAsFactors=FALSE) %>%
 		as_tibble() %>%
 		mutate(id = NULL,
-			   time = as.POSIXct(time,format = "%b  %d, %Y %H:%M:%OS")) %>%
+			   time = if(s){ as.POSIXct(time,format = "%Y-%m-%d %H:%M:%OS") } else { as.POSIXct(time,format = "%b  %d, %Y %H:%M:%OS")}) %>%
 		return
 }
 

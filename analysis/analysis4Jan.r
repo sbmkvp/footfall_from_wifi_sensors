@@ -16,11 +16,11 @@ clean_sensor_data <- function(input,output) {
 	print(paste("Cleaned file saved at", output))
 }
 
-analyse_data <- function(manual = NULL, sensor = NULL, interval = 5) {
+analyse_data <- function(manual = NULL, sensor = NULL, interval = 5,s=FALSE) {
 	library(tidyverse)
 	source("methods.r")
 	if(!is.null(manual)) {
-		manual <- manual %>% read_file()
+		manual <- manual %>% read_file(s=s)
 		manual %<>% prepare_with(interval, "count", "Manual counts")
 	}
 	if(!is.null(sensor)) {

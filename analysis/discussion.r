@@ -26,13 +26,15 @@ oxst_data_1min <-
 	analyse_data(
 				 manual = "../data/oxst_manual.csv",
 				 sensor = "../data/oxst_sensor.csv",
-				 interval = 1)
+				 interval = 1,
+				 s=TRUE)
 
 oxst_data_5min <-
 	analyse_data(
 				 manual = "../data/oxst_manual.csv",
 				 sensor = "../data/oxst_sensor.csv",
-				 interval = 5)
+				 interval = 5,
+				 s=TRUE)
 
 
 plot_data <- function(data,fields=NULL) {
