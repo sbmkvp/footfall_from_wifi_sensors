@@ -6,7 +6,7 @@ temp/
 *.log
 *.aux
 *.bbl
-*.run,xml
+*.run.xml
 *-blx.bib
 *.blg
 *.swp
