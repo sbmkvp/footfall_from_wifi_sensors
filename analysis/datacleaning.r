@@ -61,11 +61,12 @@ data_01 <-
 # with all true values for editing later 
 # ==============================================================================
 
-if(filter_vendor_table %>% is.null()) { data_02 <- data_01 } else {
+if(filter_vendor_table %>% is.null()) { 
+	data_02 <- data_01
+} else {
 
 	if(!(filter_vendor_table %>% file.exists())) {
-		generate_vendor_file(data_01$vendor, filter_vendor_table)
-	}
+		generate_vendor_file(data_01$vendor, filter_vendor_table)}
 
 	filter_vendor_table <-
 		filter_vendor_table %>%
@@ -88,23 +89,131 @@ if(filter_vendor_table %>% is.null()) { data_02 <- data_01 } else {
 # the device_sign
 # ==============================================================================
 
+subset_global <- data_02 %>% filter(type=="global")
+subset_local  <- data_02 %>% filter(type=="local")
+
+# ------------------------------------------------------------------------------
+# After splitting the data into two parts - global and local mac addresses, we
+# set the mac address as the unique identifier for global macaddresses
+# we also identify and attach top 5 vendors as a variable for plotting later
+# ------------------------------------------------------------------------------
+
+top_vendors <-
+	subset_global %>%
+	group_by(vendor) %>%
+	summarise(count = length(unique(mac))) %>%
+	top_n(5,count) %>% pull(vendor)
+
 subset_global <- 
-	data_02 %>%
-	filter(type=="global") %>%
-	mutate(device_sign = paste0("mac_",mac))
+	subset_global %>%
+	mutate(device_sign = mac) %>%
+	mutate(top_vendor = ifelse(vendor %in% top_vendors, vendor, "Other"))
 
-subset_local <-
-	data_02 %>%
-	filter(type == "local") 
+# ------------------------------------------------------------------------------
+# Here we compress the second part by time to produce tag and ssid sets to see
+# If they are helpful in gettting us any answers.
+# ------------------------------------------------------------------------------
 
-subset_local_time_compressed <-
+subset_local_compressed <-
 	subset_local %>%
 	mutate(time = format(time,"%Y-%m-%d %H:%M:%OS")) %>%
 	group_by(time, mac, oui, vendor, type) %>%
 	summarise(signal = mean(signal),
-			  length = paste(sort(unique(length)),collapse="-"),
-			  tags = paste(sort(unique(tags)),collapse="-"),
-			  ssid = paste(sort(unique(ssid)),collapse="-"),
-			  sequence = paste(sequence,collapse=",")) %>%
+			  length = paste(sort(unique(length)), collapse = "-"),
+			  tags_set = paste(sort(unique(tags)), collapse = "-"),
+			  ssid_set = paste(sort(unique(ssid)), collapse = "-"),
+			  sequence_set = paste(sequence, collapse = ",")) %>%
 	ungroup() %>%
 	mutate(time = as.POSIXct(time, format = "%Y-%m-%d %H:%M:%OS"))
+
+# ------------------------------------------------------------------------------
+# Need to write about how length parameter is more than enough for Google
+# ------------------------------------------------------------------------------
+
+subset_local %>%
+	ggplot() +
+	geom_point(aes(time, sequence, col = as.character(length)),
+			   show.legend = FALSE)
+
+subset_local_compressed_google <-
+	subset_local_compressed %>%
+	filter(vendor == "Google")
+
+subset_local_compressed_google %>%
+	ggplot() +
+	geom_point(aes(mac,tags_set),show.legend = FALSE)+
+	scale_y_discrete(label=abbreviate)
+
+# ------------------------------------------------------------------------------
+# Need to write about how ssid paramter is pretty much useless.
+# ------------------------------------------------------------------------------
+subset_local_compressed %>%
+	filter(vendor == "Unknown") %>%
+	ggplot() +
+	geom_point(aes(time,ssid_set), show.legend = FALSE) +
+	theme(axis.text.y = element_blank())
+
+# subset_local %>%
+# 	filter(vendor != "Google",
+# 		   time < as.POSIXct("20171220 123500",format="%Y%m%d %H%M%S")) %>%
+# 	ggplot() +
+# 	geom_point(aes(time,sequence,col=mac),show.legend=FALSE)
+
+# fuzzy cmeans - no need for number of clusters with distance parameters
+# filter out clusters
+# linear regression 
+
+# ==============================================================================
+# Creating a series of plots of the data for communications
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Methods used to plot data
+# ------------------------------------------------------------------------------
+
+
+
+# ------------------------------------------------------------------------------
+# Plot objects
+# ------------------------------------------------------------------------------
+
+plot_all_time_seq <-
+	data_02 %>%	
+	ggplot() +
+	geom_point(aes(time, sequence, col = mac), show.legend = FALSE)
+
+plot_global_time_seq_all <-
+	subset_global %>%	
+	ggplot() +
+	geom_point(aes(time, sequence, col = mac), show.legend = FALSE) +
+	facet_grid(top_vendor~.)
+
+plot_local_time_seq_all <-
+	subset_local %>%
+	ggplot() +
+	geom_point(aes(time,sequence,col=mac),show.legend=FALSE) +
+	facet_grid(vendor~.)
+
+plot_global_time_seq_zoom <-
+	subset_global %>%
+	filter(time < as.POSIXct("20171220 123500",format="%Y%m%d %H%M%S")) %>%
+	ggplot() +
+	geom_point(aes(time, sequence, col = mac), show.legend = FALSE) +
+	facet_grid(top_vendor~.)
+
+plot_local_time_seq_zoom <-
+	subset_local %>%
+	filter(time < as.POSIXct("20171220 123500",format="%Y%m%d %H%M%S")) %>%
+	ggplot() +
+	geom_point(aes(time,sequence,col=mac),show.legend=FALSE) +
+	facet_grid(vendor~.)
+
+# ------------------------------------------------------------------------------
+# Clean names for plotting on screen
+# ------------------------------------------------------------------------------
+
+plot_all_time_seq
+plot_global_time_seq_all
+plot_local_time_seq_all
+plot_global_time_seq_zoom
+plot_local_time_seq_zoom
