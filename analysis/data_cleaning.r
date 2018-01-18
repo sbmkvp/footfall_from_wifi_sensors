@@ -9,29 +9,32 @@ options(width = as.integer(Sys.getenv("COLUMNS")))
 # Load required libraries and submodules
 # ==============================================================================
 
-library(tidyverse)
-library(classInt)
-library(ggplot2)
-library(igraph)
-library(lubridate)
+library(tidyverse) #for pipes and df oeprations
+library(classInt) #for class intervals
+library(ggplot2) #for plotting data
+library(ggmap) #for plotting data
+library(igraph) #for graph analysis
+library(lubridate) #for date-time operations
 
 # ==============================================================================
 # Global variables
 # ==============================================================================
 
-file <- "../data/final_data.csv"
-filter_signal_value <- NULL
-filter_signal_algorithm <- "kmeans"
-filter_vendor_table <- "../data/final_vendors.csv"
-signature_sequence <- 60 
-signature_time <- 16
-interval <- "1 minute"
+sensor_file <- "../data/final_sensor_data.csv" #File with sensor collected data
+manual_file <- "../data/final_manual_data.csv" #File with manual counting data
+filter_signal_value <- NULL #Fill in if known. Best to leave NULL
+filter_signal_algorithm <- "kmeans" #See classIntervals() for mroe options
+filter_vendor_table <- "../data/final_vendors_data.csv" #Vendor list file
+signature_sequence <- 60 #Threshold on the sequence for device signature
+signature_time <- 16 #Threshold on time axis for device signature
+interval <- "1 minute" #The aggregation interval. See lubridate:: for more info.
 
 # ==============================================================================
-# Read the data file and do basic formatting for legible display
+# Read the data sensor_file and do basic formatting for legible display. Time is
+# changed into an R compatible format.
 # ==============================================================================
 
-data_00 <- file %>%
+data_00 <- sensor_file %>%
 	read.csv(stringsAsFactors = FALSE) %>%
 	as_tibble() %>%
 	select(time, signal, mac, oui, vendor,
@@ -44,6 +47,7 @@ data_00 <- file %>%
 # Filter the data for signal strength greater than the given value. If value has 
 # not been given, then classify the signal column into two using the given
 # alogorithm and use the mid point as value. The algorithm default is 'kmeans'
+# To-Do: Difference between 'kmeans' and other methodology.
 # ==============================================================================
 
 if(filter_signal_value %>% is.null()) {
@@ -52,10 +56,7 @@ if(filter_signal_value %>% is.null()) {
 }
 
 data_01 <- data_00 %>% filter(signal > filter_signal_value)
-
-count_data_01 <- data_01 %>% mutate(time = floor_date(time, interval)) %>%
-	group_by(time) %>% summarise(footfall = length(unique(mac))) %>%
-	mutate(type = "01 Filtered out low signal strength")
+data_00 <- data_00 %>% mutate(sig = signal > filter_signal_value)
 
 # ==============================================================================
 # 02 Non Mobile Vendors
@@ -121,8 +122,14 @@ subset_global <- data_02 %>%
 # Add a device signatures and join them up again.
 # ------------------------------------------------------------------------------
 # We use a graph based clustering algorithm to detect clusters within the data
-# and uniquely name them to be used as device signatures.
-# To:Do - loop through nodes and choose only the shortest edges from a node.
+# and uniquely name them to be used as device signatures. First we make the 
+# vertice ids from the row numbers of the probe requests. we populate a complete
+# grid for all the points vs all other points. We remove the lower traingle so 
+# that the graph is one directional ie always from lower id (which corresponds 
+# to the time) to higher id. We calculate the sequence distance and time 
+# distance between the point pairs and filter based on them as well. Finally we
+# for each node with more than 1 incoming or out going link, We summarise the
+# links to the one with the least distance.
 # ------------------------------------------------------------------------------
 
 add_signature <- function(data, ds, dt) {
@@ -141,7 +148,8 @@ add_signature <- function(data, ds, dt) {
 		mutate(tdistance = sqrt((x.y-x.x)**2)) %>%
 		filter(x.y >= x.x, y.y > y.x, tdistance < dt, sdistance < ds) %>%
 		group_by(from) %>%
-		summarise(to = to[which(tdistance == min(tdistance))][[1]],tdistance=min(tdistance)) %>% 
+		summarise(to = to[which(tdistance == min(tdistance))][[1]],
+				  tdistance = min(tdistance)) %>% 
 		group_by(to) %>%
 		summarise(from = from[which(tdistance == min(tdistance))][[1]])
 	graph <- graph_from_data_frame(edges, vertices = vertices)
@@ -149,6 +157,12 @@ add_signature <- function(data, ds, dt) {
 	data
 }
 
+# ------------------------------------------------------------------------------
+# We apply the function over each vendor in public range iteratively and join
+# them together. Finally we bind both global and local probes together as they
+# have a unique id to be worked with.
+# To-do: split the table based on length as well for better clustering.
+# ------------------------------------------------------------------------------
 subset_local  <- data_02 %>%
 	filter(type == "local") %>%
 	split(f = {.$vendor}) %>%
@@ -176,6 +190,18 @@ data_04 <- data_03 %>%
 # Here we count the unique devices at each stage based on the time and unique id
 # that was present at that stage.
 # ==============================================================================
+count_data_00 <- data_00 %>%
+	mutate(time = floor_date(time, interval)) %>%
+	group_by(mac) %>%
+	summarise(time = min(time)) %>% 
+	mutate(time = floor_date(time, interval)) %>%
+	group_by(time) %>% summarise(footfall = length(unique(mac))) %>%
+	mutate(type = "00 No filtering")
+
+count_data_01 <- data_01 %>% mutate(time = floor_date(time, interval)) %>%
+	group_by(time) %>% summarise(footfall = length(unique(mac))) %>%
+	mutate(type = "01 Filtered out low signal strength")
+
 count_data_02 <- data_02 %>% mutate(time = floor_date(time, interval)) %>%
 	group_by(time) %>% summarise(footfall = length(unique(mac))) %>%
 	mutate(type = "02 Filter out non-mobile vendors")
@@ -199,44 +225,14 @@ count_all <- bind_rows(count_data_01, count_data_02,
 					   count_data_03, count_data_04, count_data_05)
 
 # ==============================================================================
-# Creating a series of plots of the data for communications
-# ==============================================================================
-
-# ------------------------------------------------------------------------------
-# Methods used to plot data
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# Plot objects
-# ------------------------------------------------------------------------------
-
-pp <- ggplot(count_all)+
-	geom_line(aes(time,footfall,col=type))+
-	theme(legend.position="bottom")
-
-p1 <- subset_local %>%
-	ggplot() + 
-	geom_point(aes(time,sequence,col=mac),size=1,show.legend=FALSE) +
-	theme(legend.position="bottom")
-p2 <- subset_local %>%
-	ggplot() + 
-	geom_line(aes(time,sequence,group=device_sign),
-			  size=1,show.legend=FALSE) +
-	theme(legend.position="bottom")
-
-
-# ------------------------------------------------------------------------------
-# Clean names for plotting on screen
-# ------------------------------------------------------------------------------
-
-# ==============================================================================
 # Cleaning up stuff
 # ==============================================================================
 
-rm(file,
+rm(sensor_file,
    filter_signal_value,
    filter_signal_algorithm,
    filter_vendor_table,
-   signature_distance,
+   signature_sequence,
+   signature_time,
    generate_vendor_file,
    add_signature)
