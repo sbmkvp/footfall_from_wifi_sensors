@@ -134,6 +134,27 @@
 	We assign the hashed MAC address the unique identifier for the rest of
 	the 45\% and investigate the anonymised probe requests further.
 	
+	We then use the fields - OUI, lengths and sequence number,
+	to tackle the noise from devices which anonymising the probe requests.
+	OUI and length are used to split the dataset into
+	groups probe requests from similar
+	devices and each subset is classified further
+	based on a graph based clustering algorithm 
+	where each cluster correspond to an unique device.
+	The algorithm works by creating a graph where the nodes are the
+	probe requests and the links are created between them based on the following
+	rules,
+	A link can go only forward in time.
+	A link can exist between nodes with a 
+		maximum time difference of t (time threshold)
+	A link can go from low to high sequence numbers.
+	A link can exist between nodes with a
+		maximum sequence number difference of s (sequence threshold)
+	A node can have only one incoming link and outgoing link
+		which is the shortest of all possible such links.
+	The nodes are then classified based on the unique connected component they
+	belong to.
+
 	Then we turn our attention to other fields which can provide us information
 	on the device which generated the probe request and hence enabling us to 
 	finger print them uniquely.
