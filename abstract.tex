@@ -5,7 +5,7 @@
 \documentclass[11t, a4paper, twocolumn]{article} 
 \input{structure.tex}
 
-\title{Estimating real-time highstreet footfall from the Wi-Fi probe requests}
+\title{Estimating real-time high street footfall from Wi-Fi probe requests}
 \author{
 	\authorstyle{
 		Balamurugan Soundararaj\textsuperscript{1}, 
@@ -25,82 +25,115 @@
 
 \begin{document}
 
-	% ---------------------------------------------------------------------------
-	% We talk about wifi and probe requests. Possibility of 
-	% counting people without revealing identity. There is uncertainity. We look
-	% at resolving these. We have a setup to collect data from sensor and manual
-	% We propose methodology to clean sensor count. compare with manual to see
-	% it corresponds properly.
-	% ---------------------------------------------------------------------------
-
 	\maketitle
 	\thispagestyle{firstpage}
 
-	\textbf{Abstract}
+	\section{Abstract}
 
-	Wi-Fi has become an ubiquitous technology used in provinding internet access in
-	public and private spaces to people's mobile devices such as smartphones, 
-	tablets and laptops. This has resulted in a situation
-	where any point in a dense urban built environment 
-	has multiple Wi-Fi networks available. Modern mobile devices anticipate and 
-	remember these networks and to be able to switch seamlessly between them,
-	broadcast a special type of management packets known as probe requests.
-	This is a low level signal (probe request) specified in IEEE 802.11b/g specification
-	which relays information about the source mobile device to
-	any Access Points (AP) listening around them.
-	This is the first step in establishing a connection between these devices and
-	is universal to any device which has a Wi-Fi radio to communicate.
-	This makes these probe requests a continuous, passive and wireless source of
-	data available at any urban location which can be a clue in
-	understanding the number of people present in that area in real-time (\citep{freud2015},\citep{konto2017}).
+	In the past decade Wi-Fi has emerged as the most
+	commonly used technology in providing 
+	internet access to mobile devices such as smartphones, tablets
+	and laptops in public and private spaces.
+	This has resulted in multiple Wi-Fi networks being available at
+	almost every location in an urban environment.
+	Traversing through this overlapping mesh of Wi-Fi networks,
+	modern mobile devices with Wi-Fi antennae regularly
+	broadcast special type of signals known as probe requests to
+	discover available Wi-Fi networks and switch seamlessly
+	between them.
+	This is a hardware level signal which was standardised by IEEE 802.11b/g
+	specification relays information about the source mobile device to
+	any Access Points (AP) available around it.
+	Since this is the first step in establishing
+	a connection between any two devices, it is
+	is universal to any device which uses a Wi-Fi radio to communicate.
+	This makes these probe requests
+	an open, passive, continuous, and wireless source of
+	data available at any urban location which can provide us with clues in
+	understanding the number of people present in the immediate surroundings
+	in real-time with high granularity \citep{freud2015,konto2017}.
 	In this paper, from a set of probe requests collected
-	at a highstreet location in London, along with manually collected data, we demonstrate
-	that pedestrian footfall can be estimated with reasonable accuracy without
-	infringing on the privacy of the mobile users.
+	at a high street location in London,
+	along with manually counted data, we demonstrate
+	that pedestrian footfall can be estimated with considerable accuracy without
+	infringing on the privacy of the mobile users involved.
 
 	\begin{figure*}
 		\begin{center}
-	  \includegraphics[width=0.8\textwidth]{outputs/clustering_1.png}
-	  \caption{Clustering probe requests based on increasing sequence numbers generated over time.}
+			\includegraphics[width=0.8\textwidth]{outputs/clustering_1.png}
+			\caption{Clustering probe requests based on increasing sequence
+			numbers present in them.}
 		\end{center}
 	\end{figure*}
 
 	There have been numerous attempts at using Wi-Fi
 	to measure the volume and movement of people in built environment for various
-	applications (\citep{zarim2006},\citep{sap2015},\citep{reki2007}).
-	Though favorable results have been observed, one of the major 
-	challanges been the changes in the MAC address randomisation process which 
-	aims to protect the users' privacy by anonymising the only globally identifiable
-	portion of the probe requests \citep{green2008}. There have been various 
-	successful research in breaking this
+	applications \citep{zarim2006,sap2015,reki2007}.
+	Though most research observe feasible and favorable results,
+	in recent years, one of the major challenges faced in such attempts
+	has been the MAC address randomisation process.
+	This process aims to protect the users' privacy by anonymising
+	the only globally identifiable portion of the probe requests
+	resulting in a set of probe requests generated by the same device
+	with different random MAC addresses \citep{green2008}.
+	There have been various successful research in breaking this
 	randomisation process to extract real MAC addresses \citep{martin2017}
-	but this usually results in serious infringement on the user's
-	privacy. There is a clear gap in the research for
-	exploring methodologies with which we can estimate the
-	number of unique mobile devices at a location without the need to fingerprint
-	them using their MAC address which we try to address in this paper.
+	but this usually results in serious risk in infringement of
+	privacy of the users of the mobile devices.
+	There is a clear gap in the research for exploring methodologies
+	which enables us to estimate the number of unique mobile
+	devices from a set of anonymised probe requests
+	without the need to reveal their original MAC addresses.
 
-	The pilot survey was conducted on Oxford st. in London on 20 December 2017 from 12:30 to
-	13:00. The data was collected parallely through two methods - Wi-Fi sensor and Android app.
-	The Wi-Fi sensor collected all the probe requests broadcated around the area
-	and recorded the timestamp at which they were colleted, MAC address of the source
-	device anonymised using a hashing algorithm, organisationally unique identifier (OUI) of the
-	vendor who manufactured the device, total length of the singal in bits, signal
-	strength reported by the device in dBm, duration for which the signal was tranmmitted, 
-	the service set identifier (SSID) to which the probe request has been sent to and the
-	length of the extra tags in the packets. The android app recorded the timestamp
-	of every touch on the screen by the surveyor which corresponds to a pedestrian 
-	crossing a cordon on the sidewalk. 
+	A pilot survey was conducted at Oxford street in London
+	on 20 December 2017 from 12:30 to 13:00 where two sets of data
+	were collected on pedestrian footfall through Wi-Fi sensing
+	and manual counting in parallel.
+	The Wi-Fi sensor collected all the probe requests that were 
+	broadcast around the area and recorded
+	the time-stamp at which they were collected,
+	MAC address of the source mobile device
+	(anonymised using a hashing algorithm),
+	organisationally unique identifier (OUI) of the manufacturer of the device,
+	total length of the signal in bits,
+	the strength of the signal reported by the mobile device in dBm,
+	the sequence number of the signal,
+	duration for which the signal was transmitted, 
+	the service set identifier (SSID) of the access point targeted
+	by the probe request and 
+	the length of the extra information (tags) embedded in the packets.
+	The manual count was done by an android application on a mobile phone
+	which records the time-stamp every time the surveyor touches the screen
+	which corresponds to one pedestrian footfall on the sidewalk.
 
-	Approximately 60,000 probe requests were collected out of which   \% had
-	randomised MAC addresses thus effectively anonymised.
-	When we include these anonymised probe requests and count the number of unique
-	devices present in dataset, we find that the difference between manual counting and sensor based counting
-	is 425\% on average thus showing the need for using a different fingerprint other than MAC address for the
-	anonymised probe requests. We first filter the data by removing all the probe requests reporting
-	low signal strength. This classification is done using a kmeans - class interval algorithm.
-	This reduces the difference from the manual count to 30\%.
+	Being one of the busiest location in the United Kingdom, the location
+	generated approximately 60,000 probe requests in the 30 minutes
+	interval through the Wi-Fi sensor and 3,722 people were counted manually.
+	When we aggregate the probe requests by their MAC address for every minute,
+	the difference between the sensor counts and the manual counts
+	is observed to be on average 425\%. 
+	This shows that there is a large amount of noise
+	in the data which might include signals from devices outside the area where
+	the manual count was conducted and the anonymised probe requests from the
+	same devices with different MAC addresses.
+	Before we go look at the data
+	in detail, an initial analysis shows that the fields - SSID and tags are
+	very sparse and doesn't provide much information for our cleaning process 
+	and the duration field is closely related to the length of the 
+	probe request and provides no new information.
+	So we remove these fields from further analysis.
 
+	We remove the noise from devices outside the area of interest 
+	by removing all the probe requests which report a "low" signal strength.
+	This classification of "high" vs "low" is done through "k-means"
+	classification algorithm.
+	The cutoff point for the collected data is -71dBm.
+	This process of filtering is highly effective and reduces the difference
+	between the sensor counts and manual counts to 30\%. We observe that
+	around 55\% of all probe requests collected are anonymised.
+	We assign the hashed MAC address the unique identifier for the rest of
+	the 45\% and investigate the anonymised probe requests further.
+	
 	Then we turn our attention to other fields which can provide us information
 	on the device which generated the probe request and hence enabling us to 
 	finger print them uniquely.
