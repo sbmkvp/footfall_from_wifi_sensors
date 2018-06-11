@@ -20,7 +20,7 @@
 	\maketitle
 	\thispagestyle{firstpage}
 
-	\textbf{Abstract : }
+	% \textbf{Abstract : }
 
 	\section{Introduction}\label{intro}
 
@@ -33,7 +33,15 @@
 		This makes these probe requests an open, passive, continuous, and wireless source of data available at any urban location.
 		Moreover, the data can provide us with clues to understand the number of people present in the immediate surrounding in real-time and with high granularity \citep{freud2015,konto2017}.
 		In this paper, using a set of probe requests collected at high street locations in London along with manually counted data, we demonstrate that pedestrian footfall can be estimated with considerable accuracy without infringing on the privacy of the mobile users involved.
-		
+	
+	\begin{figure*}
+		\begin{center}
+			\includegraphics [width=\textwidth,trim=4 4 4 4,clip] {outputs/clustering_2.png}
+			\caption{Clustering probe requests based on increasing sequence numbers present in them.}
+			\label{clustering_pilot}
+		\end{center}
+	\end{figure*}
+
 	\section{Previous Work}\label{prev}
 		There have been numerous attempts at using Wi-Fi to measure the volume and movement of people in the built environment for various applications \citep{zarim2006,sap2015,reki2007}.
 		Though most research obtains feasible and favorable results, in recent years, one of the major challenges faced in such attempts has been the MAC address randomisation process.
@@ -41,26 +49,16 @@
 		There have been various successful attempts by researchers to breaking this randomisation process in order to extract real MAC addresses, \citep{martin2017} but this usually results in serious risk of infringement of the privacy of the users of the mobile devices.
 		There is a clear gap in the research for exploring methodologies which enable us to estimate the number of unique mobile devices from a set of anonymised probe requests, without the need to reveal their original MAC addresses.
 
-	\section{Pilot Study}\label{data}
-		A pilot survey was conducted on Oxford Street in London in December 2017, where two sets of data were collected on pedestrian footfall.
-		These datasets were collected through Wi-Fi sensing and manual counting in parallel.
+	\section{Methodology}
+		A probe request consists of various information including, MAC address, device capabilities, sequence number, known hotspots etc. Out of this we are interested in things which can identify a unique mobile device. We collect the WiFi probe requests using the WireShark on hardware such as laptop for the pilot study and raspberry pi based custom sensor. j
 		The Wi-Fi sensor collected all the probe requests which were broadcast around the area, and recorded the following data: the time-stamp at which they were collected, the MAC address of the source mobile device (anonymised using a hashing algorithm), the organisationally unique identifier (OUI) of the manufacturer of the device, the total length of the signal in bits, the strength of the signal reported by the mobile device in dBm, the sequence number of the signal, the duration for which the signal was transmitted, the service set identifier (SSID) of the access point targeted by the probe request, and the length of the extra information (tags) embedded in the packets.
 		The manual count was undertaken using an Android application on a mobile phone: the researcher touched the phone’s screen every time an individual pedestrian footfall was counted, and this was recorded as a time-stamp. 
-
-		Being located at one of the busiest retail locations in the United Kingdom, the WiFi sensor captured approximately 60,000 probe requests over a 30 minutes interval, and 3,722 people were counted manually.
-		When we aggregated the probe requests by their MAC address for every minute, the difference between the sensor counts and the manual counts was observed to be on average 425\%.
-		This suggested that there was a large amount of noise in the data which might have included signals from devices outside the area where themanual count was conducted, as well as anonymised probe requests from the same devices but with different MAC addresses.
-		An initial analysis revealed that the fields - SSID and tags - were very sparse and did not provide much information for our cleaning process.
+			An initial analysis revealed that the fields - SSID and tags - were very sparse and did not provide much information for our cleaning process.
 		In addition, the duration field was closely related to the length of the probe request and provides no new information.
 		Therefore, we removed these fields from further analysis.
-
 		We eliminated the noise from devices outside the area of interest by removing all the probe requests which reported a "low" signal strength.
 		This classification of "high" vs "low" was performed using a k-means classification algorithm.
 		The cut-off point for the collected data was -71 dBm.
-		This process of filtering was highly effective and reduced the difference between the sensor counts and manual counts to 30\%.
-		We observed that around 55\% of all probe requests collected were anonymised.
-		We assigned the hashed MAC address the unique identifier for the remaining 45\% and investigated the anonymised probe requests further.
-
 		We then used the fields - OUI, lengths and sequence number - to tackle the noise from devices which anonymised the probe requests.
 		OUI and length were used to split the dataset into groups of probe requests from similar devices, and each subset was classified further using a graph based clustering algorithm where each cluster corresponded to a unique device.
 		The algorithm created a graph where the probe requests represented the nodes, and links are created between them based on the following rules: 
@@ -75,9 +73,33 @@
 
 		The nodes were then classified based on the unique connected component they belonged to.
 		This classification was assigned as the unique identifier for the anonymised probe requests.
-		Figure \ref{fig} shows the clustering process: the black dots show the probe requests and the red lines connect them into clusters representing those which were generated by the same device.
-		We finally combined both normal and anonymised probe requests, aggregated them based on their unique identifier, and removed repeating probe requests which reduced the difference between the sensor counts and the manual counts to -18\%.
 
+	\section{Pilot Study}\label{data}
+		A pilot survey was conducted on Oxford Street in London in December 2017, where two sets of data were collected on pedestrian footfall with the aim of establishing merit in measuring pedestrian footfall as a function of the number of wifi probe requests collected at a given location.
+		These datasets were collected through Wi-Fi sensing and manual counting in parallel.
+		Being located at one of the busiest retail locations in the United Kingdom, the WiFi sensor captured approximately 60,000 probe requests over a 30 minutes interval, and 3,722 people were counted manually.
+		
+		When we aggregated the probe requests by their MAC address for every minute, the difference between the sensor counts and the manual counts was observed to be on average 425\%.
+		This suggested that there was a large amount of noise in the data which might have included signals from devices outside the area where themanual count was conducted, as well as anonymised probe requests from the same devices but with different MAC addresses.
+		This process of filtering was highly effective and reduced the difference between the sensor counts and manual counts to 30\%.
+		We observed that around 55\% of all probe requests collected were anonymised.
+		We assigned the hashed MAC address the unique identifier for the remaining 45\% and investigated the anonymised probe requests further.
+	
+		Figure \ref{clustering_pilot} shows the clustering process: the black dots show the probe requests and the red lines connect them into clusters representing those which were generated by the same device.
+		We finally combined both normal and anonymised probe requests, aggregated them based on their unique identifier, and removed repeating probe requests which reduced the difference between the sensor counts and the manual counts to -18\%.
+	
+		\begin{figure}
+			\begin{center}
+				\includegraphics [width=0.45\textwidth] {outputs/pilot_counts_comparision.png}
+				\caption{Comparision of counts after filtering with manual counts}
+				\label{comparision_pilot}
+			\end{center}
+		\end{figure}
+
+	\section{Main Study}
+		The k
+
+	\section{Conclusion}
 		It is important to note that the filtering process was done based soley on the information present in the probe requests and their temporal distribution.
 		This ensured that although the mobile devices were uniquely identified, there was no further personal data generated by linking the probe requests to the users of the mobile devices.
 		This method essentially gave us a way to estimate the footfall in real-time without identifying or tracking the mobile devices themselves.
