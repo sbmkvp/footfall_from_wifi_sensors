@@ -1,7 +1,8 @@
 \documentclass[11t, a4paper, twocolumn]{article} 
 \input{structure.tex}
+\addbibresource{references.bib}
 
-\title{Estimating real-time highstreet  footfall from Wi-Fi probe requests}
+\title{Estimating real-time highstreet footfall from Wi-Fi probe requests}
 \author{
 	\authorstyle{
 		Balamurugan Soundararaj\textsuperscript{1}, 
@@ -20,7 +21,7 @@
 	\maketitle
 	\thispagestyle{firstpage}
 	
-	\textbf{Abstract } \lipsum[1]
+	\textbf{Abstract -} \lipsum[1]
 
 	\section{Introduction}\label{intro}
 
@@ -38,7 +39,7 @@
 		A probe request consists of various information including, MAC address, device capabilities, sequence number, known hotspots etc. Out of this we are interested in things which can identify a unique mobile device. We collect the WiFi probe requests using the WireShark on hardware such as laptop for the pilot study and raspberry pi based custom sensor. The Wi-Fi sensor collected all the probe requests which were broadcast around the area, and recorded the following data: the time-stamp at which they were collected, the MAC address of the source mobile device (anonymised using a hashing algorithm), the organisationally unique identifier (OUI) of the manufacturer of the device, the total length of the signal in bits, the strength of the signal reported by the mobile device in dBm, the sequence number of the signal, the duration for which the signal was transmitted, the service set identifier (SSID) of the access point targeted by the probe request, and the length of the extra information (tags) embedded in the packets.
 		\begin{figure}
 			\begin{center}
-				\includegraphics [width=\linewidth,trim=4 4 4 4,clip] {outputs/clustering_2.png}
+				\includegraphics [width=\linewidth,trim=4 4 4 4,clip] {images/methodology_clustering.png}
 				\caption{Clustering probe requests based on increasing sequence numbers present in them.}
 				\label{clustering_pilot}
 			\end{center}
@@ -83,7 +84,7 @@
 	
 		\begin{figure}
 			\begin{center}
-				\includegraphics [width=\linewidth] {outputs/pilot_counts_comparision.png}
+				\includegraphics [width=\linewidth] {images/pilot_counts_comparision.png}
 				\caption{Comparision of counts after filtering with manual counts}
 				\label{comparision_pilot}
 			\end{center}

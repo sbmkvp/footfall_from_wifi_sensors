@@ -2,7 +2,8 @@ screen -dm -S paper -t vim
 sleep 1
 screen -S paper -X screen -t pdf
 screen -S paper -X screen -t refresh
-screen -S paper -p pdf -X stuff "mupdf main.pdf\n"
-screen -S paper -p refresh -X stuff 'find . -regex ".*\.\(cls\|tex\)" | entr /bin/sh -c "pdflatex main.tex && bibtex main && pdflatex main.tex && pkill -HUP mupdf"\n'
+screen -S paper -p pdf -X stuff "mupdf paper/paper.pdf\n"
+screen -S paper -p refresh -X stuff 'cd paper\n'
+screen -S paper -p refresh -X stuff 'find . -regex ".*\.\(cls\|tex\)" | entr /bin/sh -c "pdflatex paper.tex && bibtex paper && pdflatex paper.tex && pkill -HUP mupdf"\n'
 screen -S paper -p vim -X stuff "vim $1\n"
 screen -R paper -p vim
