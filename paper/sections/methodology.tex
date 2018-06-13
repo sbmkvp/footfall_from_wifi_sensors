@@ -21,8 +21,10 @@ Therefore, we removed these fields from further analysis.
 We eliminated the noise from devices outside the area of interest by removing all the probe requests which reported a "low" signal strength.
 This classification of "high" vs "low" was performed using a k-means classification algorithm.
 The cut-off point for the collected data was -71 dBm.
-
-\subsection{Device Fingerprinting}
+\subsection{Removing uncertainties}
+\subsubsection{Signal Strength}
+\lipsum[1-3]
+\subsubsection{Device Fingerprinting}
 We then used the fields - OUI, lengths and sequence number - to tackle the noise from devices which anonymised the probe requests.
 OUI and length were used to split the dataset into groups of probe requests from similar devices, and each subset was classified further using a graph based clustering algorithm where each cluster corresponded to a unique device.
 The algorithm created a graph where the probe requests represented the nodes, and links are created between them based on the following rules: 
@@ -35,3 +37,5 @@ The algorithm created a graph where the probe requests represented the nodes, an
 	\end{enumerate}
 The nodes were then classified based on the unique connected component they belonged to.
 This classification was assigned as the unique identifier for the anonymised probe requests.
+\subsubsection{Calibration}
+\lipsum[1-2]
