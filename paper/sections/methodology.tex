@@ -1,17 +1,31 @@
-\lipsum[1]
+The overall methodology is to use a WiFi antenna to collect probe requests,
+assign a unique identification based on the device that created the request,
+aggregate them based on the unique identification for a specific time interval
+to create an estimate of number of people at the location.
+In this section we look at the characteristics of probe requests in detail,
+outline the methodology used to collect these probe requests, 
+look at the uncertainities and biases in the process and 
+device methods to overcome these issues.
 
 \subsection{Probe Requests}
-A probe request consists of various information including, MAC address, device capabilities, sequence number, known hotspots etc.
-Out of this we are interested in things which can identify a unique mobile device.
-We collect the WiFi probe requests using the WireShark on hardware such as laptop for the pilot study and raspberry pi based custom sensor.
-The Wi-Fi sensor collected all the probe requests which were broadcast around the area, and recorded the following data: the time-stamp at which they were collected, the MAC address of the source mobile device (anonymised using a hashing algorithm), the organisationally unique identifier (OUI) of the manufacturer of the device, the total length of the signal in bits, the strength of the signal reported by the mobile device in dBm, the sequence number of the signal, the duration for which the signal was transmitted, the service set identifier (SSID) of the access point targeted by the probe request, and the length of the extra information (tags) embedded in the packets.
-	\begin{figure}
-		\begin{center}
-			\includegraphics [width=\linewidth,trim=4 4 4 4,clip] {images/methodology_clustering.png}
-			\caption{Clustering probe requests based on increasing sequence numbers present in them.}
-			\label{clustering_pilot}
-		\end{center}
-	\end{figure}
+Probe request is a low level packet sent by a mobile device as a means of
+"scanning" for various access points available at a specific location.
+This packet consists information about the mobile device including but not 
+limited to,
+Media Access Control address - A two part 12 bit identifier where the first part
+identifies the manufacturer of the device and the second part identifies the
+device itself. This MAC address is of two types, global - the real identifier
+of the device which doesnt change and local - virtual, random addresses used
+for temporary situations.
+Sequence number of the packet to keep track of the replies.
+The access points for which the packet is being sent to.
+Capabilities of the device.
+We can also infer other things about the packet such as
+time at which the packet has been received,
+total length of the packet
+time it took to transmit the packet
+Signal strength of the packet.
+All of this can help us identifying the packets and label them when they are transmitted by the same device.
 
 \subsection{Data Collection}
 The manual count was undertaken using an Android application on a mobile phone: the researcher touched the phone’s screen every time an individual pedestrian footfall was counted, and this was recorded as a time-stamp.
@@ -37,5 +51,12 @@ The algorithm created a graph where the probe requests represented the nodes, an
 	\end{enumerate}
 The nodes were then classified based on the unique connected component they belonged to.
 This classification was assigned as the unique identifier for the anonymised probe requests.
+
+\begin{figure} \begin{center}
+	\includegraphics [width=\linewidth,trim=4 4 4 4,clip] {images/methodology_clustering.png}
+	\caption{Clustering probe requests based on increasing sequence numbers present in them.}
+	\label{clustering_pilot}
+\end{center} \end{figure}
+
 \subsubsection{Calibration}
 \lipsum[1-2]
