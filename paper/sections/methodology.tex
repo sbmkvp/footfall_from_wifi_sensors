@@ -1,41 +1,110 @@
-\lipsum[1]
+The overall methodology is to use a WiFi antenna to collect probe requests,
+assign a unique identification based on the device that created the request,
+aggregate them based on the unique identification for a specific time interval
+to create an estimate of number of people at the location.
+In this section we look at the characteristics of probe requests in detail,
+outline the methodology used to collect these probe requests, 
+look at the uncertainities and biases in the process and 
+device methods to overcome these issues.
 
 \subsection{Probe Requests}
-A probe request consists of various information including, MAC address, device capabilities, sequence number, known hotspots etc.
-Out of this we are interested in things which can identify a unique mobile device.
-We collect the WiFi probe requests using the WireShark on hardware such as laptop for the pilot study and raspberry pi based custom sensor.
-The Wi-Fi sensor collected all the probe requests which were broadcast around the area, and recorded the following data: the time-stamp at which they were collected, the MAC address of the source mobile device (anonymised using a hashing algorithm), the organisationally unique identifier (OUI) of the manufacturer of the device, the total length of the signal in bits, the strength of the signal reported by the mobile device in dBm, the sequence number of the signal, the duration for which the signal was transmitted, the service set identifier (SSID) of the access point targeted by the probe request, and the length of the extra information (tags) embedded in the packets.
-	\begin{figure}
-		\begin{center}
-			\includegraphics [width=\linewidth,trim=4 4 4 4,clip] {images/methodology_clustering.png}
-			\caption{Clustering probe requests based on increasing sequence numbers present in them.}
-			\label{clustering_pilot}
-		\end{center}
-	\end{figure}
+Probe request is a low level packet sent by a mobile device as a means of
+"scanning" for various access points available at a specific location.
+This packet consists information about the mobile device
+including but not limited to,
+Media Access Control address - A two part 12 bit identifier where the first part
+identifies the manufacturer of the device and the second part identifies the
+device itself. This MAC address is of two types, global - the real identifier
+of the device which doesnt change and local - virtual, random addresses used
+for temporary situations.
+Sequence number of the packet to keep track of the replies.
+The access points for which the packet is being sent to.
+Capabilities of the device.
+We can also infer other things about the packet such as
+time at which the packet has been received,
+total length of the packet
+time it took to transmit the packet
+Signal strength of the packet.
+All of this can help us identifying the packets and label them when they are transmitted by the same device.
 
 \subsection{Data Collection}
-The manual count was undertaken using an Android application on a mobile phone: the researcher touched the phone’s screen every time an individual pedestrian footfall was counted, and this was recorded as a time-stamp.
-An initial analysis revealed that the fields - SSID and tags - were very sparse and did not provide much information for our cleaning process.
-In addition, the duration field was closely related to the length of the probe request and provides no new information.
-Therefore, we removed these fields from further analysis.
-We eliminated the noise from devices outside the area of interest by removing all the probe requests which reported a "low" signal strength.
-This classification of "high" vs "low" was performed using a k-means classification algorithm.
-The cut-off point for the collected data was -71 dBm.
-\subsection{Removing uncertainties}
-\subsubsection{Signal Strength}
-\lipsum[1-3]
-\subsubsection{Device Fingerprinting}
-We then used the fields - OUI, lengths and sequence number - to tackle the noise from devices which anonymised the probe requests.
-OUI and length were used to split the dataset into groups of probe requests from similar devices, and each subset was classified further using a graph based clustering algorithm where each cluster corresponded to a unique device.
-The algorithm created a graph where the probe requests represented the nodes, and links are created between them based on the following rules: 
-	\begin{enumerate}
-		\item A link could go only forward in time. 
-		\item A link could exist between nodes with a maximum time difference of $\alpha$ (time threshold).
-		\item A link could go from low to high sequence numbers.
-		\item A link could exist between nodes with a maximum sequence number difference of $\beta$ (sequence threshold).
-		\item A node could have only one incoming link and one outgoing link, which is the shortest of all such possible links.
-	\end{enumerate}
+The data collection involved two processes - 
+A sensor based collection of probe requests and
+a manual count of pedestrians in the area next to the sensor.
+We have detailed the sensor design below,
+
+The sensor consists of wireless transponder in a linux/ MacOSX based machine
+which is put into a monitor mode and
+wireshark software (tshark) is used to sniff, filter and
+save the relevant packets.
+The filters applied are management frame > probe requests > broadcast. 
+This is then parsed, personal information is hashed, 
+compressed and sent to a server via web socket protocol.
+The server receives, logs and stores the data in a postgresql database,
+for further analysis.
+The manual count was undertaken using an Android application
+on a mobile phone where timestamp of every individual pedestrian footfall
+was recorded by touch screen. A schematic is shown in ref figure.
+
+\subsection{Estimating Footfall}
+The next step after collecting the probe request is to estimate the footfall or pedestrian activity from them. There are three major challanges in the above data collection methodology.
+the first one is deliniating the area of interest.
+WiFi and its range depends on lots of factors.
+need a way to isolate the noise from the relevant data. depends a lot on microsite so we need a methodology which provides us with a general solution without much tinkering.
+Second one is the mac randomisation.
+modern phones randomise their MAC addresses to avoid detection and tracking.
+This leads to overcounting and explosion of randomised (local) mac addresses.
+We need a non MAC dependent method to overcome this.
+Finally, inherent mobile phone carrying bias. we need to account for the average mobile ownership. which is steadily increasing and is not 1:1.
+
+\subsubsection{WiFi range}
+One of the clues of the distance of the device generating the probe request is
+the strength of the signal recieved from it.
+The Signal strength varies in inverse square law over distance with a 
+propagation constant.
+It also depends on lot of micro site, micro temporal factors.
+There cannot be a simple rule to fit and filter for all configuration.
+Our hypothesis is that in a specific setting and specific source of noise,
+there must exist a clear break in the data.
+for example, if there is a phone shop next to our sensor where
+hundreds of phones regularly send lots of probe requests
+we should be able to see a large increase in number of probe requests around
+a specific signal strength.
+we can identify this sharp change/ break using class interval algorithms such as
+k-means, jenks, quantile, etc.
+
+\subsubsection{MAC randomisation}
+This is a recent problem. ref in figure. how mac randomisation has caused problem
+MAC address has been our unique identifier. Now we need to look for others.
+the contenders are length, duration which seem to be unique for device
+sets of known wlans and capabilites which can give us unique finger print and 
+finally sequence numbers in the packets.
+This is a tricky one since it is neither unique nor aggregatable.
+we need a method to seperate sequences shown in fig.
+We propose a graph based clustering algorithm where
+each cluster corresponded to a unique device.
+The algorithm creates a graph where the probe requests represented the nodes, 
+and links are created between them based on the following rules: 
+\begin{enumerate}
+	\item A link could go only forward in time. 
+	\item A link could exist between nodes with a maximum
+		time difference of $\alpha$ (time threshold).
+	\item A link could go from low to high sequence numbers.
+	\item A link could exist between nodes with a maximum sequence
+		number difference of $\beta$ (sequence threshold).
+	\item A node could have only one incoming link and
+		one outgoing link, which is the
+		shortest of all such possible links.
+\end{enumerate}
 The nodes were then classified based on the unique connected component they belonged to.
-This classification was assigned as the unique identifier for the anonymised probe requests.
-\subsubsection{Calibration}
-\lipsum[1-2]
+This classification was assigned as the unique identifier for the anonymised probe requests
+this unique identifier is used instead of MAC to aggregation.
+
+\subsubsection{Mobile phone ownership}
+This is both a long term change and result of demographic factors.
+Phone ownership is not 1:1. It changes slowly overtime. It also changes
+with place to place. It can be more in dense urban centers
+and can be low in rural areas. We propose a adjustment factor methodology
+we use periodically carried out manual counts to adjust the numbers
+to what is reported on ground. The adjustment is as strong as the amount of
+ground truth we collected.
