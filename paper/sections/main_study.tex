@@ -3,11 +3,11 @@ test the validity of the signal strength algorithm in different
 micro site conditions.
 Test that the sequence number algorithm works in real world
 for different locations and different times.
+check if the thresholds are consistent.
 Test if the calibration works over intervals
 Finally conclude if we can estimate footfall confidently
 with just probe requests.
 
-\subsection{locations}
 five locations were selected across central london which
 had different types of configurations and specific problems
 configuratons are shown in fig. map is shown in figure.
@@ -18,7 +18,7 @@ configuratons are shown in fig. map is shown in figure.
 	\item Restaurant Russell Square - seating on one side and side walk on other
 	\item Shop Charring Cross - sidewalk on one side and phone shop next door
 \end{enumerate}
-installations were carried out over the time period from xxxx to xxxx.
+Installations were carried out over the time period from xxxx to xxxx.
 the data collection happened from xxxx to xxxx. Manual counting was carried out
 with high precision on dates xxxx and aggregated five minutes on xxxx.
 The difference in methods could lead to some inaccuracies in data.
@@ -30,11 +30,36 @@ The comparision between global and local.
 comparision between different types of vendors.
 Specifics on top 5 manufacturers.
 
-\subsection{Signal strength filtering}
-The threshold 
+We do a daily analysis of distribution of signal strengths.
+The thresholds are shown in the table.
+The average is xxxx and standard deviation is xxx.
+we notice that the variation is lot. There is a definite
+change with the micro site locations.
 
-\subsection{Device Fingerprinting}
+We see how the signal strength filtering affects the counts.
+compared to manual counts we look at the average mean errors (daily)
+per 5 minutes. The counts go as follows.
+Shown as a red line in the Figure.
 
-\subsection{Manual Calibration}
+We can conclude that even though it has variations, this is
+a good method to reduce the overall level of error.
 
-\subsection{Discussion}
+This is also done for different locations hourly for all the data we had.
+we compare it to the manual counts and see that the average mean error
+has been reduced/increased. The finger print works well for all the locations.
+It also works over a period of time and gives us a comparable and close 
+footfall count to the manual count. The thresholds found in the pilot study
+works as well.
+
+Finally we normalise the sensor counts to match the manual count using
+a fraction/ adjustment factor calculated from the know manual counts.
+we have three sets of counts. We check if the adjustment factor holds the
+same in all three counts across locations. It does with a variations from
+xxx to xxx. The results are shown in the table. 
+
+we see that the signal strength filtering works and reduces error by
+xxxxx. there is variation by locations.
+we see that sequence number algorithm works as well. The threshold stays
+constant well and works well across locations. The calibration also works
+and ajustment factor stays consistent short term. This needs more work 
+long term.

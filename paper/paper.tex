@@ -1,23 +1,34 @@
-\documentclass[11t, a4paper, twocolumn]{article} 
-\input{structure.tex}
-\addbibresource{references.bib}
-\title{Estimating real-time highstreet footfall from Wi-Fi probe requests}
-\author{
-	\authorstyle{
-		Balamurugan Soundararaj\textsuperscript{1}, 
-		James Cheshire\textsuperscript{1} and 
-		Paul Longley\textsuperscript{1}}
-	\newline\newline
-	\textsuperscript{1} \institution{
-		Department of Geography, 
-		University College London, 
-		United Kingdom } }
-\date{\today}
+\documentclass[]{interact}
+\usepackage{epstopdf}
+\usepackage{subfigure}
+\usepackage{natbib}
+\bibpunct[, ]{(}{)}{,}{a}{}{,}
+\renewcommand\bibfont{\fontsize{10}{12}\selectfont}
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{notation}{Notation}
+
 \begin{document}
+
+	\title{Estimating real-time highstreet footfall from Wi-Fi probe requests}
+	\author{
+		\name{ Balamurugan Soundararaj\textsuperscript{a}\thanks{CONTACT Balamurugan Soundararaj. Email: s.bala@ucl.ac.uk}, James Cheshire\textsuperscript{a} and Paul Longley\textsuperscript{a} }
+		\affil{\textsuperscript{a}Department of Geography, University College London, United Kingdom.}
+	}
 	\maketitle
-	\thispagestyle{firstpage}
-	% \textbf{Abstract -}
-		% \input{sections/abstract}
+
+	\begin{abstract}
+		\input{sections/abstract} \end{abstract}
+	\begin{keywords}
+		Highstreet footfall; Wi-Fi Probe requests; Sensors; MAC Randomisation \end{keywords}
 	\section{Introduction}\label{introduction}
 		\input{sections/introduction}
 	\section{Previous Work}\label{previous_work}
@@ -30,5 +41,8 @@
 		\input{sections/main_study}
 	\section{Conclusion}\label{conclusion}
 		\input{sections/conclusion}
-	\printbibliography[title={References}]
+	\section*{Acknowledgement}
+		\input{sections/acknowledgement}
+	\bibliographystyle{tfv} \bibliography{references}
+
 \end{document}

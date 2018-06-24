@@ -1,31 +1,21 @@
-The overall methodology is to use a WiFi antenna to collect probe requests,
-assign a unique identification based on the device that created the request,
-aggregate them based on the unique identification for a specific time interval
-to create an estimate of number of people at the location.
-In this section we look at the characteristics of probe requests in detail,
-outline the methodology used to collect these probe requests, 
-look at the uncertainities and biases in the process and 
-device methods to overcome these issues.
+The primary aim of this research is to enable us to collect a series of probe requests and process them into an usable pedestrian footfall count. We do this by using a Wi-Fi receiver to collect probe requests broadcasted by mobile devices, filtering out the background noise and aggregating them based on the device that generated them. We begin by looking at the characteristics of probe requests in detail, device a methodology to collect these probe requests in public areas, examine the systemic biases and uncertainties in the data collection method and device data processing methods to overcome these challanges. Finally we compare the processed footfall counts to the ground truth recorded by primary surveys.
 
 \subsection{Probe Requests}
-Probe request is a low level packet sent by a mobile device as a means of
-"scanning" for various access points available at a specific location.
-This packet consists information about the mobile device
-including but not limited to,
-Media Access Control address - A two part 12 bit identifier where the first part
-identifies the manufacturer of the device and the second part identifies the
-device itself. This MAC address is of two types, global - the real identifier
-of the device which doesnt change and local - virtual, random addresses used
-for temporary situations.
-Sequence number of the packet to keep track of the replies.
-The access points for which the packet is being sent to.
-Capabilities of the device.
-We can also infer other things about the packet such as
-time at which the packet has been received,
-total length of the packet
-time it took to transmit the packet
-Signal strength of the packet.
-All of this can help us identifying the packets and label them when they are transmitted by the same device.
+Probe requests are a special type of management packets broadcast by Wi-Fi enabled devices as part of the various functions such as scanning for available access points (AP), quick geo-location by triangulation based known APs, etc.
+These are broadcast by all Wi-Fi enabled devices regardless of the manufacturer, type or model of the devices though there is some variation on the frequency and the information transmitted through them.
+In some cases, such as Android devices, these are broadcast even when the Wi-Fi functionality has been turned off by the user.
+Thus these signals can be used to reliably identify the presence of Wi-Fi enabled mobile devices.
+
+Being a first step of connection initiated by the mobile device, these packets have information regarding the characteristics of the mobile device itself. Some of the key information we can infer from these requests are,
+\begin{enumerate}
+	\item Media Access Control (MAC) address which is an unique identifier for the wireless hardware of the mobile device,
+	\item Sequence number of the request for the mobile device to keep track of the responses,
+	\item Timestamp at which the request was received by the AP,
+	\item Total length of the request in number of bits, and 
+	\item The strength of the signal which transmitted the request.
+\end{enumerate}
+The MAC address is the primary unique identifier for the mobile device.
+It has two parts, first part gives information about the manufacturer of the device and the second is uniue to the device. The MAC address can be randomised (hence non unique) and is marked as such. Though sequence number and length of the packet are not strictly unique, we hypothesize that we can use them to estimate unique devices.
 
 \subsection{Data Collection}
 The data collection involved two processes - 
@@ -37,7 +27,7 @@ The sensor consists of wireless transponder in a linux/ MacOSX based machine
 which is put into a monitor mode and
 wireshark software (tshark) is used to sniff, filter and
 save the relevant packets.
-The filters applied are management frame > probe requests > broadcast. 
+The filters applied are management frame to probe requests to broadcast. 
 This is then parsed, personal information is hashed, 
 compressed and sent to a server via web socket protocol.
 The server receives, logs and stores the data in a postgresql database,
