@@ -1,6 +1,5 @@
 The primary aim of this research is to enable us to collect a series of probe requests and process them into an usable pedestrian footfall count. We do this by using a Wi-Fi receiver to collect probe requests broadcasted by mobile devices, filtering out the background noise and aggregating them based on the device that generated them. We begin by looking at the characteristics of probe requests in detail, device a methodology to collect these probe requests in public areas, examine the systemic biases and uncertainties in the data collection method and device data processing methods to overcome these challanges. Finally we compare the processed footfall counts to the ground truth recorded by primary surveys.
 
-\subsection{Probe Requests}
 Probe requests are a special type of management packets broadcast by Wi-Fi enabled devices as part of the various functions such as scanning for available access points (AP), quick geo-location by triangulation based known APs, etc.
 These are broadcast by all Wi-Fi enabled devices regardless of the manufacturer, type or model of the devices though there is some variation on the frequency and the information transmitted through them.
 In some cases, such as Android devices, these are broadcast even when the Wi-Fi functionality has been turned off by the user.
@@ -8,46 +7,31 @@ Thus these signals can be used to reliably identify the presence of Wi-Fi enable
 
 Being a first step of connection initiated by the mobile device, these packets have information regarding the characteristics of the mobile device itself. Some of the key information we can infer from these requests are,
 \begin{enumerate}
-	\item Media Access Control (MAC) address which is an unique identifier for the wireless hardware of the mobile device,
-	\item Sequence number of the request for the mobile device to keep track of the responses,
-	\item Timestamp at which the request was received by the AP,
-	\item Total length of the request in number of bits, and 
-	\item The strength of the signal which transmitted the request.
+	\item \textbf{Media Access Control (MAC) address} which is an unique identifier for the wireless hardware of the mobile device,
+	\item \textbf{Sequence number} of the request for the mobile device to keep track of the responses,
+	\item \textbf{Timestamp} at which the request was received by the AP,
+	\item Total \textbf{length} of the request in number of bits, and 
+	\item The \textbf{strength of the signal} which transmitted the request.
 \end{enumerate}
 The MAC address is the primary unique identifier for the mobile device.
 It has two parts, first part gives information about the manufacturer of the device and the second is uniue to the device. The MAC address can be randomised (hence non unique) and is marked as such. Though sequence number and length of the packet are not strictly unique, we hypothesize that we can use them to estimate unique devices.
 
-\subsection{Data Collection}
-The data collection involved two processes - 
-A sensor based collection of probe requests and
-a manual count of pedestrians in the area next to the sensor.
-We have detailed the sensor design below,
+Data collection was done with the help of custom sensors built from modifing the Smart street sensor \citep{sss2016} hardware and updating them with custom software.
+The sensor is essentially a Raspberry Pi connected with Wi-Fi and 3G antennae.
+It keeps the Wi-Fi module in `Monitor' mode and uses the open source software - wireshark cite to passively collect all packets sent to `broadcast', marked with type - `management' and subtype - `probe requests'.
+The MAC address in these probe requests is anonymised using a cryptographic hashing algorithm and transmitted through 3G connection to a central database via web-sockets protocol, where it is stored in a PostgreSQL database for further analysis.
+A overall schematic of the data collection process is shown in Figure.
+The ground truth on number of pedestrian footfall was recorded using a purpose built Android application cite. 
 
-The sensor consists of wireless transponder in a linux/ MacOSX based machine
-which is put into a monitor mode and
-wireshark software (tshark) is used to sniff, filter and
-save the relevant packets.
-The filters applied are management frame to probe requests to broadcast. 
-This is then parsed, personal information is hashed, 
-compressed and sent to a server via web socket protocol.
-The server receives, logs and stores the data in a postgresql database,
-for further analysis.
-The manual count was undertaken using an Android application
-on a mobile phone where timestamp of every individual pedestrian footfall
-was recorded by touch screen. A schematic is shown in ref figure.
+The next step after collecting data was to estimate the footfall or pedestrian activity from them. We identified the following major challanges which arise from our collection methodology.
+\begin{enumerate}
+	\item Background noise - since the extent to which Wi-Fi signals travel differs subject to various factors such as interference and humidity, it is close to impossible to restrict our data collection to a finite area of interest. This can lead to a signicant background noise at certain locations. E.g. a phone shop or a bus stop located next to the study area can increase the number of probe requests received by the sensor.
+	\item MAC randomisation - The mobile devices in the past few years have been using randomised 'local' MAC addresses for probe requests to protect the users from being tracked. This makes it impossible to tell if the probe requests are being sent by the same mobile device which is being stationed next to the sensor. This along with the previous problem can further increase the magnitude of error by several fold.
+	\item Mobile ownership - Since the rate of mobile ownership can vary widely across geography and demography, we cannot assume that every mobile device translates to one pedestrian footfall. In addition to this, there is a long term overall increase in mobile ownership which may lead to the number of probe requests collected overtime. 
+\end{enumerate}
+We propose the following methods to tackle each of these challages.
 
-\subsection{Estimating Footfall}
-The next step after collecting the probe request is to estimate the footfall or pedestrian activity from them. There are three major challanges in the above data collection methodology.
-the first one is deliniating the area of interest.
-WiFi and its range depends on lots of factors.
-need a way to isolate the noise from the relevant data. depends a lot on microsite so we need a methodology which provides us with a general solution without much tinkering.
-Second one is the mac randomisation.
-modern phones randomise their MAC addresses to avoid detection and tracking.
-This leads to overcounting and explosion of randomised (local) mac addresses.
-We need a non MAC dependent method to overcome this.
-Finally, inherent mobile phone carrying bias. we need to account for the average mobile ownership. which is steadily increasing and is not 1:1.
-
-\subsubsection{WiFi range}
+\subsection{Filtering with Signal Strength}
 One of the clues of the distance of the device generating the probe request is
 the strength of the signal recieved from it.
 The Signal strength varies in inverse square law over distance with a 
@@ -63,7 +47,7 @@ a specific signal strength.
 we can identify this sharp change/ break using class interval algorithms such as
 k-means, jenks, quantile, etc.
 
-\subsubsection{MAC randomisation}
+\subsection{Clustering with sequence numbers}
 This is a recent problem. ref in figure. how mac randomisation has caused problem
 MAC address has been our unique identifier. Now we need to look for others.
 the contenders are length, duration which seem to be unique for device
@@ -75,7 +59,7 @@ We propose a graph based clustering algorithm where
 each cluster corresponded to a unique device.
 The algorithm creates a graph where the probe requests represented the nodes, 
 and links are created between them based on the following rules: 
-\begin{enumerate}
+\begin{itemize}
 	\item A link could go only forward in time. 
 	\item A link could exist between nodes with a maximum
 		time difference of $\alpha$ (time threshold).
@@ -85,12 +69,12 @@ and links are created between them based on the following rules:
 	\item A node could have only one incoming link and
 		one outgoing link, which is the
 		shortest of all such possible links.
-\end{enumerate}
+\end{itemize}
 The nodes were then classified based on the unique connected component they belonged to.
 This classification was assigned as the unique identifier for the anonymised probe requests
 this unique identifier is used instead of MAC to aggregation.
 
-\subsubsection{Mobile phone ownership}
+\subsection{Calibrating with manual counts}
 This is both a long term change and result of demographic factors.
 Phone ownership is not 1:1. It changes slowly overtime. It also changes
 with place to place. It can be more in dense urban centers
