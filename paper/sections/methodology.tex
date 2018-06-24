@@ -23,8 +23,14 @@ Data collection was done with the help of custom sensors built from modifing the
 The sensor is essentially a Raspberry Pi connected with Wi-Fi and 3G antennae.
 It keeps the Wi-Fi module in `Monitor' mode and uses the open source software - wireshark cite to passively collect all packets sent to `broadcast', marked with type - `management' and subtype - `probe requests'.
 The MAC address in these probe requests is anonymised using a cryptographic hashing algorithm and transmitted through 3G connection to a central database via web-sockets protocol, where it is stored in a PostgreSQL database for further analysis.
-A overall schematic of the data collection process is shown in Figure.
+A overall schematic of the data collection process is shown in Figure \ref{datacollection_schematic}.
 The ground truth on number of pedestrian footfall was recorded using a purpose built Android application cite. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{images/datacollection_schematic.jpeg}
+	\caption{Schematic diagram showing the process of collecting probe requests using the sensor} \label{datacollection_schematic}
+\end{figure}
 
 The next step after collecting data was to estimate the footfall or pedestrian activity from them. We identified the following major challanges which arise from our collection methodology.
 \begin{enumerate}
@@ -33,6 +39,15 @@ The next step after collecting data was to estimate the footfall or pedestrian a
 	\item \textbf{Mobile ownership} - Since the rate of mobile ownership can vary widely across geography and demography, we cannot assume that every mobile device translates to one pedestrian footfall. In addition to this, there is a long term overall increase in mobile ownership which may lead to the number of probe requests collected overtime. 
 \end{enumerate}
 We propose the following methods to tackle each of these challages.
+
+\begin{figure}
+	\centering
+	\subfigure[]{
+	\resizebox*{0.48\linewidth}{!}{\includegraphics{images/pilot_counts_comparision.png}}}
+	\subfigure[]{
+	\resizebox*{0.48\linewidth}{!}{\includegraphics{images/pilot_counts_comparision.png}}}
+	\caption{Schematic diagrams explaining the methods for filtering by signal strength and clustering using sequence numbers} \label{sample-figure}
+\end{figure}
 
 \subsection{Filtering with Signal Strength}
 One of the clues that we can use to estimate the distance between the mobie device and the sensor is the strength of the signal received by the sensor. 
