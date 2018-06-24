@@ -46,7 +46,7 @@ We propose the following methods to tackle each of these challages.
 		\resizebox*{0.45\linewidth}{!}{\includegraphics{images/methodology_signalstrength.jpeg}}}\hspace{20pt}
 	\subfigure[Clustering probe requests as nodes in a graph using increasing sequence numbers]{
 	\resizebox*{0.45\linewidth}{!}{\includegraphics{images/methodology_clustering.jpeg}}}
-	\caption{Schematic diagrams explaining the methods for filtering by signal strength and clustering using sequence numbers} \label{sample-figure}
+	\caption{Schematic diagrams explaining the methods for filtering by signal strength and clustering using sequence numbers} \label{methodology_schematic}
 \end{figure}
 
 \subsection{Filtering with Signal Strength}
@@ -58,10 +58,9 @@ This severely limits our ability to establishing a simple conversion between rep
 There is a need for a method which takes in to account these variables across varous locations.
 
 We hypothesise that in configurations where a specific source of background noise is at a constant distance, there must be a distinct break in the number of probe requests reporting signal strength corresponding to that distance.
-For example, if there is a phone shop next to our sensor where hundreds of phones regularly send probe requests there should be a sharp rise of number of probe requests with reported singal strength corresponding to the distance between the sensor and the phone shop at any given set of conditions.
+For example, if there is a phone shop next to our sensor where hundreds of phones regularly send probe requests there should be a sharp rise of number of probe requests with reported singal strength corresponding to the distance between the sensor and the phone shop at any given set of conditions as shown in Figure \ref{methodology_schematic}.
 We could identify these breaks in the data using traditional one diamensional classification algorithms such as Jenks natural breaks, k-means, quantile and hierarchical clustering, etc.
 Since we are only looking for the break in the data and not for absolute values, the methodology should apply for all the variations due micro site conditions thus reducing the overall noise in the collected data.
-An illustrative example is show in figure.
 
 \subsection{Clustering with sequence numbers}
 
@@ -84,9 +83,9 @@ The proposed algorithm creates a graph where the probe requests represented the 
 	\item A link could exist between nodes with a maximum sequence number difference of $\beta$ - sequence threshold.
 	\item A node could have only one incoming link and one outgoing link, which is the shortest of all such possible links.
 \end{itemize}
-The nodes were then classified based on the unique connected component they belong to.
+The nodes were then classified based on the unique connected component they belong to as shown in Figure \ref{methodology_schematic}.
 This classification was assigned as the unique identifier for the anonymised probe requests in the place of MAC address.
 Though the recycling of sequence number after 4000 leads to multiple classifications reported on single device, the maginitude of error is greatly reduced. 
 
 \subsection{Calibrating with ground truth}
-Since mobile phone ownership is a external uncertainty to our study and could arise from variety of spatio, temporal and demographic factors, we propose to solve this by using external source of information. We hypothesize that an adjustment factor could be arrived at for each location of such survey, comparing the sensor based counts and ground truth and can be used to adjust the data reliably to reflect the ground truth in absolute numbers. This calibration can be carried over periodically and the frequecy of which will improve the quality of the estimation.
+Since mobile phone ownership is an external uncertainty to our study and could arise from variety of spatio, temporal and demographic factors, we propose to solve this using external source of information. We hypothesize that an adjustment factor could be arrived at for each location of data collection, comparing the sensor based counts and ground truth and it can be used to adjust the data reliably to reflect the ground truth in absolute numbers for the future. This calibration can be carried over periodically and the frequecy of which will improve the quality of the estimation.
