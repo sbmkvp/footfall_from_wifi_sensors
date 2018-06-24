@@ -1,4 +1,7 @@
-The primary aim of this research is to enable us to collect a series of probe requests and process them into an usable pedestrian footfall count. We do this by using a Wi-Fi receiver to collect probe requests broadcasted by mobile devices, filtering out the background noise and aggregating them based on the device that generated them. We begin by looking at the characteristics of probe requests in detail, device a methodology to collect these probe requests in public areas, examine the systemic biases and uncertainties in the data collection method and device data processing methods to overcome these challanges. Finally we compare the processed footfall counts to the ground truth recorded by primary surveys.
+The primary aim of this research is to enable us to collect a series of probe requests and process them into an usable pedestrian footfall count. 
+We do this by using a Wi-Fi receiver to collect probe requests broadcasted by mobile devices, filtering out the background noise and aggregating them based on the device that generated them.
+We begin by looking at the characteristics of probe requests in detail, device a methodology to collect these probe requests in public areas, examine the systemic biases and uncertainties in the data collection method and device data processing methods to overcome these challanges.
+Finally we compare the processed footfall counts to the ground truth recorded by primary surveys.
 
 Probe requests are a special type of management packets broadcast by Wi-Fi enabled devices as part of the various functions such as scanning for available access points (AP), quick geo-location by triangulation based known APs, etc.
 These are broadcast by all Wi-Fi enabled devices regardless of the manufacturer, type or model of the devices though there is some variation on the frequency and the information transmitted through them.
@@ -14,7 +17,7 @@ Being a first step of connection initiated by the mobile device, these packets h
 	\item The \textbf{strength of the signal} which transmitted the request.
 \end{enumerate}
 The MAC address is the primary unique identifier for the mobile device.
-It has two parts, first part gives information about the manufacturer of the device and the second is uniue to the device. The MAC address can be randomised (hence non unique) and is marked as such. Though sequence number and length of the packet are not strictly unique, we hypothesize that we can use them to estimate unique devices.
+It has two parts, first part is called an Organisation Unique Identifier (OUI) which gives information about the manufacturer of the device and the second is unique to the device. The MAC address can be randomised (hence non unique) and is marked as such. Though sequence number and length of the packet are not strictly unique, we hypothesize that we can use them to estimate unique devices.
 
 Data collection was done with the help of custom sensors built from modifing the Smart street sensor \citep{sss2016} hardware and updating them with custom software.
 The sensor is essentially a Raspberry Pi connected with Wi-Fi and 3G antennae.
@@ -25,60 +28,50 @@ The ground truth on number of pedestrian footfall was recorded using a purpose b
 
 The next step after collecting data was to estimate the footfall or pedestrian activity from them. We identified the following major challanges which arise from our collection methodology.
 \begin{enumerate}
-	\item Background noise - since the extent to which Wi-Fi signals travel differs subject to various factors such as interference and humidity, it is close to impossible to restrict our data collection to a finite area of interest. This can lead to a signicant background noise at certain locations. E.g. a phone shop or a bus stop located next to the study area can increase the number of probe requests received by the sensor.
-	\item MAC randomisation - The mobile devices in the past few years have been using randomised 'local' MAC addresses for probe requests to protect the users from being tracked. This makes it impossible to tell if the probe requests are being sent by the same mobile device which is being stationed next to the sensor. This along with the previous problem can further increase the magnitude of error by several fold.
-	\item Mobile ownership - Since the rate of mobile ownership can vary widely across geography and demography, we cannot assume that every mobile device translates to one pedestrian footfall. In addition to this, there is a long term overall increase in mobile ownership which may lead to the number of probe requests collected overtime. 
+	\item \textbf{Background noise} - since the extent to which Wi-Fi signals travel differs subject to various factors such as interference and humidity, it is close to impossible to restrict our data collection to a finite area of interest. This can lead to a signicant background noise at certain locations. E.g. a phone shop or a bus stop located next to the study area can increase the number of probe requests received by the sensor.
+	\item \textbf{MAC randomisation} - The mobile devices in the past few years have been using randomised 'local' MAC addresses for probe requests to protect the users from being tracked. This makes it impossible to tell if the probe requests are being sent by the same mobile device which is being stationed next to the sensor. This along with the previous problem can further increase the magnitude of error by several fold.
+	\item \textbf{Mobile ownership} - Since the rate of mobile ownership can vary widely across geography and demography, we cannot assume that every mobile device translates to one pedestrian footfall. In addition to this, there is a long term overall increase in mobile ownership which may lead to the number of probe requests collected overtime. 
 \end{enumerate}
 We propose the following methods to tackle each of these challages.
 
 \subsection{Filtering with Signal Strength}
-One of the clues of the distance of the device generating the probe request is
-the strength of the signal recieved from it.
-The Signal strength varies in inverse square law over distance with a 
-propagation constant.
-It also depends on lot of micro site, micro temporal factors.
-There cannot be a simple rule to fit and filter for all configuration.
-Our hypothesis is that in a specific setting and specific source of noise,
-there must exist a clear break in the data.
-for example, if there is a phone shop next to our sensor where
-hundreds of phones regularly send lots of probe requests
-we should be able to see a large increase in number of probe requests around
-a specific signal strength.
-we can identify this sharp change/ break using class interval algorithms such as
-k-means, jenks, quantile, etc.
+One of the clues that we can use to estimate the distance between the mobie device and the sensor is the strength of the signal received by the sensor. 
+The obvious approach here is to try and establish a relationship between the signal strength and distance first and use this to filter out the unwanted probe requests.
+This approach has numerous pitfalls and uncertainities since the decay of signal strength with distance is not always constant.
+It varies with atmospheric conditions, presence of obstructions between the source and target, the nature of these obstructions and the strength (power level) of the source transponder.
+This severely limits our ability to establishing a simple conversion between reported signal strength and distance.
+There is a need for a method which takes in to account these variables across varous locations.
+
+We hypothesise that in configurations with a specific source of background noise at a constant distance, there must be a distinct break in the number of probe requests reporting signal strength corresponding to that distance.
+For example, if there is a phone shop next to our sensor where hundreds of phones regularly send probe requests there should be a sharp rise of number of probe requests with reported singal strength corresponding to the distance between the sensor and the phone shop at any given set of conditions.
+We could identify these breaks in the data using tradition class interval algorithms such as jenks natural breaks, k-means, quantile and hierarchical clustering, etc.
+Since we are only looking for the break in the data and not for absolute values, the methodology should apply for all the variations due micro site conditions thus reducing the overall noise in the collected data.
+An illustrative example is show in figure.
 
 \subsection{Clustering with sequence numbers}
-This is a recent problem. ref in figure. how mac randomisation has caused problem
-MAC address has been our unique identifier. Now we need to look for others.
-the contenders are length, duration which seem to be unique for device
-sets of known wlans and capabilites which can give us unique finger print and 
-finally sequence numbers in the packets.
-This is a tricky one since it is neither unique nor aggregatable.
-we need a method to seperate sequences shown in fig.
-We propose a graph based clustering algorithm where
-each cluster corresponded to a unique device.
-The algorithm creates a graph where the probe requests represented the nodes, 
-and links are created between them based on the following rules: 
+
+Since our primary unique identifier - MAC adddress, is being anonymised by new devces, we need to find other information present in the probe request for a unique identifier.
+Obvious approach here is to establish a factor of randomisation and adjust the counts for these probe requests based on this factor.
+We found this aproach not feasible, since the proportion of devices which randomise the MAC addresses increases over time.
+There is also a wide variation in the frequency at which the devices randomise the MAC addresses and the method used for the process.
+This leads us to look for a more generalisable approach which is independent of the device model.
+
+From our initial analysis we found that OUI, length of the packet and sequence number of the packet being the most promising information to acheive this.
+First we divide our dataset into sets of probe requests with randomised and non-randomised MAC addresses and keep the MAC address as the unique identifier for the latter set. 
+For randomised ones we futher divide them in to sub categories based on their OUIand length of the packet.
+Since the length tends to stay unique to specific models of devices we are left with the task of identifying the unique mobile devices from within these distinct models.
+
+The proposed algorithm creates a graph where the probe requests represented the nodes, and links are created between them based on the following rules: 
 \begin{itemize}
 	\item A link could go only forward in time. 
-	\item A link could exist between nodes with a maximum
-		time difference of $\alpha$ (time threshold).
 	\item A link could go from low to high sequence numbers.
-	\item A link could exist between nodes with a maximum sequence
-		number difference of $\beta$ (sequence threshold).
-	\item A node could have only one incoming link and
-		one outgoing link, which is the
-		shortest of all such possible links.
+	\item A link could exist between nodes with a maximum time difference of $\alpha$ - time threshold.
+	\item A link could exist between nodes with a maximum sequence number difference of $\beta$ - sequence threshold.
+	\item A node could have only one incoming link and one outgoing link, which is the shortest of all such possible links.
 \end{itemize}
-The nodes were then classified based on the unique connected component they belonged to.
-This classification was assigned as the unique identifier for the anonymised probe requests
-this unique identifier is used instead of MAC to aggregation.
+The nodes were then classified based on the unique connected component they belong to.
+This classification was assigned as the unique identifier for the anonymised probe requests in the place of MAC address.
+Though the recycling of sequence number after 4000 leads to multiple classifications reported on single device, the maginitude of error is greatly reduced. 
 
-\subsection{Calibrating with manual counts}
-This is both a long term change and result of demographic factors.
-Phone ownership is not 1:1. It changes slowly overtime. It also changes
-with place to place. It can be more in dense urban centers
-and can be low in rural areas. We propose a adjustment factor methodology
-we use periodically carried out manual counts to adjust the numbers
-to what is reported on ground. The adjustment is as strong as the amount of
-ground truth we collected.
+\subsection{Calibrating with ground truth}
+Since mobile phone ownership is a external uncertainty to our study and could arise from variety of spatio, temporal and demographic factors, we propose to solve this by using external source of information. We hypothesize that an adjustment factor could be arrived at for each location of such survey, comparing the sensor based counts and ground truth and can be used to adjust the data reliably to reflect the ground truth in absolute numbers. This calibration can be carried over periodically and the frequecy of which will improve the quality of the estimation.
