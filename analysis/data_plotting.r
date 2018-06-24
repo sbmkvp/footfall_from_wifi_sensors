@@ -7,6 +7,25 @@
 # ------------------------------------------------------------------------------
 # Plot objects
 # ------------------------------------------------------------------------------
+p_comp <- bind_rows(count_all,count_data_00) %>%
+	filter(time >= as.POSIXct("2017-12-20 12:30:00"),
+		   time <= as.POSIXct("2017-12-20 13:00:00"),
+		   type %in% c("01 Filtered out low signal strength",
+					   "03 Filter out randomised MACs",
+					   "05 Manual counting",
+					   "00 No filtering")) %>%
+	ggplot()+
+	geom_line(aes(time,footfall,col = type),
+			  linejoin="round",
+			  lineend="round",
+			  size = 1.5,
+			  show.legend=FALSE)+
+	theme(legend.position = "bottom") +
+	xlab("") +
+	ylab("") +
+	scale_colour_manual(values = c("#e41a1c","#4daf4a","#377eb8","#984ea3")) +
+	theme(panel.background=element_blank())
+
 
 p_comparison <- bind_rows(count_all,count_data_00) %>%
 	filter(time >= as.POSIXct("2017-12-20 12:30:00"),
