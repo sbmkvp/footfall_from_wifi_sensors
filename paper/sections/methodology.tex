@@ -42,10 +42,10 @@ We propose the following methods to tackle each of these challages.
 
 \begin{figure}
 	\centering
-	\subfigure[]{
-	\resizebox*{0.48\linewidth}{!}{\includegraphics{images/pilot_counts_comparision.png}}}
-	\subfigure[]{
-	\resizebox*{0.48\linewidth}{!}{\includegraphics{images/pilot_counts_comparision.png}}}
+	\subfigure[Distribution of signal strengths showing the filtering of background noise]{
+		\resizebox*{0.45\linewidth}{!}{\includegraphics{images/methodology_signalstrength.jpeg}}}\hspace{20pt}
+	\subfigure[Clustering probe requests as nodes in a graph using increasing sequence numbers]{
+	\resizebox*{0.45\linewidth}{!}{\includegraphics{images/methodology_clustering.jpeg}}}
 	\caption{Schematic diagrams explaining the methods for filtering by signal strength and clustering using sequence numbers} \label{sample-figure}
 \end{figure}
 
@@ -57,9 +57,9 @@ It varies with atmospheric conditions, presence of obstructions between the sour
 This severely limits our ability to establishing a simple conversion between reported signal strength and distance.
 There is a need for a method which takes in to account these variables across varous locations.
 
-We hypothesise that in configurations with a specific source of background noise at a constant distance, there must be a distinct break in the number of probe requests reporting signal strength corresponding to that distance.
+We hypothesise that in configurations where a specific source of background noise is at a constant distance, there must be a distinct break in the number of probe requests reporting signal strength corresponding to that distance.
 For example, if there is a phone shop next to our sensor where hundreds of phones regularly send probe requests there should be a sharp rise of number of probe requests with reported singal strength corresponding to the distance between the sensor and the phone shop at any given set of conditions.
-We could identify these breaks in the data using tradition class interval algorithms such as jenks natural breaks, k-means, quantile and hierarchical clustering, etc.
+We could identify these breaks in the data using traditional one diamensional classification algorithms such as Jenks natural breaks, k-means, quantile and hierarchical clustering, etc.
 Since we are only looking for the break in the data and not for absolute values, the methodology should apply for all the variations due micro site conditions thus reducing the overall noise in the collected data.
 An illustrative example is show in figure.
 
