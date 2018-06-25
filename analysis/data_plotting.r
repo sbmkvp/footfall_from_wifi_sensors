@@ -15,10 +15,12 @@ p_comp <- bind_rows(count_all,count_data_00) %>%
 					   "05 Manual counting",
 					   "00 No filtering")) %>%
 	ggplot()+
-	geom_line(aes(time,footfall,col = type),
+	geom_line(aes(time,footfall, group = type),
 			  linejoin="round",
 			  lineend="round",
-			  size = 1.5,
+			  size = 0.25,
+			  show.legend=FALSE)+
+	geom_point(aes(time,footfall, shape = type),
 			  show.legend=FALSE)+
 	theme(legend.position = "bottom") +
 	xlab("") +
