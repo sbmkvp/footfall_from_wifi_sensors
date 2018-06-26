@@ -33,7 +33,7 @@ The locations where the data were collected are shown in the table. The location
 Though data was collected for many continous days, for the purposes of comparing with ground truth we just consider the only the data from sensors corresponding to those sessions. We have 12 sets of data over 6 different days. We have atleast two set manual counts for each location for verification of calibration.
 
 \subsection{signal strength filtering}
-First we see the distribution of the signal strength varies with location and configuration. 
+First we see how the distribution of the signal strength varies with location and configuration. 
 The density plot for signal strength is shown alogn with configuration in figure.
 We can see that the signal strength distribution shows distinct patterns of high and low when the installation is that there is a clear distant source of noise but this distinction get more and more obscure as we move towards difficult installations. 
 For example, location 2 is almost a normally distributed noise as it is too far to pick up any pedestrians but location 5 with a clear view of footpath and a phone shop next door shows clear distinction between the two. 
@@ -56,7 +56,6 @@ For some practical purposes which does not require absolute numbers, this should
 	\caption{Distribution of signal strengths across locations} \label{methodology_schematic}
 \end{figure}
 
-
 The comparision between global and local.
 comparision between different types of vendors.
 Specifics on top 5 manufacturers.
@@ -73,6 +72,24 @@ a fraction/ adjustment factor calculated from the know manual counts.
 we have three sets of counts. We check if the adjustment factor holds the
 same in all three counts across locations. It does with a variations from
 xxx to xxx. The results are shown in the table. 
+
+
+\begin{table}
+	\tbl{Data collected at different locations and the correspondin mean absolute percentage error after each filtering process}
+	{\begin{tabular}{cccc} 
+		\toprule
+			Sensor& MAPE - No Cleaning (\%)&MAPE - Signal Strength (\%)&MAPE - Clustering (\%)\\
+		 \midrule
+			1 & 211 &  56 & \\
+			2 & 934 & 400 & \\
+			3 &  88 &  -3 & \\
+			4 & 501 & 237 & \\
+			5 & 476 & 117 & \\
+		 \bottomrule
+	\end{tabular}}
+	\label{errors-table}
+\end{table}
+
 
 we see that the signal strength filtering works and reduces error by
 xxxxx. there is variation by locations.

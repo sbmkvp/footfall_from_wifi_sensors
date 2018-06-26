@@ -52,7 +52,7 @@ sensor_schedule$sensor <- factor(as.character(sensor_schedule$sensor),levels=c("
 sensor_data_filtered <- (function(){
 	just_global <- sensor_data %>% filter(type=="global")
 	just_local <- sensor_data %>% filter(type=="local")
-	thres_11 <- (just_local %>% filter(signal<(-25),sensor==11) %>% pull(signal) %>% classIntervals(.,2,"kmeans"))$brks[2]
+	thres_11 <- (just_local %>% filter(sensor==11) %>% pull(signal) %>% classIntervals(.,2,"kmeans"))$brks[2]
 	thres_22 <- (just_local %>% filter(sensor==22) %>% pull(signal) %>% classIntervals(.,2,"kmeans"))$brks[2]
 	thres_33 <- (just_local %>% filter(sensor==33) %>% pull(signal) %>% classIntervals(.,2,"kmeans"))$brks[2]
 	thres_44 <- (just_local %>% filter(sensor==44) %>% pull(signal) %>% classIntervals(.,2,"kmeans"))$brks[2]
@@ -79,7 +79,20 @@ is_moving <- function(x) { return( !(((x - (5 * 60)) %in% x) |
 	((x - (12 * 60)) %in% x) |
 	((x - (13 * 60)) %in% x) |
 	((x - (14 * 60)) %in% x) |
-	((x - (15 * 60)) %in% x) ) ) }
+	((x - (16 * 60)) %in% x) |
+	((x - (17 * 60)) %in% x) |
+	((x - (18 * 60)) %in% x) |
+	((x - (19 * 60)) %in% x) |
+	((x - (20 * 60)) %in% x) |
+	((x - (21 * 60)) %in% x) |
+	((x - (22 * 60)) %in% x) |
+	((x - (23 * 60)) %in% x) |
+	((x - (24 * 60)) %in% x) |
+	((x - (26 * 60)) %in% x) |
+	((x - (27 * 60)) %in% x) |
+	((x - (28 * 60)) %in% x) |
+	((x - (29 * 60)) %in% x) |
+	((x - (30 * 60)) %in% x) ) ) }
 
 filter_moving <- function(x) {
 	data_vector <- unlist(x[[1]])
@@ -127,13 +140,16 @@ get_counts <- function(s) {
 	return(comparison)
 }
 
-get_location_parameters <- (function(){
-	counts11 <- get_counts(11)
-	counts22 <- get_counts(22)
-	counts33 <- get_counts(33)
-	counts44 <- get_counts(44)
-	counts55 <- get_counts(55)
-
+location_parameters <- (function(){
+	data <- data.frame()
+	for(i in c(11,22,33,44,55)) {
+		counts <- get_counts(i)
+		counts[is.na(counts)] <- 1 
+		mape1 <- mean((counts$raw - counts$manual)/counts$manual)*100
+		mape2 <- mean((counts$filtered - counts$manual)/counts$manual)*100
+		data <- rbind(data, data.frame(sensor = i,mape_raw = mape1, mape_sig = mape2))
+	}
+	return(data)
 })()
 
 ggplot(comparison)+geom_line(aes(timestamp,raw,group="raw"),col="red")+geom_line(aes(timestamp,filtered,group="filtered"),col="green")+geom_line(aes(timestamp,manual,group="manual"))
