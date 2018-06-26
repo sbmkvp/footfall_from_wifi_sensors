@@ -1,4 +1,5 @@
 suppressMessages(library('tidyverse'))
+suppressMessages(library('ggplot2'))
 
 if(!exists("locations")) { locations <- read.csv("../data/main_locations.csv") }
 if(!exists("manual")) { manual <- read.csv("../data/main_manual.csv") }
