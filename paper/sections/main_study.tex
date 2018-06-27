@@ -32,6 +32,15 @@ The locations where the data were collected are shown in the table. The location
 
 Though data was collected for many continous days, for the purposes of comparing with ground truth we just consider the only the data from sensors corresponding to those sessions. We have 12 sets of data over 6 different days. We have atleast two set manual counts for each location for verification of calibration.
 
+\begin{figure}
+	\centering
+	\subfigure[Installation configuration of sensors at various locations]{
+		\resizebox*{0.46\linewidth}{!}{\includegraphics[trim=20 6 20 6,clip]{images/main_configs.jpeg}}}\hspace{20pt}
+	\subfigure[Density distribution of signal strength (lower values show higher signal strength)]{
+		\resizebox*{0.46\linewidth}{!}{\includegraphics[trim=20 4 25 6,clip]{images/main_signals.jpeg}}}
+	\caption{Distribution of signal strengths across locations} \label{methodology_schematic}
+\end{figure}
+
 \subsection{signal strength filtering}
 First we see how the distribution of the signal strength varies with location and configuration. 
 The density plot for signal strength is shown alogn with configuration in figure.
@@ -42,58 +51,32 @@ It is important to note that we are dealing with relative singal strengths, this
 We run the kmeans classification algorithm and filter out the probe requests which are randomised and have signal strengths less than the second break (or the threshold). 
 We then count the number of Unique MAC addresses present in every minute and remove MAC addreses which reappear within 30 minutes of previous appearance. 
 We then compare this with the minute by minute aggreagation for the manual counts and find the average error per minute for the sensor count. 
-The results are shown in the table.We see that the location XXXX has the most error while location XXX has the least error confirming our intuition. 
+The results are shown in the table.We see that the location 2 has the most error 400\% confirming our intuition while surprisingly location 3 has the least error -3\%. 
 We also see that the error follows the complexity of the installation. 
-It is also very promising that this method alone reduces our margin of error by a lot. 
-For some practical purposes which does not require absolute numbers, this should be sufficient. talk about examples of indexes and dashboards and short term trends. 
+It is also very promising that this method alone reduces our margin of error by a 50 - 100\%
+For some practical purposes which do not require absolute numbers, this should be sufficient. 
+e.g. Indexes of activity and change dashboards and short term trends identification.
 
-\begin{figure}
-	\centering
-	\subfigure[Installation configuration of sensors at various locations]{
-		\resizebox*{0.46\linewidth}{!}{\includegraphics[trim=20 6 20 6,clip]{images/main_configs.jpeg}}}\hspace{20pt}
-	\subfigure[Density distribution of signal strength (lower values show higher signal strength)]{
-		\resizebox*{0.46\linewidth}{!}{\includegraphics[trim=20 4 25 6,clip]{images/main_signals.jpeg}}}
-	\caption{Distribution of signal strengths across locations} \label{methodology_schematic}
-\end{figure}
+We see that the success of the signal strength filtering depends on the how we tackle the problems in the installing the devices.
+The more the device in installed in a way that the field of measurement is distinct from its surroundings (however noisy they might be) the more successful this process is.
+Closer sources error causes overcounting as we see in 2, 4 but at the same time highly close field of measurement with no big source of error can cause undercounting such as in 3. The complexity of the installation and uniformity of surroundings near the sensors directly coorrelate to the MAPE.
+The most effective way of measuring pedestrian is to have the sensor next to have the sensor next to clear area of pedestrian activity and in case of absence of any major source of noise, we should not do the signal strength filtering at all. We can even note the major possible sources of noise around the device and use it to fiugre out the right way of partitioning the data e.g. location 2 and 3 should have different pattern of signal strength filtering depending on their configuration.
 
-The comparision between global and local.
-comparision between different types of vendors.
-Specifics on top 5 manufacturers.
-
-This is also done for different locations hourly for all the data we had.
-we compare it to the manual counts and see that the average mean error
-has been reduced/increased. The finger print works well for all the locations.
-It also works over a period of time and gives us a comparable and close 
-footfall count to the manual count. The thresholds found in the pilot study
-works as well.
-
-Finally we normalise the sensor counts to match the manual count using
-a fraction/ adjustment factor calculated from the know manual counts.
-we have three sets of counts. We check if the adjustment factor holds the
-same in all three counts across locations. It does with a variations from
-xxx to xxx. The results are shown in the table. 
-
+\subsection{Clustering based on sequence numbers}
 
 \begin{table}
 	\tbl{Data collected at different locations and the correspondin mean absolute percentage error after each filtering process}
 	{\begin{tabular}{cccc} 
 		\toprule
-			Sensor& MAPE - No Cleaning (\%)&MAPE - Signal Strength (\%)&MAPE - Clustering (\%)\\
+			Sensor	& MAPE - No Cleaning & MAPE - Signal Strength	& MAPE - Clustering	\\
+					& 					 & (efficiency)				& (efficiency)		\\
 		 \midrule
-			1 & 211 &  56 & \\
-			2 & 934 & 400 & \\
-			3 &  88 &  -3 & \\
-			4 & 501 & 237 & \\
-			5 & 476 & 117 & \\
+			1 & 211 &  56 ( 73)&	\\
+			2 & 934 & 400 ( 57)& 	\\
+			3 &  88 &  -3 (103)& 	\\
+			4 & 501 & 237 ( 53)& 	\\
+			5 & 476 & 117 ( 75)& 	\\
 		 \bottomrule
 	\end{tabular}}
 	\label{errors-table}
 \end{table}
-
-
-we see that the signal strength filtering works and reduces error by
-xxxxx. there is variation by locations.
-we see that sequence number algorithm works as well. The threshold stays
-constant well and works well across locations. The calibration also works
-and ajustment factor stays consistent short term. This needs more work 
-long term.

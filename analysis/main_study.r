@@ -147,10 +147,12 @@ location_parameters <- (function(){
 		counts[is.na(counts)] <- 1 
 		mape1 <- mean((counts$raw - counts$manual)/counts$manual)*100
 		mape2 <- mean((counts$filtered - counts$manual)/counts$manual)*100
-		data <- rbind(data, data.frame(sensor = i,mape_raw = mape1, mape_sig = mape2))
+		change1 <- (mape1-mape2)/mape1 * 100
+		data <- rbind(data, data.frame(sensor = i,mape_raw = mape1, mape_sig = mape2,change_sig = change1))
 	}
 	return(data)
 })()
+
 
 ggplot(comparison)+geom_line(aes(timestamp,raw,group="raw"),col="red")+geom_line(aes(timestamp,filtered,group="filtered"),col="green")+geom_line(aes(timestamp,manual,group="manual"))
 
