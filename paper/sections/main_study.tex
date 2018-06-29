@@ -41,7 +41,6 @@ Though data was collected for many continous days, for the purposes of comparing
 	\caption{Distribution of signal strengths across locations} \label{methodology_schematic}
 \end{figure}
 
-\subsection{signal strength filtering}
 First we see how the distribution of the signal strength varies with location and configuration. 
 The density plot for signal strength is shown alogn with configuration in figure.
 We can see that the signal strength distribution shows distinct patterns of high and low when the installation is that there is a clear distant source of noise but this distinction get more and more obscure as we move towards difficult installations. 
@@ -62,21 +61,34 @@ The more the device in installed in a way that the field of measurement is disti
 Closer sources error causes overcounting as we see in 2, 4 but at the same time highly close field of measurement with no big source of error can cause undercounting such as in 3. The complexity of the installation and uniformity of surroundings near the sensors directly coorrelate to the MAPE.
 The most effective way of measuring pedestrian is to have the sensor next to have the sensor next to clear area of pedestrian activity and in case of absence of any major source of noise, we should not do the signal strength filtering at all. We can even note the major possible sources of noise around the device and use it to fiugre out the right way of partitioning the data e.g. location 2 and 3 should have different pattern of signal strength filtering depending on their configuration.
 
-\subsection{Clustering based on sequence numbers}
+In terms of filtering by sequence numbers we see that the the filtering works in all the locations. It has the similar effect as the signal strength and brings us furthe closer to the manual count. Finally we calculate the adjustment factor from the first 15 minutes and apply that for the rest of the interval. We get the counts down to almost 10\% on good locations. The locations which still over count are the ones with seating next to them (2 and 4). We also see that the trends are preserved with the filtering process.
+
+Finally to summarize, through a simple raspberry pi based wifi sensors, we collected probe requests sent by user's mobile devices, cleaned them based on the reported signal strength, clustered/ fingerprinted them based on sequence numbers, aggregated them to get pedestrian counts. We then compared it to the read pedestrian count and developed adjustment factors which work for short term future.
 
 \begin{table}
 	\tbl{Data collected at different locations and the correspondin mean absolute percentage error after each filtering process}
-	{\begin{tabular}{cccc} 
+	{\begin{tabular}{ccccccc} 
 		\toprule
-			Sensor	& MAPE - No Cleaning & MAPE - Signal Strength	& MAPE - Clustering	\\
-					& 					 & (efficiency)				& (efficiency)		\\
+			Sensor & Signal strength & Adjustment & MAPE & MAPE after & MAPE after & MAPE of\\
+			& threshold & factor & without any & filtering signal & filtering sequence & final adjusted\\
+			& (-dBm) & &  cleaning (\%) & strength (\%) & numbers (\%) & counts (\%)\\
 		 \midrule
-			1 & 211 &  56 ( 73)&	\\
-			2 & 934 & 400 ( 57)& 	\\
-			3 &  88 &  -3 (103)& 	\\
-			4 & 501 & 237 ( 53)& 	\\
-			5 & 476 & 117 ( 75)& 	\\
+			1 & -70 & 1.25 & 259 &  22 & -13 &  9 \\
+			2 & -74 & 0.51 & 928 & 396 & 206 & 55 \\
+			3 & -72 & 1.60 &  87 & -19 & -31 & 10 \\
+			4 & -70 & 0.88 & 498 & 142 &  52 & 33 \\
+			5 & -72 & 0.80 & 473 &  84 &  38 & 11 \\
 		 \bottomrule
 	\end{tabular}}
 	\label{errors-table}
 \end{table}
+
+\begin{figure}
+	\begin{center}
+		\includegraphics [width=\linewidth,trim=6 6 6 6,clip] {images/main_comparison.jpeg}
+		\caption{Comparison of all the counts in teh sensors}
+		\label{main_comparison}
+	\end{center}
+\end{figure}
+
+
