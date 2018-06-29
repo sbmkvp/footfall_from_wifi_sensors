@@ -1,11 +1,3 @@
-The main study was designed to validate the results of the pilot study over different locations at different times. 
-We choose five different locations across central London, to install the sensors and collect data for a long period of time. 
-We also carry out manual counting on these locations along with this across different time of the day. 
-We then apply the filtering based on signal strength and sequence numbers and compare with manual counts and evaluate the effectiveness of the process with the mean error per minute on these locations. 
-Finally we calculate the ajustment factor for the first interval of manual counts and check if that works on the consecutive intervals. 
-
-The locations where the data were collected are shown in the table. The location are chosen for their variety of configuration and sources of noise. Location 1 is the `cleanest' of while location 2 is the one with the most complexity. The configuration, installation and data collection schedule is shown in the figure. 
-
 \begin{table}
 	\tbl{Locations where sensors were installed}
 	{\begin{tabular}{clll} 
@@ -29,6 +21,14 @@ The locations where the data were collected are shown in the table. The location
 		\label{pilot_clustering}
 	\end{center}
 \end{figure}
+
+The main study was designed to validate the results of the pilot study over different locations at different times. 
+We choose five different locations across central London, to install the sensors and collect data for a long period of time. 
+We also carry out manual counting on these locations along with this across different time of the day. 
+We then apply the filtering based on signal strength and sequence numbers and compare with manual counts and evaluate the effectiveness of the process with the mean error per minute on these locations. 
+Finally we calculate the ajustment factor for the first interval of manual counts and check if that works on the consecutive intervals. 
+
+The locations where the data were collected are shown in the table. The location are chosen for their variety of configuration and sources of noise. Location 1 is the `cleanest' of while location 2 is the one with the most complexity. The configuration, installation and data collection schedule is shown in the figure. 
 
 Though data was collected for many continous days, for the purposes of comparing with ground truth we just consider the only the data from sensors corresponding to those sessions. We have 12 sets of data over 6 different days. We have atleast two set manual counts for each location for verification of calibration.
 
@@ -62,8 +62,6 @@ Closer sources error causes overcounting as we see in 2, 4 but at the same time 
 The most effective way of measuring pedestrian is to have the sensor next to have the sensor next to clear area of pedestrian activity and in case of absence of any major source of noise, we should not do the signal strength filtering at all. We can even note the major possible sources of noise around the device and use it to fiugre out the right way of partitioning the data e.g. location 2 and 3 should have different pattern of signal strength filtering depending on their configuration.
 
 In terms of filtering by sequence numbers we see that the the filtering works in all the locations. It has the similar effect as the signal strength and brings us furthe closer to the manual count. Finally we calculate the adjustment factor from the first 15 minutes and apply that for the rest of the interval. We get the counts down to almost 10\% on good locations. The locations which still over count are the ones with seating next to them (2 and 4). We also see that the trends are preserved with the filtering process.
-
-Finally to summarize, through a simple raspberry pi based wifi sensors, we collected probe requests sent by user's mobile devices, cleaned them based on the reported signal strength, clustered/ fingerprinted them based on sequence numbers, aggregated them to get pedestrian counts. We then compared it to the read pedestrian count and developed adjustment factors which work for short term future.
 
 \begin{table}
 	\tbl{Data collected at different locations and the correspondin mean absolute percentage error after each filtering process}
