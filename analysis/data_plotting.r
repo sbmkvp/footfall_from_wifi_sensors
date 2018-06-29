@@ -15,19 +15,14 @@ p_comp <- bind_rows(count_all,count_data_00) %>%
 					   "05 Manual counting",
 					   "00 No filtering")) %>%
 	ggplot()+
-	geom_line(aes(time,footfall, group = type),
-			  linejoin="round",
-			  lineend="round",
-			  size = 0.25,
-			  show.legend=FALSE)+
-	geom_point(aes(time,footfall, shape = type),
-			  show.legend=FALSE)+
+	geom_line(aes(time,footfall, group = type, col=type),size = 0.5, show.legend=FALSE)+
+	geom_point(aes(time,footfall, shape = type,col=type),size = 2.5)+
 	theme(legend.position = "bottom") +
 	xlab("") +
 	ylab("") +
-	scale_colour_manual(values = c("#e41a1c","#4daf4a","#377eb8","#984ea3")) +
+	scale_colour_manual(values=c("#333333","#377eb8","#4daf4a","#e41a1c")) +
 	theme(panel.background=element_blank())
-
+p_comp
 
 p_comparison <- bind_rows(count_all,count_data_00) %>%
 	filter(time >= as.POSIXct("2017-12-20 12:30:00"),
@@ -162,3 +157,28 @@ p_local_cluster <- subset_local %>%
 	ylab("") +
 	theme(panel.background=element_blank())
 
+clustering_schematic <- subset_local %>%
+	filter(time >= as.POSIXct("2017-12-20 12:30:00"),
+		   time <= as.POSIXct("2017-12-20 12:40:00"),
+		   sequence < 2000) %>%
+	ggplot() + 
+	geom_point(aes(time,sequence,fill=mac),
+			   size = 4,
+			   shape = 21,
+			   color = "grey",
+			   stroke = 0.5,
+			   show.legend = FALSE) +
+	geom_line(aes(time,
+				  sequence,
+				  group = device_sign),
+			  # arrow = arrow(length=unit(0.1,"cm"), ends="last", type = "closed"),
+			  size = 1,
+			  # color = "#e41a1c",
+			  lineend = "round",
+			  linejoin = "round",
+			  color = "#333333",
+			  show.legend = FALSE) +
+	xlab("") +
+	ylab("") +
+	theme(panel.background=element_blank())
+clustering_schematic
