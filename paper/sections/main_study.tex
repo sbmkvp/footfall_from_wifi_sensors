@@ -44,12 +44,12 @@ Intuitively we expect that location 2 and 4 must be harder to classify than loca
 We run the k-means classification algorithm and filter out the probe requests which are randomised and have signal strengths less than the second break (threshold). 
 It is important to note that we are dealing with relative thresholds of signal strengths which can vary with location and time of the analysis.
 We then aggregate then probe requests for every minute by counting the number of Unique MAC addresses present in every minute. We also remove devices that dwell around the sensor by removing the MAC addresses which reappear from within the past hour.
-The results of the first stage of filtering process along with the thresholds are shown in Table \ref{errors-table}. Confirming our intuition, we see that the location 2 has the most MAPE followed by location 4 while rest of them have highly reduced MAPE.
+The results of the first stage of filtering process along with the thresholds are shown in Table \ref{errors_table}. Confirming our intuition, we see that the location 2 has the most MAPE followed by location 4 while rest of them have highly reduced MAPE.
 It is significant that this method alone reduces our margin of error by a 50 - 100\% from the raw counts without any cleaning.
 This makes the signal strength filtering quick and ideal method for practical applications which doesn't require absolute numbers such as creating large aggregated indexes to show long term trends. 
 We also see that the success of the signal strength filtering can be improved significantly by installing sensors such that the pedestrians and noise are at different distances from the sensor and are the field of measurement is distinct from the surroundings however noisy it might be.
 
-We then run the sequence numbers based clustering process on the rest of the probe requests to reduce the MAPE by almost 50-100\% on all the sensors except for location 3.
+We then run the sequence numbers based clustering process on the rest of the probe requests to reduce the MAPE by almost 50 - 100\% on all the sensors except for location 3.
 Location 3 is an outlier among all the other sensors since it is the only one with large amount of pedestrians very close to the sensor.
 This may be causing the over filtering caused by the previous process.
 We finally run the calibration process where we calculate the adjustment factors shown in Table \ref{errors_table}.
@@ -70,7 +70,7 @@ We the use them to adjust the counts to achieve a MAPE ranging from 10 - 50\%. W
 			5 & -72 & 0.80 & 473 &  84 &  38 & 11 \\
 		 \bottomrule
 	\end{tabular}}
-	\label{errors-table}
+	\label{errors_table}
 \end{table}
 
 \begin{figure}
