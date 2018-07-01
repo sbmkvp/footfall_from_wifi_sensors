@@ -49,10 +49,14 @@ It is significant that this method alone reduces our margin of error by a 50 - 1
 This makes the signal strength filtering quick and ideal method for practical applications which doesn't require absolute numbers such as creating large aggregated indexes to show long term trends. 
 We also see that the success of the signal strength filtering can be improved significantly by installing sensors such that the pedestrians and noise are at different distances from the sensor and are the field of measurement is distinct from the surroundings however noisy it might be.
 
-In terms of filtering by sequence numbers we see that the filtering works in all the locations. It has the similar effect as the signal strength and brings us further closer to the manual count. Finally we calculate the adjustment factor from the first 15 minutes and apply that for the rest of the interval. We get the counts down to almost 10\% on good locations. The locations which still over count are the ones with seating next to them (2 and 4). We also see that the trends are preserved with the filtering process.
+We then run the sequence numbers based clustering process on the rest of the probe requests to reduce the MAPE by almost 50-100\% on all the sensors except for location 3.
+Location 3 is an outlier among all the other sensors since it is the only one with large amount of pedestrians very close to the sensor.
+This may be causing the over filtering caused by the previous process.
+We finally run the calibration process where we calculate the adjustment factors shown in Table \ref{errors_table}.
+We the use them to adjust the counts to achieve a MAPE ranging from 10 - 50\%. We can see that the sensors with people moving right next to them tend to under-count with our methodology while sensors with seating next to them tend to over-count significantly. However, using the filtering process, we can reduce the error to almost 10\% closer to that of the ground truth.
 
 \begin{table}
-	\tbl{Data collected at different locations and the corresponding mean absolute percentage error after each filtering process}
+	\tbl{Results of footfall estimation at each location as Mean Absolute Percentage Error (MAPE) after each step of the filtering process}
 	{\begin{tabular}{ccccccc} 
 		\toprule
 			Sensor & Signal strength & Adjustment & MAPE & MAPE after & MAPE after & MAPE of\\
@@ -72,15 +76,15 @@ In terms of filtering by sequence numbers we see that the filtering works in all
 \begin{figure}
 	\begin{center}
 		\includegraphics [width=\linewidth,trim=6 6 6 6,clip] {images/main_comparison.jpeg}
-		\caption{Comparison of all the counts in the sensors}
+		\caption{Comparison of the filtering process with the ground truth in all the locations.}
 		\label{main_comparison}
 	\end{center}
 \end{figure}
 
 \begin{figure}
 	\begin{center}
-		\includegraphics [width=\linewidth] {images/main_schedule.jpeg}
-		\caption{A week of pedestrian footfall at Camden Highstreet collected by the methodology. The counts are aggregated for 5 minute intervals.}
+		\includegraphics [width=\linewidth] {images/main_footfall.jpeg}
+		\caption{A week of pedestrian footfall at the Strand, London collected by the methodology. The counts are aggregated for 5 minute intervals.}
 		\label{main_study_counts}
 	\end{center}
 \end{figure}

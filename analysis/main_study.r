@@ -302,3 +302,83 @@ counts_plot <- counts %>%
 		scale_color_manual(values=c("#e41a1c","#377eb8","#ff7f00","#4daf4a","#333333"))
 
 dbDisconnect(connection)
+
+single_sensor <- dbGetQuery(connection,"select sensor.*, vendor.vendor,case when substring(sensor.oui,2,1) in ('e','a','2','6') then 'local' else 'global' end as type from sensor left join vendor on sensor.oui=vendor.oui where sensor = 55 and date(timestamp) > '2018-02-18' and date(timestamp) < '2018-02-26';")
+
+single_sensor_c <- single_sensor %>%
+	mutate(date = as.Date(timestamp),
+		   hour = format(timestamp,"%H"),
+		   five = format(floor_date(timestamp,"5 minutes"),"%M")) %>%
+	select(-sensor,-length,-oui) %>%
+	mutate(interval = paste(date,hour,five,sep="-"))
+
+filter_signal <- function(d) {
+	if(nrow(d)>0) {
+		sig <- d$sig[d$type=="local"]
+		thres <- classIntervals(sig,2,"kmeans")$brks[2]
+		return(d[!(d$type=="local" & d$signal<thres),])
+	}
+}
+
+filter_sequence <- function(data, ds=200, dt=60) {
+	if(nrow(data)>0) {
+	data1 <- data[data$type=="global",]
+	data1$signature <- paste(data1$date,data1$mac,sep="-")
+	data <- data[data$type=="local",]
+	vertices <- data %>%
+		mutate(x = as.integer(timestamp), id = as.numeric(rownames(data))) %>%
+		select(id, x, y=sequence) %>%
+		arrange(x)
+	edges <- vertices %>%
+		pull(id) %>%
+		expand.grid(.,.) %>% rename(from=Var1,to=Var2) %>%
+		mutate(from=as.numeric(from), to=as.numeric(to)) %>%
+		filter(from<to) %>%
+		left_join(vertices, by = c("from" = "id")) %>%
+		left_join(vertices, by = c("to" = "id")) %>%
+		mutate(sdistance = sqrt((y.y-y.x)**2)) %>%
+		mutate(tdistance = sqrt((x.y-x.x)**2)) %>%
+		mutate(distance = sqrt((tdistance**2)+(sdistance**2))) %>%
+		filter(x.y >= x.x, y.y > y.x, tdistance < dt, sdistance < ds) %>%
+		group_by(from) %>%
+		summarise(to = to[which(distance == min(distance))][[1]],
+				  distance = min(distance)) %>% 
+		group_by(to) %>%
+		summarise(from = from[which(distance == min(distance))][[1]])
+	graph <- graph_from_data_frame(edges, vertices = vertices)
+	data$signature <- paste(data$vendor,data$date,data$hour,clusters(graph)$membership, sep = "-")
+	return (rbind(data1,data))
+	}
+}
+
+single_sensor_filtered <- single_sensor_c %>% 
+	split(f=list(.$date,.$hour)) %>%
+	lapply(filter_signal) %>% bind_rows()
+
+single_sensor_clustered <- single_sensor_filtered %>% split(f=list(.$vendor,.$date,.$hour)) %>% lapply(filter_sequence) %>% bind_rows()
+
+single_counts <- single_sensor_clustered %>% group_by(interval) %>% summarise(count = signature %>% unique %>% length)
+
+single_counts$count_prev <- append(c(0),single_counts$count[(1:nrow(single_counts)-1)])
+single_counts$count_next <- append(single_counts$count[2:nrow(single_counts)],c(0))
+single_counts$count <- ifelse(single_counts$count < 10, (single_counts$count_prev+single_counts$count_next)/2, single_counts$count)
+
+ggplot(single_counts) + 
+	geom_line(aes(interval,count,group=""),
+			  stat="identity",
+			  color="black",
+			  size = 0.3) +
+	theme_light()
+	# xlab("") +
+	# ylab("") +
+	theme(panel.grid.major=element_blank(),
+		  panel.grid.minor=element_blank(),
+		  panel.border=element_blank(),
+		  strip.text=element_blank(),
+		  axis.title.x=element_blank(),
+		  axis.text.x=element_blank(),
+		  axis.ticks.x=element_blank(),
+		  axis.title.y=element_blank(),
+		  axis.text.y=element_blank(),
+		  axis.ticks.y=element_blank())
+
