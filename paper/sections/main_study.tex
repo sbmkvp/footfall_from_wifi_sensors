@@ -17,54 +17,42 @@
 \begin{figure}
 	\begin{center}
 		\includegraphics [width=0.90\linewidth] {images/main_schedule.jpeg}
-		\caption{Days when the sensors were active at the corresponding location. The red square shows that manual data collection was also done.}
-		\label{pilot_clustering}
+		\caption{Data collection schedule showing the days when sensors were active at their corresponding locations. The red squares show that manual counting of pedestrians was also done on that day.}
+		\label{main_schedule}
 	\end{center}
 \end{figure}
 
-The main study was designed to validate the results of the pilot study over different locations at different times. 
-We choose five different locations across central London, to install the sensors and collect data for a long period of time. 
-We also carry out manual counting on these locations along with this across different time of the day. 
-We then apply the filtering based on signal strength and sequence numbers and compare with manual counts and evaluate the effectiveness of the process with the mean error per minute on these locations. 
-Finally we calculate the ajustment factor for the first interval of manual counts and check if that works on the consecutive intervals. 
+The main study was designed to validate the results of the pilot study over different locations at different times. We start by choosing five different locations across central London, install the sensors and collect data for extended periods of time. 
+We also carry out manual counting at these locations across different times of the day. 
+We then apply the methodologies discussed earlier to arrive at estimated pedestrian footfall and compare them with corresponding manual counts.
+We finally evaluate the effectiveness of the processes with the Mean Absolute Percentage Error (MAPE) at these locations and report our findings.
 
-The locations where the data were collected are shown in the table. The location are chosen for their variety of configuration and sources of noise. Location 1 is the `cleanest' of while location 2 is the one with the most complexity. The configuration, installation and data collection schedule is shown in the figure. 
-
-Though data was collected for many continous days, for the purposes of comparing with ground truth we just consider the only the data from sensors corresponding to those sessions. We have 12 sets of data over 6 different days. We have atleast two set manual counts for each location for verification of calibration.
+The locations at which the data were collected are shown in Table \ref{locations-table}. The locations are chosen for their diverse site conditions and unique sources of noise around the potential location of the sensors. The position of the sensor at these locations with respect to the context is shown the Figure \ref{main_signal_strength}. We can see that Location 5 is the `cleanest' with one clear stationary source of noise (phone shop) of while location 2 is the one with the most complexity with seating area all around the sensor. 
+The sensors were operational through out February and March while manual counts were conducted in these location in half hour sessions on at least two different days. For the purposes of comparing with ground truth we just considered the data from sensors which corresponding to the 12 sets of available manual counts. The schedule of data collection is shown in Figure \ref{main_schedule}
 
 \begin{figure}
 	\centering
-	\subfigure[Installation configuration of sensors at various locations]{
+	\subfigure[Installation configuration of sensors at the survey locations (not to scale)]{
 		\resizebox*{0.46\linewidth}{!}{\includegraphics[trim=20 6 20 6,clip]{images/main_configs.jpeg}}}\hspace{20pt}
-	\subfigure[Density distribution of signal strength (lower values show higher signal strength)]{
+	\subfigure[Density distribution of signal strength reported in collected probe requests (lower values show higher signal strength)]{
 		\resizebox*{0.46\linewidth}{!}{\includegraphics[trim=20 4 25 6,clip]{images/main_signals.jpeg}}}
-	\caption{Distribution of signal strengths across locations} \label{methodology_schematic}
+	\caption{Distribution of signal strengths across locations} \label{main_signal_strength}
 \end{figure}
 
-First we see how the distribution of the signal strength varies with location and configuration. 
-The density plot for signal strength is shown alogn with configuration in figure.
-We can see that the signal strength distribution shows distinct patterns of high and low when the installation is that there is a clear distant source of noise but this distinction get more and more obscure as we move towards difficult installations. 
-For example, location 2 is almost a normally distributed noise as it is too far to pick up any pedestrians but location 5 with a clear view of footpath and a phone shop next door shows clear distinction between the two. 
-Intuitively the classfication algorithm should give us better results in the latter. 
-It is important to note that we are dealing with relative singal strengths, this can vary with location and time of the analysis but we should be still be able to differentiate signal from noise. 
-We run the kmeans classification algorithm and filter out the probe requests which are randomised and have signal strengths less than the second break (or the threshold). 
-We then count the number of Unique MAC addresses present in every minute and remove MAC addreses which reappear within 30 minutes of previous appearance. 
-We then compare this with the minute by minute aggreagation for the manual counts and find the average error per minute for the sensor count. 
-The results are shown in the table.We see that the location 2 has the most error 400\% confirming our intuition while surprisingly location 3 has the least error -3\%. 
-We also see that the error follows the complexity of the installation. 
-It is also very promising that this method alone reduces our margin of error by a 50 - 100\%
-For some practical purposes which do not require absolute numbers, this should be sufficient. 
-e.g. Indexes of activity and change dashboards and short term trends identification.
+We start by looking at the distribution of the signal strength reported by the probe requests across the locations. From the density plot shown in Figure \ref{main_signal_strength} we can see that there is clear relation between the distribution of the signal strength and the distance and complexity of the source of noise. We can see that while location 5 shows clean difference between low and high signal strengths, location 2 is almost normally distributed.
+Intuitively we expect that location 2 and 4 must be harder to classify than location 1 3 and 5. 
+We run the k-means classification algorithm and filter out the probe requests which are randomised and have signal strengths less than the second break (threshold). 
+It is important to note that we are dealing with relative thresholds of signal strengths which can vary with location and time of the analysis.
+We then aggregate then probe requests for every minute by counting the number of Unique MAC addresses present in every minute. We also remove devices that dwell around the sensor by removing the MAC addresses which reappear from within the past hour.
+The results of the first stage of filtering process along with the thresholds are shown in Table \ref{errors-table}. Confirming our intuition, we see that the location 2 has the most MAPE followed by location 4 while rest of them have highly reduced MAPE.
+It is significant that this method alone reduces our margin of error by a 50 - 100\% from the raw counts without any cleaning.
+This makes the signal strength filtering quick and ideal method for practical applications which doesn't require absolute numbers such as creating large aggregated indexes to show long term trends. 
+We also see that the success of the signal strength filtering can be improved significantly by installing sensors such that the pedestrians and noise are at different distances from the sensor and are the field of measurement is distinct from the surroundings however noisy it might be.
 
-We see that the success of the signal strength filtering depends on the how we tackle the problems in the installing the devices.
-The more the device in installed in a way that the field of measurement is distinct from its surroundings (however noisy they might be) the more successful this process is.
-Closer sources error causes overcounting as we see in 2, 4 but at the same time highly close field of measurement with no big source of error can cause undercounting such as in 3. The complexity of the installation and uniformity of surroundings near the sensors directly coorrelate to the MAPE.
-The most effective way of measuring pedestrian is to have the sensor next to have the sensor next to clear area of pedestrian activity and in case of absence of any major source of noise, we should not do the signal strength filtering at all. We can even note the major possible sources of noise around the device and use it to fiugre out the right way of partitioning the data e.g. location 2 and 3 should have different pattern of signal strength filtering depending on their configuration.
-
-In terms of filtering by sequence numbers we see that the the filtering works in all the locations. It has the similar effect as the signal strength and brings us furthe closer to the manual count. Finally we calculate the adjustment factor from the first 15 minutes and apply that for the rest of the interval. We get the counts down to almost 10\% on good locations. The locations which still over count are the ones with seating next to them (2 and 4). We also see that the trends are preserved with the filtering process.
+In terms of filtering by sequence numbers we see that the filtering works in all the locations. It has the similar effect as the signal strength and brings us further closer to the manual count. Finally we calculate the adjustment factor from the first 15 minutes and apply that for the rest of the interval. We get the counts down to almost 10\% on good locations. The locations which still over count are the ones with seating next to them (2 and 4). We also see that the trends are preserved with the filtering process.
 
 \begin{table}
-	\tbl{Data collected at different locations and the correspondin mean absolute percentage error after each filtering process}
+	\tbl{Data collected at different locations and the corresponding mean absolute percentage error after each filtering process}
 	{\begin{tabular}{ccccccc} 
 		\toprule
 			Sensor & Signal strength & Adjustment & MAPE & MAPE after & MAPE after & MAPE of\\
@@ -84,9 +72,15 @@ In terms of filtering by sequence numbers we see that the the filtering works in
 \begin{figure}
 	\begin{center}
 		\includegraphics [width=\linewidth,trim=6 6 6 6,clip] {images/main_comparison.jpeg}
-		\caption{Comparison of all the counts in teh sensors}
+		\caption{Comparison of all the counts in the sensors}
 		\label{main_comparison}
 	\end{center}
 \end{figure}
 
-
+\begin{figure}
+	\begin{center}
+		\includegraphics [width=\linewidth] {images/main_schedule.jpeg}
+		\caption{A week of pedestrian footfall at Camden Highstreet collected by the methodology. The counts are aggregated for 5 minute intervals.}
+		\label{main_study_counts}
+	\end{center}
+\end{figure}
