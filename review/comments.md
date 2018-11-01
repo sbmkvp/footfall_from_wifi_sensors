@@ -1,89 +1,119 @@
-# First review comments
-Manuscript title : Estimating Real-Time Highstreet Footfall from Wi-Fi Probe Requests
+First review comments
+=====================
+
+Title : Estimating Real-Time Highstreet Footfall from Wi-Fi Probe Requests
 Manuscript id : IJGIS-2018-0340
 Comments dated : 28-Oct-2018
 
-## 1. Editor
+1 Editor
+--------
 
-### 1.1. Overall Comments
+1.1 Overall Comments
+---------------------
 
-1. While this is an important and timing topic dealing with data uncertainty and privacy in the mobile age, the reviewers have raised concerns on
+1. While this is an important and timing topic dealing with data uncertainty
+and privacy in the mobile age, the reviewers have raised concerns on
 	- Clarity of the methodology
 	- Lack of discussion of wifi-based human activity studies in the big data age
 	- Proper use of terminology
 	- Performance of the algorithm etc.
 	
-2. In lieu of these comments, they have recommended to make substantial revisions to your manuscript
+2. In lieu of these comments, they have recommended to make substantial revisions
+to your manuscript
+
 3. Also, since this is a "smart cities" related special issue, I ask you to
-	- Add more discussions on smart cities in the introduction and conclusion sections and
+	- Add more discussions on smart cities in the introduction and 
+	  conclusion sections and
 	- Link your research more tightly to this theme. 
 
-### 1.2 General Instructions
+1.2 General Instructions
+------------------------
 
-1. Please try to avoid making the paper longer (keep in mind that the average length of papers in this journal is 18-20 published pages). It is important that you ensure that the spelling and grammar is of a high standard.
-2.
-3.
-4.
-5.
+1. Please try to avoid making the paper longer (keep in mind that the average
+length of papers in this journal is 18-20 published pages). It is important that
+you ensure that the spelling and grammar is of a high standard.
 
+2. Please also highlight the changes to your manuscript within the document by
+using the track changes mode in MS Word or by using bold or colored text.
 
-## Reviewer 1
-
-## Reviewer 2
-
-## Reviewer 3
-
-
-
-To revise your manuscript, please select the link below, which will take you your decision letter, and where you need to resubmit your manuscript.
-
-*** PLEASE NOTE: This is a two-step process. After clicking on the link, you will be directed to a webpage to confirm. *** 
-
+3. To revise your manuscript, please select the link below,
 https://mc.manuscriptcentral.com/ijgis?URL_MASK=a32caf3bbd49412cac8d1cfa9d7ebaf8
+which will take you your decision letter, and where you need to
+resubmit your manuscript.
 
-You will be unable to make your revisions on the originally submitted version of the manuscript.  Instead, revise your manuscript using a word processing program and save it on your computer.  Please also highlight the changes to your manuscript within the document by using the track changes mode in MS Word or by using bold or colored text.
+4. If you have used the on-line LaTeX template, upload all those files and a pdf.
 
-Once the revised manuscript is prepared, you can upload it and submit it through your Author Centre. Could you upload your revision of the paper with the text as a word file (without figures), with a Title Page as a separate file and each of the figures as a separate file in one of the following formats (as required in our ‘Advice to Authors’): TIFF (tagged image file format), PostScript or EPS (encapsulated PostScript).  Alternatively, if you have used the on-line LaTeX template, upload all those files (and a pdf).
+5. Please check your English spelling and grammar.
 
-PLEASE check your English spelling and grammar. The paper will be returned if this is not done.
+6. There are two hard limits that you need to bear in mind, 
+	- Image size - Please be aware that the total number of pixels 
+	  (height X width) in each image must be less than 40,000,000 (40 mp).
+	- Total file size - please make sure that the combined, uncompressed,
+	  file sizes do not exceed 20Mb. The internal LZW compression, which 
+	  is an option in TIF, is acceptable however.
+	- Please do not save B/W or Greyscale images as RGB.
 
-There are two hard limits that you need to bear in mind, image size and total file size. Please be aware that the total number of pixels (height X width) in each image must be less than 40,000,000 (40 megapixels). Please do not save B/W or Greyscale images as RGB.  Also, please make sure that the combined, uncompressed, file sizes do not exceed 20Mb. The internal LZW compression, which is an option in TIF, is acceptable however.
+7. Equations and tables need to be in an editable format.
 
-Equations and tables need to be in an editable format.
+8. You need to check that the paper title in ScholarOne is the same as the
+title on the paper and that the Title page contains all authors’ names and
+affiliations as you would want them to appear.
 
-You need to check that the paper title in ScholarOne is the same as the title on the paper and that the Title page contains all authors’ names and affiliations as you would want them to appear.
+9. When submitting your revised manuscript, you will be able to respond to
+the comments made by the reviewers in the space provided.  You can use this
+space to document any changes you make to the original manuscript.  In order
+to expedite the processing of the revised manuscript, please be as specific as
+possible in your response to the reviewers.
 
-When submitting your revised manuscript, you will be able to respond to the comments made by the reviewers in the space provided.  You can use this space to document any changes you make to the original manuscript.  In order to expedite the processing of the revised manuscript, please be as specific as possible in your response to the reviewers.
+10. Please delete any redundant files before completing the submission.
 
-IMPORTANT:  Your original files are available to you when you upload your revised manuscript.  Please delete any redundant files before completing the submission.
+2 Reviewer 1
+------------
 
-Because we are trying to facilitate timely publication of manuscripts submitted to the International Journal of Geographical Information Science, your revised manuscript should be uploaded as soon as possible.  If it is not possible for you to submit your revision in a reasonable amount of time, we may have to consider your paper as a new submission.
+2.1 Overall Summary
+-------------------
 
-Once again, thank you for submitting your manuscript to the International Journal of Geographical Information Science and I look forward to receiving your revision.
+This paper is about the estimation of pedestrian footfall using Wi-Fi
+signal emitted by mobile devices.
+It deals with the problem of estimating the footfall size based on a noisy
+and biased data. More specifically it addresses the following issues that may
+lead to overcounting:
+ - MAC randomization that may cause a device to generate several MAC addresses;
+ - Signals received from outside the interest zone; unequal adoption
+   of Wi-Fi smartphone in the population.
+To address this issue, a number of techniques are introduced:
+ - clustering received signal strength to remove device that are outside
+   the monitored area;
+ - clustering probes based on sequence number and timing;
+ - finally an adjustment factor is applied to correct the estimated value.
+   The adjustment factor is calibrated for each location using
+   a manual counting.
+The author conducted a pilot experiment to identify the clustering 
+algorithms and parameters, and then they conducted a second range of 
+experiments at different location over an extended period of time. During 
+each of those experiments, ground-truth count was collected manually.
+The results show that the presented approach can significantly reduce the
+counting error compared to a naive solution consisting in counting the 
+distinct number of MAC observed.
+Nevertheless, there are cases (2) where the error is still large (50%),
+even if in other cases (1) the error is only of 9%.   
 
-Sincerely,
-Dr Wenwen LI
-Associate Editor, International Journal of Geographical Information Science
-wenwen@asu.edu
+2.2 General Comments
+--------------------
 
-Reviewers' Comments to Author:
-Reviewer: 1
+1. The idea of clustering frames using sequence number has been introduced 
+in [1]. This work needs to be cited when introducing the proposed clustering
+algorithm.
+[1] Mathy Vanhoef, Célestin Matte, Mathieu Cunche, Leonardo Cardoso, Frank
+Piessens. Why MAC Address Randomization is not Enough: An Analysis of Wi-Fi
+Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016, 
 
-<b>Comments to the Author</b>
-This paper is about the estimation of pedestrian footfall using Wi-Fi signal emitted by mobile devices. It deals with the problem of estimating the footfall size based on a noisy and biased data. More specifically it addresses the following issues that may lead to overcounting: MAC randomization that may cause a device to generate several MAC addresses; signals received from outside the interest zone; unequal adoption of Wi-Fi smartphone in the population. To address this issue, a number of techniques are introduced: clustering received signal strength to remove device that are outside the monitored area; clustering probes based on sequence number and timing; finally an adjustment factor is applied to correct the estimated value. The adjustment factor is calibrated for each location using a manual counting. The author conducted a pilot experiment to identify the clustering algorithms and parameters, and then they conducted a second range of experiments at different location over an extended period of time. During each of those experiments, ground-truth count was collected manually. The results show that the presented approach can significantly reduce the counting error compared to a naive solution consisting in counting the distinct number of MAC observed. Nevertheless, there are cases (2) where the error is still large (50%), even if in other cases (1) the error is only of 9%.   
-
-
-The idea of clustering frames using sequence number has been introduced in [1]. This work needs to be cited when introducing the proposed clustering algorithm.
-
-[1] Mathy Vanhoef, Célestin Matte, Mathieu Cunche, Leonardo Cardoso, Frank Piessens. Why MAC Address Randomization is not Enough: An Analysis of Wi-Fi Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016, 
-
-The author considered that the hashing of MAC address is a good way to protect users privacy, as some MAC address collected by the device may not be random. However hashing of MAC address cannot be considered as a proper anonymization technique (see [2] and http://webpolicy.org/2014/03/19/questionable-crypto-in-retail-analytics/ ); at best it can be considered as an obfuscation. 
-
+2. The author considered that the hashing of MAC address is a good way to protect users privacy, as some MAC address collected by the device may not be random. However hashing of MAC address cannot be considered as a proper anonymization technique (see [2] and http://webpolicy.org/2014/03/19/questionable-crypto-in-retail-analytics/ ); at best it can be considered as an obfuscation. 
 [2] Levent Demir, Mathieu Cunche, Cédric Lauradoux. Analysing the privacy policies of Wi-Fi trackers. Workshop on Physical Analytics, Jun 2014, Bretton Woods, United States. ACM, 2014
 
-There is a number of commercial solutions doing counting based on Wi-Fi signal. Although the detail of their solution is not public, it would be worthwhile to acknowledge their existence.
+3. There is a number of commercial solutions doing counting based on Wi-Fi signal. Although the detail of their solution is not public, it would be worthwhile to acknowledge their existence.
 
-In section 3.2, it is explained that data is divided into two sets corresponding on random and non-random MAC. Which method is used to perform this classification ?
+4. In section 3.2, it is explained that data is divided into two sets corresponding on random and non-random MAC. Which method is used to perform this classification ?
 
 How was the sensor positioned compared to the area monitored used for ground truth ? A more detailed description is required regarding the positioning of the sensor and the size and topology of the surveyed area.  
 
@@ -111,6 +141,27 @@ Some typos and other remarks:
 - Wireshark and not WireShark.
 - " We hypothesize that an adjustment factor could be arrived at for each location of data collection, ""This calibration can be carried over periodically and the frequency to improve the quality of the estimation." something wrong in both sentences.
 -  
+
+
+Reviewer 2
+----------
+
+Reviewer 3
+----------
+
+
+
+
+
+
+
+
+
+
+
+
+Reviewers' Comments to Author:
+Reviewer: 1
 
 
 
