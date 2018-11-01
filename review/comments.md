@@ -21,6 +21,7 @@ Comments dated : 28-Oct-2018
 ### 1.2 General Instructions
 
 1. Please try to avoid making the paper longer (keep in mind that the average length of papers in this journal is 18-20 published pages). It is important that you ensure that the spelling and grammar is of a high standard.
+
 2.
 3.
 4.
