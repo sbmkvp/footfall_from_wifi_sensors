@@ -459,10 +459,16 @@ you choose time range from 12:30 to 13:00 hrs ?
 
 2. Will you give more detail information about the data and the parameters for 
 various clustering algorithms? Including the number of records, the number of 
-clusters.
+clusters. How about the performance for different clustering methods 
+in your study？
 
-> Thank you. This has been corrected in the revised version of the
-> paper.
+> Thank you. This part has been expanded and clarified in the revised manuscript. The
+> performance of the algorithms were tested on the basis of the time taken for
+> processing and the relative improvement in results. We found the k-means gives
+> us the best data for the least processing time. The graph based clustering
+> was done using parameters which were arrived at using trial and error
+> controlling for a known device.
+
 
 4.3 Corrections and Clarifications
 ----------------------------------
@@ -470,14 +476,17 @@ clusters.
 More specific comments can be found in the following. 
 
 1. Minor formatting issues and typos needs to be fixed.
+Figure 2, no value and units in the x-axis and y-axis.
+Table 1, and Figure 4 are in wrong location.
 
-2. Figure 2, no value and units in the x-axis and y-axis.
+> Thank you. This has been corrected in the revised version of the
 
-3. Table 1, and Figure 4 are in wrong location.
+2. Related work: How about WiFi-based real-time data analytics?
 
-4. Related work: How about WiFi-based real-time data analytics?
+> We have included reference to such work in our extended discussion of
+> the relevance of the work to the smart cities discourse.
 
-5. Methodology: Will you draw a diagram of the Methodology?
+3. Methodology: Will you draw a diagram of the Methodology?
 
 > We have resequenced some of the material in response to Referee 2
 > and, cognisant of over-all length requirements, think that this (rather
@@ -487,6 +496,18 @@ More specific comments can be found in the following.
 PostgreSQL? Did you compare Apache Flink and Spark Streaming for real-time data 
 collecting? 
 
-7. How about the performance for different clustering methods in your study？
+> This is an interesting point in the context of big data and tools for tackling
+> big data. Though the data set at hand is large enough for desktop computing to
+> be unfeasible, it is neither big nor fast enough for a large scale big data
+> systems. A toolkit with opensource, free text processing tools and relational
+> database management system was enough to handle the compexity, size and speed
+> of the data. The toolkit employed here involves PostgreSQL, Bash, Unix tools
+> for text processing (sed, awk, sort, join), NodeJs and R counting.
+> This was a proven toolkit used in the larger project (smart street sensor)
+> providing near real-time delivery of data.
 
-8. The reference list needs to be written in a standard format. Some reference papers are lacking specific pages .Please use a standard way of reference list.
+5. The reference list needs to be written in a standard format. Some reference 
+papers are lacking specific pages .Please use a standard way of reference list.
+
+> Thank you. This has been corrected in the revised version of the paper.
+
