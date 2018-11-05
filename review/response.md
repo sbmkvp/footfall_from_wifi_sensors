@@ -302,7 +302,9 @@ organized effectively and missing many details in the methodology.  Before
 addressing these problems, it is difficult to assess the reliability and 
 scientific merit of the case study.
 
-> 
+> Thank you very much for this endorsement of the motivation for our paper.
+> We hope that following responses and the amendments to the paper will allay
+> your concerns about the methodology and application.
 
 3.2 General Comments
 --------------------
@@ -315,7 +317,14 @@ modeling human activities and urban dynamics based on various types of big
 geodata, such as mobile phone records, location-based social media, Bluetooth 
 data, etc. 
 
-2. The conclusion did not address most of the important results from the case study and should be expanded.
+2. The conclusion did not address most of the important results from the case 
+study and should be expanded.
+
+> This is a welcome comment, and we have added material in the
+> introduction and conclusion as to the value of new Big Data sources for
+> developing activity-based representations of behaviour and circumstances
+> in the smart city, This chimes with much of our related research, but we
+> write cognisant of the article length restrictions of IJGIS.
 
 3.3 Corrections and Clarifications
 ----------------------------------
@@ -328,6 +337,8 @@ sequence number and length of the packet are sufficient to estimate the number
 of unique devices. This argument was not elaborated until 2.5 pages later 
 in section 3.2.
 
+> This material has now been amended and resequenced.
+
 2. P6 l27, please provide more information regarding how you defined the 
 threshold for low/high signal strength when eliminating the background noise. 
 This was also unclear in the case study on P8, where the authors repeatedly 
@@ -336,16 +347,50 @@ clustering is considered a “classification algorithm” as claimed in p8 l26.
 Very few details were provided regarding the parameter setting of 
 these analyses.
 
+> Thank you. The reference to clustering has been amended. The
+> specifics of the thresholds used have been included, and the techniques
+> justified in more detail.
+
+
 3. P6 l30-31, in the phone shop example, the authors mentioned that it is 
 possible to identify background noise based on a sharp rise of the request 
 number; however, this will also eliminate the regular pedestrian flow in that 
 shop and cause additional inaccuracy. Please clarify.
 
+> Thank you. Clarified in the revised version. It is know with preliminary 
+> investigation that the received signal strength indicator decreases with
+> increasing distance between the mobile device and the base station. This
+> change is also found to be exponential as opposed to linear. With this context
+> When we install a sensor to have a clear view of the pedestrian footpath
+> in front of it, we make sure that all the devices beyond a certain distance
+> will report similarly low signal strength. This threhold is idenfied using
+> the kmeans algorithm to find the natural break in the data. We have found that
+> this successfully isolates a farther stationary source of large number of
+> probe requests such as a phone shop or a restaurant next door, Bustops etc.
+> This doesn't work when the source of error is within the range of the
+> footfall. As shown in our examples 2,4. Here our methodology fails to provide
+> sufficient accuracy.
+
 4. P7 l21, how often does the recycling of sequence number occur, and how will 
 this impact the reliability of your analysis? Please provide more details.
 
+> The recycling of the sequence number occurs every 4096 counts. From our
+> experiments we observed that a device staying next to device actively searching
+> recycles the sequence number 1-2 times in a 30 mins interval. On average
+> this is expected to be much less than this. when the device doesn't probe
+> as frequently. We have included more details regarding the cycling of sequence
+> numbers and have mentioned method to overcomet this as mentioned by other
+> reviewer. The change in implementing the method is estimated to be --% which
+> we found to be not significant in our context.
+
 5. P7 Section 3.3, please be more specific about the calibration process and 
 the external source of information to be used here.
+
+> This section has been expanded to include more details. The calibration process
+> is adjusting the future counts based on a sample manual counts done at the
+> location. The external source of information used is the manual counts which is
+> collected outside the sensor
+
 
 6. P7 l45, the analysis in this research is based on one single sensor for each 
 location; however, in reality, it is very common to estimate travel flows based 
