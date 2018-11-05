@@ -317,14 +317,18 @@ modeling human activities and urban dynamics based on various types of big
 geodata, such as mobile phone records, location-based social media, Bluetooth 
 data, etc. 
 
-2. The conclusion did not address most of the important results from the case 
-study and should be expanded.
-
 > This is a welcome comment, and we have added material in the
 > introduction and conclusion as to the value of new Big Data sources for
 > developing activity-based representations of behaviour and circumstances
 > in the smart city, This chimes with much of our related research, but we
 > write cognisant of the article length restrictions of IJGIS.
+
+2. The conclusion did not address most of the important results from the case 
+study and should be expanded.
+
+> Yes, we agree, and some wider conclusions about the implications of
+> our research for better understanding the functioning of the smart city
+> have now been added.
 
 3.3 Corrections and Clarifications
 ----------------------------------
@@ -434,6 +438,8 @@ method address duplication in multiple sensors?
 
 1. This paper presents Wi-Fi based footfall counting methodology, which is timely and interesting topic. The method can be performed to estimate human activity such as pedestrian footfall from Wi-Fi probe requests. 
 
+> Yes, thank you.
+
 4.2 General Comments
 --------------------
 
@@ -443,9 +449,20 @@ Some areas where I would like to see more detail:
 a week pedestrian footfall. How to consider this situation in your study? Why do
 you choose time range from 12:30 to 13:00 hrs ? 
 
+> Thank you. Our related work examines daily, weekly and seasonal
+> variation, and wil be the subject of future papers. There was no reason for
+> selecting the time in the pilot study. the location was chosen for it it known
+> to have high number of randomised probe requests and has one of the highest
+> footfall in London. For the main study the counting was done such that each
+> location has atleast 2/3 counts in the same time interval.
+
+
 2. Will you give more detail information about the data and the parameters for 
 various clustering algorithms? Including the number of records, the number of 
 clusters.
+
+> Thank you. This has been corrected in the revised version of the
+> paper.
 
 4.3 Corrections and Clarifications
 ----------------------------------
@@ -461,6 +478,10 @@ More specific comments can be found in the following.
 4. Related work: How about WiFi-based real-time data analytics?
 
 5. Methodology: Will you draw a diagram of the Methodology?
+
+> We have resequenced some of the material in response to Referee 2
+> and, cognisant of over-all length requirements, think that this (rather
+> than a diagram) addresses your concerns.
 
 4. Performance Analysis: How about the performance for collecting data using 
 PostgreSQL? Did you compare Apache Flink and Spark Streaming for real-time data 
