@@ -391,13 +391,28 @@ the external source of information to be used here.
 > location. The external source of information used is the manual counts which is
 > collected outside the sensor
 
-
 6. P7 l45, the analysis in this research is based on one single sensor for each 
 location; however, in reality, it is very common to estimate travel flows based 
 on multiple sensors (e.g., nearby stores in a shopping mall). How would your 
 method address duplication in multiple sensors?
 
+> This is a valid concern. Which we tried to clarify in the revised manuscript.
+> Our motivation is not to attempt to track the movements of individuals,
+> although we do attempt to accommodate measurement variations attributable to 
+> micro-site location of the sensors. In related work we have carried out 
+> controlled comparison of sensor measures obtained from adjacent store
+> locations, and examined correspondence with retail unit function. This enables
+> identification of the differences in dwell time between, for example,
+> fast food outlets and clothes shops. This full analysis requires
+> addition of store till data and the analysis is detailed. For this
+> reason we include only a short reference to this extension of our
+> analysis here.
+
 7. P10 l48, how was the adjustment factor determined?
+
+> The adjustment factor is calculated as the ration between the manual counts to
+> the counts calculated from sensor for the sample period. This 
+> is used to adjust future counts at the same locations.
 
 4 Reviewer 3
 ------------
