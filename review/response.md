@@ -406,7 +406,19 @@ method address duplication in multiple sensors?
 > fast food outlets and clothes shops. This full analysis requires
 > addition of store till data and the analysis is detailed. For this
 > reason we include only a short reference to this extension of our
-> analysis here.
+> analysis here. We also aim this method to count footfall accurately at 
+> locations rather than the flow of footfall between those locations. But as 
+> demonstarted in
+> Lee J, Nemati S, Silva I, Edwards BA, Butler JP, Malhotra A. Transfer entropy 
+> estimation and directional coupling change detection in biomedical time series.
+> Biomed Eng Online. 2012;11:19. Published 2012 Apr 13.
+> doi:10.1186/1475-925X-11-19
+> and
+> Vicente R, Wibral M, Lindner M, Pipa G. Transfer entropy--a model-free 
+> measure of effective connectivity for the neurosciences.
+> J Comput Neurosci. 2010;30(1):45-67.
+> we can infer the relation or flow between the locations using other
+> probabilistic approaches.
 
 7. P10 l48, how was the adjustment factor determined?
 
