@@ -413,14 +413,18 @@ method address duplication in multiple sensors?
 > analysis here. We also aim this method to count footfall accurately at 
 > locations rather than the flow of footfall between those locations. But as 
 > demonstarted in
+
 > Lee J, Nemati S, Silva I, Edwards BA, Butler JP, Malhotra A. Transfer entropy 
 > estimation and directional coupling change detection in biomedical time series.
 > Biomed Eng Online. 2012;11:19. Published 2012 Apr 13.
 > doi:10.1186/1475-925X-11-19
+
 > and
+
 > Vicente R, Wibral M, Lindner M, Pipa G. Transfer entropy--a model-free 
 > measure of effective connectivity for the neurosciences.
 > J Comput Neurosci. 2010;30(1):45-67.
+
 > we can infer the relation or flow between the locations using other
 > probabilistic approaches.
 
@@ -464,7 +468,7 @@ you choose time range from 12:30 to 13:00 hrs ?
 > location has atleast 2/3 counts in the same time interval.
 
 
-2. Will you give more detail information about the data and the parameters for 
+2. Will you give more detailed information about the data and the parameters for 
 various clustering algorithms? Including the number of records, the number of 
 clusters. How about the performance for different clustering methods 
 in your study？
