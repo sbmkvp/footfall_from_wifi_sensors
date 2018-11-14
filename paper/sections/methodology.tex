@@ -20,7 +20,7 @@ It has two parts, first part is the Organisation Unique Identifier (OUI) which g
 
 Data collection was done with the help of custom sensors built from modifying the hardware used in Smart street sensors \citep{sss2016} and updating them with custom software.
 The sensor is essentially a Raspberry-Pi device with Wi-Fi and 3G modules.
-It keeps the Wi-Fi module in `Monitor' mode and uses the open source software - WireShark \citep{wireshark2} to passively collect all packets sent to `broadcast', marked with type as management' and subtype as `probe requests'.
+It keeps the Wi-Fi module in `Monitor' mode and uses the open source software - Wireshark \citep{wireshark2} to passively collect all packets sent to `broadcast', marked with type as management' and subtype as `probe requests'.
 The MAC address in these probe requests is anonymised at the device level using a cryptographic hashing algorithm and transmitted through 3G connection to a central database via web-sockets protocol, where it is stored in a PostgreSQL database for further analysis.
 A overall schematic of the data collection and storage process is shown in Figure \ref{datacollection_schematic}.
 The ground truth on number of pedestrian footfall was recorded using a custom mobile application - Clicker \citep{bala2018clicker}
@@ -41,7 +41,7 @@ We propose the following internal and external validation methods to tackle each
 
 \begin{figure}
 	\centering
-	\subfigure[Distribution of signal strengths showing the filtering of background noise]{
+	\subfigure[Distribution of signal strengths (dBm) showing the filtering of background noise]{
 		\resizebox*{0.45\linewidth}{!}{\includegraphics{images/methodology_signalstrength.jpeg}}}\hspace{20pt}
 	\subfigure[Clustering probe requests as nodes in a graph using increasing sequence numbers]{
 	\resizebox*{0.45\linewidth}{!}{\includegraphics{images/methodology_clustering.jpeg}}}

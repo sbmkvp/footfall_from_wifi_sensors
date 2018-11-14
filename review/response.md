@@ -479,7 +479,9 @@ More specific comments can be found in the following.
 Figure 2, no value and units in the x-axis and y-axis.
 Table 1, and Figure 4 are in wrong location.
 
-> Thank you. This has been corrected in the revised version of the
+> Thank you. This has been corrected in the revised version of the manuscript.
+> Figure 2 is just a schematic showing the idea of cut off and clustering hence
+> there are now values on the axes. We have included the units in the description
 
 2. Related work: How about WiFi-based real-time data analytics?
 
