@@ -449,8 +449,15 @@ Some areas where I would like to see more detail:
 a week pedestrian footfall. How to consider this situation in your study? Why do
 you choose time range from 12:30 to 13:00 hrs ? 
 
-> Thank you. Our related work examines daily, weekly and seasonal
-> variation, and wil be the subject of future papers. There was no reason for
+> Thank you. Our related work (cited below) examines daily, weekly and seasonal
+> variation, and wil be the subject of future papers.
+
+> Lugomer, K., & Longley, P. (2018). Towards a Comprehensive Temporal 
+> Classification of Footfall Patterns in the Cities of Great Britain (Short
+> Paper). In LIPIcs-Leibniz International Proceedings in Informatics (Vol. 114).
+> Schloss Dagstuhl-Leibniz-Zentrum fuer Informatik.
+
+> There was no reason for
 > selecting the time in the pilot study. the location was chosen for it it known
 > to have high number of randomised probe requests and has one of the highest
 > footfall in London. For the main study the counting was done such that each
