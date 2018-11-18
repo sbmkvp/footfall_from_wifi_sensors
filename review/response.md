@@ -440,7 +440,9 @@ method address duplication in multiple sensors?
 4.1 Overall Summary
 -------------------
 
-1. This paper presents Wi-Fi based footfall counting methodology, which is timely and interesting topic. The method can be performed to estimate human activity such as pedestrian footfall from Wi-Fi probe requests. 
+1. This paper presents Wi-Fi based footfall counting methodology, which is 
+timely and interesting topic. The method can be performed to estimate human
+activity such as pedestrian footfall from Wi-Fi probe requests. 
 
 > Yes, thank you.
 

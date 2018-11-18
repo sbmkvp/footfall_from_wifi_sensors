@@ -6,13 +6,14 @@ library(ggplot2)
 library(igraph)
 library(lubridate)
 
-signal_comparison <- function(method) {
+signal_comparison <- function(method,records) {
 	print(method)
 	t1 <- Sys.time()
 	sensor <- "../data/final_sensor_data.csv" %>% 
 		read.csv(stringsAsFactors = FALSE) %>% as_tibble() %>%
 		select(time, signal, mac, oui, vendor, type, sequence) %>%
-		mutate(time = as.POSIXct(time, format = "%b %d, %Y %H:%M:%OS"))
+		mutate(time = as.POSIXct(time, format = "%b %d, %Y %H:%M:%OS")) %>%
+		arrange(time) %>% head(records)
 	llogg <- capture.output({threshold <- classIntervals(sensor$signal, 2, method)$brks[2]})
 	print(threshold); time <- as.numeric(Sys.time()-t1); print(time)
 	add_signature <- function(data, ds, dt) {
