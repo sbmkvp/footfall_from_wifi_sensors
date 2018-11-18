@@ -6,16 +6,15 @@ library(ggplot2)
 library(igraph)
 library(lubridate)
 
-signal_comparision <- function(method,records) {
+signal_comparison <- function(method) {
 	print(method)
 	t1 <- Sys.time()
 	sensor <- "../data/final_sensor_data.csv" %>% 
 		read.csv(stringsAsFactors = FALSE) %>% as_tibble() %>%
 		select(time, signal, mac, oui, vendor, type, sequence) %>%
-		mutate(time = as.POSIXct(time, format = "%b %d, %Y %H:%M:%OS")) %>%
-		arrange(time) %>% head(records)
+		mutate(time = as.POSIXct(time, format = "%b %d, %Y %H:%M:%OS"))
 	llogg <- capture.output({threshold <- classIntervals(sensor$signal, 2, method)$brks[2]})
-	print(threshold)
+	print(threshold); time <- as.numeric(Sys.time()-t1); print(time)
 	add_signature <- function(data, ds, dt) {
 		vertices <- data %>%
 			mutate(x = as.integer(time), id = as.numeric(rownames(data))) %>%
@@ -56,14 +55,12 @@ signal_comparision <- function(method,records) {
 		mutate(diff = (footfall.y - footfall.x)/ footfall.x) %>%
 		pull(diff) %>% mean
 	mape <- (mape * 100) %>% round %>% as.character %>% paste("%")
-	time <- as.numeric(Sys.time()-t1)
-	print(mape); print(time); cat("\n\n");
+	print(mape);
 	return(list(manual_counts = manual_counts,
 				sensor_counts = sensor_counts,
 				threshold = threshold,
 				mape = mape,
 				time = time))
 }
-methods <- c( "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher")
-for(i in methods) { 
-	data <- signal_comparision(i,30000) }
+# methods <- c( "sd", "equal", "pretty", "quantile", "kmeans", "hclust", "bclust", "fisher","jenks")
+#for(i in methods) { data <- signal_comparision(i) }
