@@ -111,7 +111,7 @@ distinct number of MAC observed.
 Nevertheless, there are cases (2) where the error is still large (50%),
 even if in other cases (1) the error is only of 9%.   
 
-> This is a correct surmisal of the remit of the paper. We have also added#
+> This is a correct surmisal of the remit of the paper. We have also added
 > material to the introduction and conclusion of the paper to better link
 > this remit to the Smart Cities discourse.
 
@@ -430,9 +430,10 @@ method address duplication in multiple sensors?
 
 7. P10 l48, how was the adjustment factor determined?
 
-> The adjustment factor is calculated as the ration between the manual counts to
+> The adjustment factor is calculated as the ratio between the manual counts to
 > the counts calculated from sensor for the sample period. This 
-> is used to adjust future counts at the same locations.
+> is used to adjust future counts at the same locations. We have included
+> the clarification on the revised manuscript.
 
 4 Reviewer 3
 ------------
@@ -444,7 +445,7 @@ method address duplication in multiple sensors?
 timely and interesting topic. The method can be performed to estimate human
 activity such as pedestrian footfall from Wi-Fi probe requests. 
 
-> Yes, thank you.
+> Yes, Thank you for your encouraging comment. 
 
 4.2 General Comments
 --------------------
@@ -475,12 +476,15 @@ various clustering algorithms? Including the number of records, the number of
 clusters. How about the performance for different clustering methods 
 in your study？
 
-> Thank you. This part has been expanded and clarified in the revised manuscript. The
-> performance of the algorithms were tested on the basis of the time taken for
-> processing and the relative improvement in results. We found the k-means gives
-> us the best data for the least processing time. The graph based clustering
-> was done using parameters which were arrived at using trial and error
-> controlling for a known device.
+> Thank you. This part has been expanded and clarified in the revised manuscript. 
+> The performance of the algorithms used for one dimensional classification were 
+> evaluated on the basis of the time taken for processing and the resulting 
+> mean absolute percentage error. We found that the k-means gives
+> us the best data for the quickest processing time. The graph based clustering
+> was done using two parameters - sequence threshold of 60 and time threshold of
+> 16 seconds. These values were arrived arrived at using trial and error by using
+> a know device as the control mechanism. This has been illustrated further in 
+> the revised manuscript.
 
 
 4.3 Corrections and Clarifications
@@ -512,14 +516,15 @@ PostgreSQL? Did you compare Apache Flink and Spark Streaming for real-time data
 collecting? 
 
 > This is an interesting point in the context of big data and tools for tackling
-> big data. Though the data set at hand is large enough for desktop computing to
-> be unfeasible, it is neither big nor fast enough for a large scale big data
-> systems. A toolkit with opensource, free text processing tools and relational
-> database management system was enough to handle the compexity, size and speed
-> of the data. The toolkit employed here involves PostgreSQL, Bash, Unix tools
-> for text processing (sed, awk, sort, join), NodeJs and R counting.
-> This was a proven toolkit used in the larger project (smart street sensor)
-> providing near real-time delivery of data.
+> big data. Though the data set here is large enough to make desktop computing
+> unfeasible, it is neither big nor fast enough for a large scale big data
+> system. An opensource and free toolkit comprising of text processing tools 
+> and relational database management system was enough 
+> to handle the compexity, size and speed of the data.
+> The toolkit employed here involves PostgreSQL, Bash, Unix tools
+> for text processing (sed, awk, sort, join), Node.js and R.
+> The same toolkit proved to be useful in the larger project 
+> (smart street sensor) providing near real-time delivery of data.
 
 5. The reference list needs to be written in a standard format. Some reference 
 papers are lacking specific pages .Please use a standard way of reference list.
