@@ -165,9 +165,9 @@ this classification ?
 > The addresses with E, A, 2, 6 at these locations are identified to be
 > randomised MAC addresses. This has been included in the revised paper.
 
-5. How was the sensor positioned compared to the area monitored used for 
-ground truth ? A more detailed description is required regarding the positioning
-of the sensor and the size and topology of the surveyed area.  
+5. How was the sensor positioned compared to the area monitored used for ground
+truth ? A more detailed description is required regarding the positioning of the
+sensor and the size and topology of the surveyed area.  
 
 > This is a good point, and is very important for our validation work. We
 > have included a more detailed and explicit discussion of the way that field
@@ -483,7 +483,7 @@ clusters. How about the performance for different clustering methods
 in your study？
 
 > Thank you. This part has been expanded and clarified in the revised manuscript. 
-> The performance of the algorithms used for one dimensional classification were 
+> The performance of the algorithms used for one dimensional clustering were 
 > evaluated on the basis of the time taken for processing and the resulting 
 > mean absolute percentage error. We found that the k-means gives
 > us the best data for the quickest processing time. The graph based clustering

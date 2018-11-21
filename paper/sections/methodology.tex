@@ -204,8 +204,10 @@ The nodes were then assigned a unique id based on the unique connected component
 they belong to as shown in Figure \ref{methodology_schematic}. This unique
 identifier is used in the place of MAC address for aggregation for the
 anonymised probe requests. Though the recycling of sequence number after 4096
-leads to multiple unique ids being reported from a single device, the magnitude
-of error is greatly reduced. 
+leads to multiple unique ids being reported from a single device from a sample
+experiment done on randomised probe requests sent by "Google" devices we found
+that the sequence number is reset for around 0.05\% of them. We hence assume
+this to be inconsequential. 
 
 \subsection{Calibrating with Ground Truth} 
 
