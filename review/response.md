@@ -33,13 +33,13 @@ revisions to your manuscript
 > requested, we have responded to all comments without adding significant
 > length to the paper. We have also extended our discussion of how effective
 > measurement of footfall is relevant to understanding the functioning of the
-> Smart City.
-> 
-> If any of what follows and what has been uploaded is unclear, please do not
-> hesitate to contact me.
+> Smart City. If any of what follows and what has been uploaded is unclear,
+> please do not hesitate to contact me.
 > 
 > Yours sincerely,
+>
 > Balamurugan Soundararaj,
+>
 > (on behalf also of Paul Longley and James Cheshire)
 
 1.2 General Instructions
