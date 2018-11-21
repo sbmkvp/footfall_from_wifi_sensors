@@ -1,16 +1,16 @@
 \begin{table}
 \tbl{Comparison of clustering algorithms with a sample of 40000 probe requests}
 {\begin{tabular}{lcc} 
-\toprule
+	\toprule
 	 Algorithm					& Time (s) 	& MAPE (\%) \\
-\midrule
-	 Quantile					& 0.002 	&  27\% \\
-	 K-Means			 		& 0.007 	& -23\% \\
-	 Hierarchical Clustering	& 172.520 	& -9\% \\
-	 Bagged Clustering 			& 0.135 	& -30\% \\
-	 Fisher 					& 3.034 	& -30\% \\
-	 Jenks Natural Break 		& 556.279 	& -30\% \\
- \bottomrule
+	\midrule
+	 Quantile					& 0.002 	&  27 \% \\
+	 K-Means			 		& 0.007 	& -23 \% \\
+	 Hierarchical Clustering	& 172.520 	&  -9 \% \\
+	 Bagged Clustering 			& 0.135 	& -30 \% \\
+	 Fisher 					& 3.034 	& -30 \% \\
+	 Jenks Natural Break 		& 556.279 	& -30 \% \\
+	 \bottomrule
 \end{tabular}}
 \label{classification-table}
 \end{table}
@@ -26,7 +26,11 @@ and pedestrian footfall was manually recorded using the Android app
 \citep{bala2018clicker}.  Being located at one of the busiest retail locations
 in the United Kingdom, the Wi-Fi sensor captured approximately 60,000 probe
 requests during the half hour period, and 3,722 people were recorded manually
-walking on the sidewalk during that time.
+walking on the sidewalk during that time. The count was done at the location in
+front of the store where the surveyor carried the sensor on a backpack for the
+automated count and used a phone for doing the manual count. The sensor is kept
+as close to the store window as possible and the manual count is done as a
+cordon count in fron of the store.
 
 As a first step we just aggregated the probe requests by their MAC address for
 every minute to generate a minute by minute count of the number of people around

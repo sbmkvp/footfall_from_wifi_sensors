@@ -15,31 +15,44 @@ APs, quick geolocation by triangulation based known APs, etc. These are
 broadcast by all Wi-Fi enabled devices regardless of the manufacturer, type or
 model of the devices though there is some variation on the frequency and the
 information transmitted through them. In some cases, such as Android devices,
-these are broadcast even when the Wi-Fi functionality has been turned off by the
-user. Thus these signals can be used to reliably identify the presence of Wi-Fi
-enabled mobile devices. Being a first step of connection initiated by the mobile
-device, these packets have information regarding the characteristics of the
-mobile device itself. Some of the key information we can infer from these
-requests are,
+these are broadcast even when the Wi-Fi functionality has been turned off by
+the user so that device can immediately connet to networks when the
+functionality is switched back on. Since some devices even use the probe
+requests as a less accurate form of localisation they keep sending probe
+requests as well. Thus these signals can be used to reliably identify the
+presence of Wi-Fi enabled mobile devices. Being a first step of connection
+initiated by the mobile device, these packets have information regarding the
+characteristics of the mobile device itself. Some of the key information we can
+infer from these requests are,
 
 \begin{enumerate} 
-\item \textbf{Media Access Control (MAC) address} which is an unique identifier
+\item \textbf{Media Access Control (MAC) address} which is an name identifying
 	for the wireless hardware of the mobile device, 
 \item \textbf{Sequence number} of the request for the mobile device to keep
 	track of the responses, 
 \item \textbf{Time stamp} at which the request was received by the AP, 
 \item Total \textbf{length} of the request in number of bits, and 
-\item The \textbf{strength of the signal} which transmitted the request.
+\item The \textbf{strength of the signal} received by the mobile device.
 \end{enumerate}
 
 The MAC address is the primary unique identifier for the mobile device. It has
-two parts, first part is the Organisation Unique Identifier (OUI) which gives
-information about the manufacturer of the device and the second is unique to the
-device. In modern devices, to protect the users privacy, the MAC address can
-also be randomised (hence non unique) and is marked as such. Though sequence
-number and length of the packet are not strictly unique, we hypothesize that we
-can use them to estimate the number unique devices as demonstrated by
-\citep{vanhoef2016}.
+two parts, first part is the Organisationally Unique Identifier (OUI) which
+gives information about the manufacturer of the device and the second is unique
+to the device. In modern devices, to protect the users privacy, the MAC address
+can also be randomised (hence non unique) and is marked as such. Though
+sequence number of the packet is strictly unique to a mobile device, we
+hypothesize that we can use them to estimate the number unique devices as
+demonstrated by \citep{vanhoef2016}, where optional information present in the
+probe requests - Information Elements (IE) along with the probe requests have
+been used to fingerprint the devices. This approach has become increasinly
+difficult as mobile phone manufacturers have severely limited the IEs present
+in the probe requests thus leading us to explore methods which uses only the
+sequence numbers. This also affects the established commercial solutions using
+Wi-Fi probe requests such as Blix, Walkbase, Euclid Analytics, RetailNext etc.
+There have been another solution proposed by \citep{hong2018crowdprobe} where
+the authors tried to solve the similar problem using a hidden markov models
+based trajectory inference alogorithm but the scope is limited to enclosed,
+exit controlled public spaces such as shopping malls, railway stations, etc.
 
 Data collection was done with the help of custom sensors built from modifying
 the hardware used in Smart street sensors \citep{sss2016} and updating them with
@@ -47,21 +60,30 @@ custom software. The sensor is essentially a Raspberry-Pi device with Wi-Fi and
 3G modules. It keeps the Wi-Fi module in `Monitor' mode and uses the open source
 software - Wireshark \citep{wireshark2} to passively collect all packets sent to
 `broadcast', marked with type as management' and subtype as `probe requests'.
-The MAC address in these probe requests is anonymised at the device level using
+The MAC address in these probe requests is obfuscated at the device level using
 a cryptographic hashing algorithm and transmitted through 3G connection to a
 central database via web-sockets protocol, where it is stored in a PostgreSQL
-database for further analysis. A overall schematic of the data collection and
-storage process is shown in Figure \ref{datacollection_schematic}. The ground
-truth on number of pedestrian footfall was recorded using a custom mobile
-application - Clicker \citep{bala2018clicker}
+database for further analysis. The random salt used in the hashing algorithm was
+rotated regularly to further mitigate the risk of de-anonymisation of the hash.
+Though hashing cannot completely ensure anonymisation as discussed in
+\citep{demir2014analysing} it can sufficiently obfuscate the data which along
+with a secure process of data handling gives us reasonable security. A overall
+schematic of the data collection and storage process is shown in Figure
+\ref{datacollection_schematic}. The ground truth on number of pedestrian
+footfall was recorded using a custom Android application - Clicker
+\citep{bala2018clicker}. This app logs accurate timestamps for each time the
+surveryor records a pedestrian crossing the designated cordon line at the
+location. In addition to counting the pedestrians manually this also makes the
+mobile device used constantly probe for networks which also gives us a know
+device to calibrate our methodology against.
 
 \begin{figure} 
-\centering \includegraphics[width=\linewidth]
-	{images/datacollection_schematic.jpeg}
-\caption 
-	{Schematic diagram showing the process of collecting and storing probe
-	requests using the sensor}
-\label{datacollection_schematic} 
+	\centering \includegraphics[width=\linewidth]
+		{images/datacollection_schematic.jpeg}
+	\caption 
+		{Schematic diagram showing the process of collecting and storing probe
+		requests using the sensor}
+	\label{datacollection_schematic} 
 \end{figure}
 
 The next step after collecting data was to estimate the footfall or pedestrian
@@ -127,7 +149,7 @@ severely limits our ability in establishing a simple conversion between reported
 signal strength and distance. There is a need for a method which takes in to
 account these variables across various locations.
 
-We hypothesise that in configurations where a specific source of background
+We assume that in configurations where a specific source of background
 noise is at a constant distance, there must be a distinct pattern in the number
 of probe requests reporting signal strength corresponding to that distance. For
 example, if there is a phone shop next to our sensor where hundreds of phones
@@ -153,14 +175,15 @@ wide variation in the frequency at which the devices randomise the MAC addresses
 and the method used for the process. This lead us to look for a more
 generalisable approach which is independent of the device model.
 
-From our initial analysis we found that OUI, length of the packet and sequence
-number of the packet being the most promising information to achieve this.
+From our initial look at the data we found that OUI and the sequence
+number of the packet is the most promising information to achieve this.
 First we divide our dataset into sets of probe requests with randomised and
-non-randomised MAC addresses and keep the MAC address as the unique identifier
-for the latter set. For randomised ones we further divide them in to sub
-categories based on their OUI and length of the packet. Since the length tends
-to stay unique to specific models of devices we are left with the task of
-identifying the unique mobile devices from within these sets.
+non-randomised MAC addresses by looking at the second character of the vendor
+part of the MAC address and if it is E, A, 2 or 6, then these addresses are
+identified to be randomised. We keep the MAC address as the unique
+identifier for the non-randomised requests and further divide the randomised ones in to
+sub categories based on their OUI. We then  
+identify unique mobile devices from within these sets and assign a unique identifier to each device.
 
 The proposed algorithm creates a graph where the probe requests represented the
 nodes, and links are created between them based on the following rules:
@@ -188,9 +211,9 @@ of error is greatly reduced.
 
 Since mobile device ownership is an external uncertainty to our study and could
 arise from variety of spatio - temporal and demographic factors, we propose to
-solve this using external source of information. We hypothesize that an
-adjustment factor could be arrived at for each location of data collection by
-comparing the sensor based counts and ground truth and it can be used to adjust
-the data reliably to reflect the ground truth in absolute numbers for the
-future. This calibration can be carried out periodically and frequently to
-improve the quality of the estimation over longer periods of time.
+solve this using a sample count done manually at each location.  We can then
+calculate an  adjustment factor or an offset for each location by comparing the
+sensor based counts and ground truth and in turn it can be used to adjust the
+data reliably to reflect the ground truth in absolute numbers for the future.
+This calibration can be carried out periodically at these locations to improve
+the quality of the estimation.
