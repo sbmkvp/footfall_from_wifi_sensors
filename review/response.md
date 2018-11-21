@@ -36,10 +36,8 @@ revisions to your manuscript
 > Smart City. If any of what follows and what has been uploaded is unclear,
 > please do not hesitate to contact me.
 > 
-> Yours sincerely,
->
-> Balamurugan Soundararaj,
->
+> Yours sincerely,  
+> Balamurugan Soundararaj,  
 > (on behalf also of Paul Longley and James Cheshire)
 
 1.2 General Instructions
