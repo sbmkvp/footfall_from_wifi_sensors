@@ -6,10 +6,9 @@ Manuscript id : IJGIS-2018-0340
 
 Comments dated : 28-Oct-2018
 
-### 1 Editor
+## 1 Editor
 
-1.1 Overall Comments
----------------------
+### 1.1 Overall Comments
 
 1. While this is an important and timing topic dealing with data uncertainty
    and privacy in the mobile age, the reviewers have raised concerns on
@@ -38,8 +37,7 @@ revisions to your manuscript
 > Balamurugan Soundararaj,  
 > (on behalf also of Paul Longley and James Cheshire)
 
-1.2 General Instructions
-------------------------
+### 1.2 General Instructions
 
 1. Please try to avoid making the paper longer (keep in mind that the average
    length of papers in this journal is 18-20 published pages). It is important
@@ -84,11 +82,9 @@ that you ensure that the spelling and grammar is of a high standard.
 > consideration and checked for creating the revised manuscript for the final
 > submission.
 
-2 Reviewer 1
-------------
+## 2 Reviewer-1
 
-2.1 Overall Summary
--------------------
+### 2.1 Overall Summary
 
 1. This paper is about the estimation of pedestrian footfall using Wi-Fi signal
    emitted by mobile devices. It deals with the problem of estimating the
@@ -119,8 +115,7 @@ that you ensure that the spelling and grammar is of a high standard.
 > material to the introduction and conclusion of the paper to better link this
 > remit to the Smart Cities discourse.
 
-2.2 General Comments
---------------------
+### 2.2 General Comments
 
 1. The idea of clustering frames using sequence number has been introduced in
    [1]. This work needs to be cited when introducing the proposed clustering
@@ -173,8 +168,7 @@ that you ensure that the spelling and grammar is of a high standard.
 > included a more detailed and explicit discussion of the way that field
 > observation was used to calibrate and cross validate the Wi-Fi results.
 
-2.3 Clarifications & Corrections
---------------------------------
+### 2.3 Clarifications & Corrections
 
 1. The topic addressed in this work is interesting and timely. The proposed
    approach is sound and shows promising results. The fact that the authors
@@ -260,8 +254,7 @@ that you ensure that the spelling and grammar is of a high standard.
 > 0.5% reset their mac addresses. Which in our opinion doesn't influence the
 > results in any significant way considering the context.
 
-2.4 Typos and other remarks
---------------------------------
+### 2.4 Typos and other remarks
 
 1. Challanges
 
@@ -286,11 +279,9 @@ that you ensure that the spelling and grammar is of a high standard.
 > Thank you for picking up these minor lapses. All have been corrected or
 > clarified in the revised version of the paper.
 
-3 Reviewer 2
-------------
+## 3 Reviewer-2
 
-3.1 Overall Summary
--------------------
+### 3.1 Overall Summary
 
 1. This paper addressed the data quality issue of Wi-Fi-based probe requests in
    estimating pedestrian counts. The authors proposed several methods to improve
@@ -313,8 +304,7 @@ that you ensure that the spelling and grammar is of a high standard.
 > hope that following responses and the amendments to the paper will allay your
 > concerns about the methodology and application.
 
-3.2 General Comments
---------------------
+### 3.2 General Comments
 
 1. First, the literature review section adequately covered Wi-Fi-based human
    activity studies, but it is in lack of an overview of modeling human activity
@@ -337,8 +327,7 @@ that you ensure that the spelling and grammar is of a high standard.
 > research for better understanding the functioning of the smart city have now
 > been added.
 
-3.3 Corrections and Clarifications
-----------------------------------
+### 3.3 Corrections and Clarifications
 
 Second, the methodology should be better clarified. There are many details
 missing or in need of a better justification. For example,
@@ -440,11 +429,9 @@ missing or in need of a better justification. For example,
 > adjust future counts at the same locations. We have included the clarification
 > on the revised manuscript.
 
-4 Reviewer 3
-------------
+## 4 Reviewer-3
 
-4.1 Overall Summary
--------------------
+### 4.1 Overall Summary
 
 1. This paper presents Wi-Fi based footfall counting methodology, which is
    timely and interesting topic. The method can be performed to estimate human
@@ -452,8 +439,7 @@ missing or in need of a better justification. For example,
 
 > Yes, Thank you for your encouraging comment. 
 
-4.2 General Comments
---------------------
+### 4.2 General Comments
 
 Some areas where I would like to see more detail:
 
@@ -490,8 +476,7 @@ Some areas where I would like to see more detail:
 > using a know device as the control mechanism. This has been illustrated
 > further in the revised manuscript.
 
-4.3 Corrections and Clarifications
-----------------------------------
+### 4.3 Corrections and Clarifications
 
 More specific comments can be found in the following. 
 
