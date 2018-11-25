@@ -1,5 +1,4 @@
-First review comments
-=====================
+## First review comments
 
 Title : Estimating Real-Time Highstreet Footfall from Wi-Fi Probe Requests
 
@@ -7,8 +6,7 @@ Manuscript id : IJGIS-2018-0340
 
 Comments dated : 28-Oct-2018
 
-1 Editor
---------
+### 1 Editor
 
 1.1 Overall Comments
 ---------------------
