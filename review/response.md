@@ -92,10 +92,10 @@ possible in your response to the reviewers.
 2.1 Overall Summary
 -------------------
 
-This paper is about the estimation of pedestrian footfall using Wi-Fi signal
-emitted by mobile devices.  It deals with the problem of estimating the
-footfall size based on a noisy and biased data. More specifically it addresses
-the following issues that may lead to over counting:
+1. This paper is about the estimation of pedestrian footfall using Wi-Fi signal
+   emitted by mobile devices.  It deals with the problem of estimating the
+   footfall size based on a noisy and biased data. More specifically it
+   addresses the following issues that may lead to over counting:
 
  - MAC randomization that may cause a device to generate several MAC addresses;
  - Signals received from outside the interest zone; unequal adoption of Wi-Fi
@@ -106,15 +106,16 @@ the following issues that may lead to over counting:
  - clustering probes based on sequence number and timing;
  - finally an adjustment factor is applied to correct the estimated value.  
  
-The adjustment factor is calibrated for each location using a manual counting.
-The author conducted a pilot experiment to identify the clustering algorithms
-and parameters, and then they conducted a second range of experiments at
-different location over an extended period of time. During each of those
-experiments, ground-truth count was collected manually.  The results show that
-the presented approach can significantly reduce the counting error compared to
-a naive solution consisting in counting the distinct number of MAC observed.
-Nevertheless, there are cases (2) where the error is still large (50%), even if
-in other cases (1) the error is only of 9%.   
+2. The adjustment factor is calibrated for each location using a manual
+   counting.  The author conducted a pilot experiment to identify the clustering
+   algorithms and parameters, and then they conducted a second range of
+   experiments at different location over an extended period of time. During
+   each of those experiments, ground-truth count was collected manually.  The
+   results show that the presented approach can significantly reduce the
+   counting error compared to a naive solution consisting in counting the
+   distinct number of MAC observed.  Nevertheless, there are cases (2) where the
+   error is still large (50%), even if in other cases (1) the error is only of
+   9%.   
 
 > This is a correct surmisal of the remit of the paper. We have also added
 > material to the introduction and conclusion of the paper to better link this
@@ -127,9 +128,9 @@ in other cases (1) the error is only of 9%.
    [1]. This work needs to be cited when introducing the proposed clustering
    algorithm.
 
-[1] Mathy Vanhoef, Célestin Matte, Mathieu Cunche, Leonardo Cardoso, Frank
-Piessens. Why MAC Address Randomization is not Enough: An Analysis of Wi-Fi
-Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016, 
+   [1] Mathy Vanhoef, Célestin Matte, Mathieu Cunche, Leonardo Cardoso, Frank
+   Piessens. Why MAC Address Randomization is not Enough: An Analysis of Wi-Fi
+   Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016, 
 
 > Thank you. We have included a citiation to the source, as well as one other
 > recent addition to this fast-developing literature.
@@ -144,12 +145,12 @@ Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016,
    Workshop on Physical Analytics, Jun 2014, Bretton Woods, United States. ACM,
    2014
 
-> Thank you for pointing this out. In the revised version of the paper
-> we have made reference to this discussion, while also making clear the 
-> anonymisation is ensured by the system architecture that processess and
-> curates the data. Specifically we rotated the random salt used to hash the
-> MAC addresses regulary to prevent any kind of tracking of the users across a
-> longer period of time with which the hashing process is carried out.
+> Thank you for pointing this out. In the revised version of the paper we have
+> made reference to this discussion, while also making clear the anonymisation
+> is ensured by the system architecture that processess and curates the data.
+> Specifically we rotated the random salt used to hash the MAC addresses
+> regulary to prevent any kind of tracking of the users across a longer period
+> of time with which the hashing process is carried out.
 
 3. There is a number of commercial solutions doing counting based on Wi-Fi
    signal. Although the detail of their solution is not public, it would be
@@ -157,98 +158,98 @@ Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016,
 
 > Thank you - this has been done.
 
-4. In section 3.2, it is explained that data is divided into two sets 
-corresponding on random and non-random MAC. Which method is used to perform 
-this classification ?
+4. In section 3.2, it is explained that data is divided into two sets
+   corresponding on random and non-random MAC. Which method is used to perform
+   this classification ?
 
 > The identification of a MAC address as randomised or non-randomised is done
-> looking at the second character of the vendor part of the MAC address.
-> The addresses with E, A, 2, 6 at these locations are identified to be
-> randomised MAC addresses. This has been included in the revised paper.
+> looking at the second character of the vendor part of the MAC address.  The
+> addresses with E, A, 2, 6 at these locations are identified to be randomised
+> MAC addresses. This has been included in the revised paper.
 
 5. How was the sensor positioned compared to the area monitored used for ground
-truth ? A more detailed description is required regarding the positioning of the
-sensor and the size and topology of the surveyed area.  
+   truth ? A more detailed description is required regarding the positioning of
+   the sensor and the size and topology of the surveyed area.  
 
-> This is a good point, and is very important for our validation work. We
-> have included a more detailed and explicit discussion of the way that field
+> This is a good point, and is very important for our validation work. We have
+> included a more detailed and explicit discussion of the way that field
 > observation was used to calibrate and cross validate the Wi-Fi results.
 
 2.3 Clarifications & Corrections
 --------------------------------
 
 1. The topic addressed in this work is interesting and timely. The proposed
-approach is sound and shows promising results. The fact that the authors
-conducted field experiments to evaluate their solution is a positive point.
-Yet before publication, I believe that there are a number of points that needs
-to be clarified or corrected. Regarding the technical aspects I have a number
-of minor remarks: 
+   approach is sound and shows promising results. The fact that the authors
+   conducted field experiments to evaluate their solution is a positive point.
+   Yet before publication, I believe that there are a number of points that
+   needs to be clarified or corrected. Regarding the technical aspects I have a
+   number of minor remarks: 
 
 > Thank you very much for these very positive comments. The paper reports on
-> extensive methodological research and field implementation and is, we
-> believe, cutting edge in its finding. It also has important implications for
-> our understanding of the functioning of smart cities, and these implications
-> are discussed in greater detail in the revised version.
+> extensive methodological research and field implementation and is, we believe,
+> cutting edge in its finding. It also has important implications for our
+> understanding of the functioning of smart cities, and these implications are
+> discussed in greater detail in the revised version.
 
 2. "WiFi beacon technologies to access the Internet". In Wi-Fi, beacons are
-management frames used by Access Point for service discovery. They do not
-provide Internet access. "Wi-Fi Access Point to access ..." 
+   management frames used by Access Point for service discovery. They do not
+   provide Internet access. "Wi-Fi Access Point to access ..." 
 
 > Thank you. We have corrected and clarified the point.
 
 3. "Wi-Fi antennae regularly broadcast a special type of signal" -> the antenna
-is just the part ensuring that the signal is correctly emitted, but it is not
-the source. In this context it is better to use a more general concept and
-refer to the "Wi-Fi network interface" (or Wi-Fi interface) as the the element
-broadcasting a signal. 
+   is just the part ensuring that the signal is correctly emitted, but it is not
+   the source. In this context it is better to use a more general concept and
+   refer to the "Wi-Fi network interface" (or Wi-Fi interface) as the the
+   element broadcasting a signal. 
 
 > Thank you. Point clarified in the revised version.
 
 4. The IEEE 802.11 b/g is just a subpart of the 802.11 specification. Here you
-can refer to the 802.11 specifications as a whole : [“802.11-2012 - IEEE
-Standard for Information technology–Telecommunications and information exchange
-between systems Local and metropolitan area networks–Specific requirements Part
-11: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY)
-Specifications,” IEEE Std 802.11-2012 (Revision of IEEE Std 802.11-2007), pp.
-1–2793, Mar. 2012.
+   can refer to the 802.11 specifications as a whole : [“802.11-2012 - IEEE
+   Standard for Information technology–Telecommunications and information
+   exchange between systems Local and metropolitan area networks–Specific
+   requirements Part 11: Wireless LAN Medium Access Control (MAC) and Physical
+   Layer (PHY) Specifications,” IEEE Std 802.11-2012 (Revision of IEEE Std
+   802.11-2007), pp.  1–2793, Mar. 2012.
 
 > Thank you. Noted and added to the revised version.
 
 5. "the first step in establishing a Wi-Fi based connection " is also known as
-service discovery
+   service discovery
 
 > Thank you. Added to the revised version
 
 6. "Wi-Fi functionality has been turned off by the user", regarding this point
-you may be interested in : 
+   you may be interested in : 
 
 7. "Media Access Control (MAC) address which is an unique identifier for the
-wireless hardware of the mobile device"  The transmitter field of the 802.11
-frame can indeed contain a unique MAC address  but can also contain a random
-one as noted by the author. Here it would be better to avoid stating that the
-content of this field is always a unique MAC. 
+   wireless hardware of the mobile device"  The transmitter field of the 802.11
+   frame can indeed contain a unique MAC address  but can also contain a random
+   one as noted by the author. Here it would be better to avoid stating that the
+   content of this field is always a unique MAC. 
 
 > Thank you. Again, this has been noted in the revised version of the paper.
 
 8. "The strength of the signal which transmitted the request.". In fact the
-Received Signal Strength Indicator, a value providing an indication on the
-strength of the received signal as seen by the receiver, not the strength at
-the emitter side.
+   Received Signal Strength Indicator, a value providing an indication on the
+   strength of the received signal as seen by the receiver, not the strength at
+   the emitter side.
 
 > Thank you. This distinction has been noted in the revised version of the
 > paper.
 
 9. Could you provide more information on the application used for counting
-(Clicker) 
+   (Clicker) 
 
-> This simple application was developed specifically for the project for
-> Android platform. More details on the application has been included in the
-> revised manuscript.
+> This simple application was developed specifically for the project for Android
+> platform. More details on the application has been included in the revised
+> manuscript.
 
 10. "Though the recycling of sequence number r after 4000 leads to multiple
-classifications reported on single device, the magnitude of error is greatly
-reduced." This sentence is not clear. And the cycle length is not 4000 but 4096
-= 2^12.
+	classifications reported on single device, the magnitude of error is greatly
+	reduced." This sentence is not clear. And the cycle length is not 4000 but
+	4096 = 2^12.
 
 > Thank you. This point has been boted and accommodated into the revised
 > version.
