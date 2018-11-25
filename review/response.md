@@ -82,8 +82,9 @@ possible in your response to the reviewers.
 
 10. Please delete any redundant files before completing the submission.
 
-> Thank you for the detailed instructions. All of these have been checked in
-> revised manuscript for the final submission.
+> Thank you for the detailed instructions. All of these have been taken in
+> consideration and checked for creating the revised manuscript for the final
+> submission.
 
 2 Reviewer 1
 ------------
@@ -96,7 +97,7 @@ emitted by mobile devices.  It deals with the problem of estimating the
 footfall size based on a noisy and biased data. More specifically it addresses
 the following issues that may lead to over counting:
 
-- MAC randomization that may cause a device to generate several MAC addresses;
+ - MAC randomization that may cause a device to generate several MAC addresses;
  - Signals received from outside the interest zone; unequal adoption of Wi-Fi
  smartphone in the population.  To address this issue, a number of techniques
  are introduced:
@@ -122,26 +123,26 @@ in other cases (1) the error is only of 9%.
 2.2 General Comments
 --------------------
 
-1. The idea of clustering frames using sequence number has been introduced 
-in [1]. This work needs to be cited when introducing the proposed clustering
-algorithm.
+1. The idea of clustering frames using sequence number has been introduced in
+   [1]. This work needs to be cited when introducing the proposed clustering
+   algorithm.
 
 [1] Mathy Vanhoef, Célestin Matte, Mathieu Cunche, Leonardo Cardoso, Frank
 Piessens. Why MAC Address Randomization is not Enough: An Analysis of Wi-Fi
 Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016, 
 
-> Thank you. We have included a citiation to the source, as well as one 
-> other recent addition to this fast-developing literature.
+> Thank you. We have included a citiation to the source, as well as one other
+> recent addition to this fast-developing literature.
 
-2. The author considered that the hashing of MAC address is a good way to 
-protect users privacy, as some MAC address collected by the device may not be 
-random. However hashing of MAC address cannot be considered as a proper 
-anonymization technique (see [2] and 
-http://webpolicy.org/2014/03/19/questionable-crypto-in-retail-analytics/ ); 
-at best it can be considered as an obfuscation. 
-[2] Levent Demir, Mathieu Cunche, Cédric Lauradoux. Analysing the privacy 
-policies of Wi-Fi trackers. Workshop on Physical Analytics, Jun 2014, Bretton 
-Woods, United States. ACM, 2014
+2. The author considered that the hashing of MAC address is a good way to
+   protect users privacy, as some MAC address collected by the device may not be
+   random. However hashing of MAC address cannot be considered as a proper
+   anonymization technique (see [2] and
+   http://webpolicy.org/2014/03/19/questionable-crypto-in-retail-analytics/
+   ); at best it can be considered as an obfuscation.  [2] Levent Demir, Mathieu
+   Cunche, Cédric Lauradoux. Analysing the privacy policies of Wi-Fi trackers.
+   Workshop on Physical Analytics, Jun 2014, Bretton Woods, United States. ACM,
+   2014
 
 > Thank you for pointing this out. In the revised version of the paper
 > we have made reference to this discussion, while also making clear the 
@@ -150,9 +151,9 @@ Woods, United States. ACM, 2014
 > MAC addresses regulary to prevent any kind of tracking of the users across a
 > longer period of time with which the hashing process is carried out.
 
-3. There is a number of commercial solutions doing counting based on Wi-Fi 
-signal. Although the detail of their solution is not public, it would be 
-worthwhile to acknowledge their existence.
+3. There is a number of commercial solutions doing counting based on Wi-Fi
+   signal. Although the detail of their solution is not public, it would be
+   worthwhile to acknowledge their existence.
 
 > Thank you - this has been done.
 
