@@ -1,4 +1,5 @@
 ## First review comments
+--------------------------------------------------------------------------------
 
 Title : Estimating Real-Time Highstreet Footfall from Wi-Fi Probe Requests
 
@@ -7,6 +8,7 @@ Manuscript id : IJGIS-2018-0340
 Comments dated : 28-Oct-2018
 
 ## 1 Editor
+--------------------------------------------------------------------------------
 
 ### 1.1 Overall Comments
 
@@ -82,6 +84,7 @@ as possible in your response to the reviewers.
 > submission.
 
 ## 2 Reviewer-1
+--------------------------------------------------------------------------------
 
 ### 2.1 Overall Summary
 
@@ -283,6 +286,7 @@ something wrong in both sentences.
 > clarified in the revised version of the paper.
 
 ## 3 Reviewer-2
+--------------------------------------------------------------------------------
 
 ### 3.1 Overall Summary
 
@@ -433,6 +437,7 @@ would your method address duplication in multiple sensors?
 > clarification on the revised manuscript.
 
 ## 4 Reviewer-3
+--------------------------------------------------------------------------------
 
 ### 4.1 Overall Summary
 
