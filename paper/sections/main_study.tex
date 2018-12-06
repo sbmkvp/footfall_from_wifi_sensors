@@ -54,30 +54,32 @@ available manual counts. The schedule of data collection is shown in Figure
 	\caption{Distribution of signal strengths across locations} \label{main_signal_strength}
 \end{figure}
 
-We start by looking at the distribution of the signal strength reported by the
+We begin by looking at the distribution of the signal strength reported by the
 probe requests across the locations. From the density plot shown in Figure
-\ref{main_signal_strength} we can see that there is clear relation between the
-distribution of the signal strength and the distance and complexity of the
-source of noise. We can see that while location 5 shows clean difference between
-low and high signal strengths, location 2 is almost normally distributed.
-Intuitively we expect that location 2 and 4 must be harder to classify than
-location 1 3 and 5.  We run the k-means clustering algorithm and filter out the
-probe requests which are randomised and have signal strengths less than the
-second break (threshold).  It is important to note that we are dealing with
-relative thresholds of signal strengths which can vary with location and time of
-the analysis.  We then aggregate then probe requests for every minute by
-counting the number of Unique MAC addresses present in every minute. We also
-remove devices that dwell around the sensor by removing the MAC addresses which
-reappear from within the past hour.  The results of the first stage of filtering
-process along with the thresholds are shown in Table \ref{errors_table}.
-Confirming our intuition, we see that the location 2 has the most MAPE followed
-by location 4 while rest of them have highly reduced MAPE.  It is significant
-that this method alone reduces our margin of error by a 50 - 100\% from the raw
-counts without any cleaning.  This makes the signal strength filtering quick and
-ideal method for practical applications which doesn't require absolute numbers
-such as creating large aggregated indexes to show long term trends.  We also see
-that the success of the signal strength filtering can be improved significantly
-by installing sensors such that the pedestrians and noise are at different
+\ref{main_signal_strength}, we can observe that there is clear relation between
+the distribution of the signal strength and the distance and complexity of the
+source of noise. We can see that while location 5 shows clean difference
+between low and high signal strengths, location 2 is almost normally
+distributed.  Intuitively we expected that location 2 and 4 would be harder to
+classify than locations 1, 3 and 5.  We ran the k-means clustering algorithm
+and filtered out the probe requests which were randomised and had signal
+strengths less than the second break (threshold).  It is important to note that
+we were dealing with relative thresholds of signal strengths which can vary
+with location and time of the analysis.  We then aggregated the probe requests
+by counting the number of Unique MAC addresses present in every minute. We also
+removed devices that dwelled around the sensor by removing the MAC
+addresses which reappeared within the previous hour.
+
+The results of the first stage of the filtering process along with the
+thresholds are shown in Table \ref{errors_table}.  Confirming our intuition, we
+see that the location 2 has the most MAPE followed by location 4 while rest of
+them have highly reduced MAPE.  It is significant that this method alone
+reduces our margin of error by a 50 - 100\% from the raw counts without any
+cleaning.  This makes the signal strength filtering quick and ideal method for
+practical applications which doesn't require absolute numbers such as creating
+large aggregated indexes to show long term trends.  We also see that the
+success of the signal strength filtering can be improved significantly by
+installing sensors such that the pedestrians and noise are at different
 distances from the sensor and are the field of measurement is distinct from the
 surroundings however noisy it might be.
 
