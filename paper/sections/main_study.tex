@@ -35,15 +35,15 @@ The locations at which the data were collected are shown in Table
 \ref{locations-table}. The locations were chosen for their diverse site
 conditions and unique sources of noise around the potential location of the
 sensors. The position of the sensor at these locations with respect to the
-context is shown the Figure \ref{main_signal_strength}. We can see that Location
-5 is the `cleanest' with one clear stationary source of noise (phone shop)
-while location 2 is the most complex due to the proximity of seating areas
-to the sensor.  The sensors were operational through out February and March,
-while manual counts were conducted in these locations in half hour sessions on at
-least two different days. For the purposes of comparing with ground truth, we
-considered the data from sensors which correspond to the 12 sets of
-available manual counts. The schedule of data collection is shown in Figure
-\ref{main_schedule}.
+context is shown the Figure \ref{main_signal_strength}. We can see that
+Location 5 is the `cleanest' with one clear stationary source of noise (phone
+shop) while location 2 is the most complex due to the proximity of seating
+areas to the sensor.  The sensors were operational through out February and
+March, while manual counts were conducted in these locations in half hour
+sessions on at least two different days. For the purposes of comparing with
+ground truth, we considered the data from sensors which correspond to the 12
+sets of available manual counts. The schedule of data collection is shown in
+Figure \ref{main_schedule}.
 
 \begin{figure}
 	\centering
@@ -72,30 +72,31 @@ addresses which reappeared within the previous hour.
 
 The results of the first stage of the filtering process along with the
 thresholds are shown in Table \ref{errors_table}.  Confirming our intuition, we
-see that the location 2 has the most MAPE followed by location 4 while rest of
-them have highly reduced MAPE.  It is significant that this method alone
-reduces our margin of error by a 50 - 100\% from the raw counts without any
-cleaning.  This makes the signal strength filtering quick and ideal method for
-practical applications which doesn't require absolute numbers such as creating
-large aggregated indexes to show long term trends.  We also see that the
-success of the signal strength filtering can be improved significantly by
-installing sensors such that the pedestrians and noise are at different
-distances from the sensor and are the field of measurement is distinct from the
-surroundings however noisy it might be.
+see that the location 2 has the most MAPE followed by location 4, while the rest
+of them have highly reduced MAPE.  It is significant that this method alone
+reduces our margin of error by 50 - 100\% from the raw counts without any
+cleaning.  This makes the signal strength filtering a quick and ideal method for
+practical applications, one which doesn't require absolute numbers such as
+creating large aggregated indexes to show long-term trends.  We also found that
+the success of the signal strength filtering can be improved significantly by
+installing sensors so that the pedestrians and source of noise are at different
+distances from the sensor. This ensures that the distribution of signal
+strengths within the field of measurement is distinct from that of the
+surroundings.
 
-We then run the sequence numbers based clustering process on the rest of the
+We then ran the sequence numbers based clustering process on the rest of the
 probe requests to reduce the MAPE by almost 50 - 100\% on all the sensors except
 for location 3.  Location 3 is an outlier among all the other sensors since it
 is the only one with large amount of pedestrians very close to the sensor.  This
-may be causing the over filtering caused by the previous process.  We finally
-run the calibration process where we calculate the adjustment factors from the
-ratio between the manual counts to the counts calculated for the sample period
-as shown in Table \ref{errors_table}.  We the use them to adjust the counts to
-achieve a MAPE ranging from 10 - 50\%. We can see that the sensors with people
-moving right next to them tend to under-count with our methodology while sensors
-with seating next to them tend to over-count significantly. However, using the
-filtering process, we can reduce the error to almost 10\% closer to that of the
-ground truth.
+may be the reason behind the over filtering observed in the previous process.
+We finally ran the calibration process where we calculated the adjustment
+factors from the ratio between the manual counts to the sensor based counts for
+the sample period as shown in Table \ref{errors_table}.  We used them to adjust
+the counts to achieve a MAPE ranging from 10 - 50\%. We observed that the
+sensors with people moving right next to them tend to under-count with our
+methodology, while sensors with seating next to them tend to over-count
+significantly. However, using the filtering process, we can reduce the error to
+almost 10\% closer to that of the ground truth.
 
 \begin{table}
 	\tbl{Results of footfall estimation at each location as Mean Absolute Percentage Error (MAPE) after each step of the filtering process}
