@@ -94,7 +94,7 @@ footfall size based on a noisy and biased data. More specifically it
 addresses the following issues that may lead to over counting:
 
 	- MAC randomization that may cause a device to generate several MAC
-	   addresses;
+	  addresses;
 	- Signals received from outside the interest zone; unequal adoption of Wi-Fi
 	  smartphone in the population. To address this issue, a number of
 	  techniques are introduced:
@@ -128,7 +128,7 @@ algorithm.
 Piessens. Why MAC Address Randomization is not Enough: An Analysis of Wi-Fi
 Network Discovery Mechanisms. ACM AsiaCCS, May 2016, Xi’an, China. 2016, 
 
-> Thank you. We have included a citiation to the source, as well as one other
+> Thank you. We have included a citation to the source, as well as one other
 > recent addition to this fast-developing literature.
 
 2. The author considered that the hashing of MAC address is a good way to
@@ -143,9 +143,9 @@ Workshop on Physical Analytics, Jun 2014, Bretton Woods, United States. ACM,
 
 > Thank you for pointing this out. In the revised version of the paper we
 > have made reference to this discussion, while also making clear the
-> anonymisation is ensured by the system architecture that processess and
+> anonymisation is ensured by the system architecture that processes and
 > curates the data.  Specifically we rotated the random salt used to hash the
-> MAC addresses regulary to prevent any kind of tracking of the users across
+> MAC addresses regularly to prevent any kind of tracking of the users across
 > a longer period of time with which the hashing process is carried out.
 
 3. There is a number of commercial solutions doing counting based on Wi-Fi
@@ -196,7 +196,7 @@ provide Internet access. "Wi-Fi Access Point to access ..."
 antenna is just the part ensuring that the signal is correctly emitted, but
 it is not the source. In this context it is better to use a more general
 concept and refer to the "Wi-Fi network interface" (or Wi-Fi interface) as
-the the element broadcasting a signal. 
+the element broadcasting a signal. 
 
 > Thank you. Point clarified in the revised version.
 
@@ -246,19 +246,19 @@ classifications reported on single device, the magnitude of error is greatly
 reduced." This sentence is not clear. And the cycle length is not 4000 but
 4096 = 2^12.
 
-> Thank you. This point has been boted and accommodated into the revised
+> Thank you. This point has been noted and accommodated into the revised
 > version.
 
 11. Regarding the issue of cycling sequence number, one could use a distance
 with a modulo : di,j = di - dj mod 4096. 
 
 > Thank you very much for the suggestion. We carried out some tests on a
-> sample data of 1910 probe requests corresponding to just google phones with
+> sample data of 1910 probe requests comprising of google phones with
 > randomised MAC addresses captured in the pilot study and found that only
 > around 0.5% of the probe requests encountered the recycling of sequence
 > number. Which, in our opinion, doesn't influence the results in any
 > significant way considering the context. We have also included this in our
-> revised manuscript for the benefit of future research.
+> revised manuscript.
 
 ### 2.4 Typos and other remarks
 
@@ -272,7 +272,7 @@ is not clear.
 3. "Though Wi-Fi F is a ‘location-less’ technology, ", please clarify what
 you mean by that.
 
-4. "privacy infringement" may not be the best word as infrigement relate to a
+4. "privacy infringement" may not be the best word as infringement relate to a
 law or a regulation. Privacy breach or leak may be a better choice.
 
 5. Wireshark and not WireShark.
@@ -369,11 +369,11 @@ shop and cause additional inaccuracy. Please clarify.
 > change is also found to be exponential as opposed to linear. With this
 > context When we install a sensor to have a clear view of the pedestrian
 > footpath in front of it, we make sure that all the devices beyond a certain
-> distance will report similarly low signal strength. This threhold is
-> idenfied using the kmeans algorithm to find the natural break in the data.
+> distance will report similarly low signal strength. This threshold is
+> identified using the k-means algorithm to find the natural break in the data.
 > We have found that this successfully isolates a farther stationary source
 > of large number of probe requests such as a phone shop or a restaurant next
-> door, Bustops etc.  This doesn't work when the source of error is within
+> door, Bus stops etc.  This doesn't work when the source of error is within
 > the range of the footfall. As shown in our examples 2,4. Here our
 > methodology fails to provide sufficient accuracy.
 
@@ -384,9 +384,9 @@ details.
 > The recycling of the sequence number occurs every 4096 counts. From our
 > experiments we observed that a device staying next to device actively
 > searching recycles the sequence number 1-2 times in a 30 mins interval. On
-> average this is expected to be much less than this. when the device doesn't
+> average this is expected to be much less than this. When the device doesn't
 > probe as frequently. We have included more details regarding the cycling of
-> sequence numbers and have mentioned method to overcomet this as mentioned
+> sequence numbers and have mentioned method to overcome this as mentioned
 > by other reviewer. The change in implementing the method is estimated to be
 > --% which we found to be not significant in our context.
 
@@ -463,10 +463,10 @@ Why do you choose time range from 12:30 to 13:00 hrs ?
 > Paper). In LIPIcs-Leibniz International Proceedings in Informatics (Vol.
 > 114).  Schloss Dagstuhl-Leibniz-Zentrum fuer Informatik.
 >
-> There was no reason for selecting the time in the pilot study. the location
+> There was no reason for selecting the time in the pilot study. The location
 > was chosen for it it known to have high number of randomised probe requests
 > and has one of the highest footfall in London. For the main study the
-> counting was done such that each location has atleast 2/3 counts in the
+> counting was done such that each location has at least 2/3 counts in the
 > same time interval.
 
 2. Will you give more detailed information about the data and the parameters
@@ -515,9 +515,9 @@ data collecting?
 > This is an interesting point in the context of big data and tools for
 > tackling big data. Though the data set here is large enough to make desktop
 > computing unfeasible, it is neither big nor fast enough for a large scale
-> big data system. An opensource and free toolkit comprising of text
+> big data system. An open source and free toolkit comprising of text
 > processing tools and relational database management system was enough to
-> handle the compexity, size and speed of the data. The toolkit employed here
+> handle the complexity, size and speed of the data. The toolkit employed here
 > involves PostgreSQL, Bash, Unix tools for text processing (sed, awk, sort,
 > join), Node.js and R. The same toolkit proved to be useful in the larger
 > project (smart street sensor) providing near real-time delivery of data.
