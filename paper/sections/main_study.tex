@@ -8,16 +8,19 @@ processes with the Mean Absolute Percentage Error (MAPE) at the locations and
 report our findings below.
 
 \begin{table}
-	\tbl{Locations where sensors were installed}
-	{\begin{tabular}{clll} 
+    \tbl{Locations where sensors were installes, volume and speed of probe requests collected by
+    the sendor and total pedestrians manually counted. The data occupies around 1.8 GB on disk 
+    when encoded in text format.}
+	{\begin{tabular}{clllccc} 
 		\toprule
-		 ID & Location & Type & Installation notes\\
+         ID & Location & Type & Installation notes & Probe Requests & Footfall\\
+         & & & & x10\textsuperscript{6} (per min) & No. (per min)\\
 		 \midrule
-		 1 & Camden High Street & Phone Shop & Bus stop in front\\
-		 2 & Central St.Giles Piazza & Restaurant & Seating area on both sides\\
-		 3 & Holborn Underground Station & Information Kiosk & Overlooks station entrance\\
-		 4 & Brunswick Center & Fast Food Restaurant & Has seating area on one side\\
-		 5 & The Strand & Tea Shop & Has phone shop next door \\
+         1 & Camden High Street & Phone Shop & Bus stop in front & 9.9 (297) & 3683 (33)\\
+         2 & Central St.Giles & Restaurant & Seating area on both sides & 3.9 (169) & 0346 (05)\\
+         3 & Holborn Station & Info. Kiosk & Overlooks station entrance & 4.3 (303) & 2956 (46)\\
+         4 & Brunswick Center & Fast Food & Has seating area on one side & 3.4 (210) & 0960 (12)\\
+         5 & The Strand & Tea Shop & Has phone shop next door & 8.4 (382) & 1969 (21)\\
 		 \bottomrule
 	\end{tabular}}
 	\label{locations-table}
