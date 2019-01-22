@@ -1,5 +1,4 @@
 data/
-temp/
 .DS_Store
 *.RData
 *.Rhistory
