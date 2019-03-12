@@ -5,7 +5,9 @@ library(igraph)
 library(classInt)
 library(lubridate)
 
+## Doesn't work anymore has to be changed to read settings through the config file ---------
 connection <- dbConnect(dbDriver('PostgreSQL'), dbname = 'bala_ijgis', user = 'bala_read', password = 'balareadpassword', host = 'cdrc-footfall.geog.ucl.ac.uk')
+--------------------------------------------------------------------------------------------
 manual_schedule <- dbGetQuery(connection,"select new_sensor as sensor, min(date_trunc('minute',timestamp::timestamp)+interval '1 minute') as start, max(date_trunc('minute',timestamp::timestamp)) as end from manual left join locations on locations.id = manual.location group by date(timestamp),new_sensor order by 1;")
 if(!exists("sensor_data")){ 
 	sensor_data <- (function(){
