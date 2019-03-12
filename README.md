@@ -18,3 +18,8 @@ You can cite the paper using the following bibtex record,
  2. [Full paper](https://github.com/sbmkvp/ijgis-research-article/blob/master/stages/first_submission/paper.pdf)
  3. [Second revision](https://github.com/sbmkvp/ijgis-research-article/blob/master/stages/second_submission/paper.pdf)
  4. [Third revision](https://github.com/sbmkvp/ijgis-research-article/blob/master/stages/third_submission/paper.pdf)
+ 
+---
+
+> The research is funded by ESRC Retail Business Datasafe [ES/L011840/1](https://gtr.ukri.org/project/EC8C62BE-7D55-4EF8-89D1-D04B0F03B0F2) and part of activities of the [Consumer Data Research Centre](https://www.cdrc.ac.uk/). 
+For queries regarding the data used in the research please contact [s.bala@ucl.ac.uk](mailto:s.bala@ucl.ac.uk)
